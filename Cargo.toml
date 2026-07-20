@@ -1,0 +1,57 @@
+[package]
+name = "symbolica-integrate"
+version = "1.0.0"
+authors = ["Ben Ruijl <ben@symbolica.io>"]
+edition = "2024"
+rust-version = "1.89"
+description = "Symbolic integration for Symbolica, based on the Rubi integration rules"
+repository = "https://github.com/symbolica-dev/symbolica-integrate"
+homepage = "https://symbolica.io"
+documentation = "https://docs.rs/symbolica-integrate"
+readme = "README.md"
+license = "MIT"
+keywords = ["symbolic", "integration", "mathematics", "algebra", "rubi"]
+categories = ["science"]
+exclude = [
+    "/tests/rubi_corpus.rs",
+    "/tests/data/**",
+    "/vendor/**",
+    "scripts/**",
+    "docs/**",
+]
+
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[[example]]
+name = "steps"
+path = "examples/steps.rs"
+required-features = ["steps"]
+
+[[example]]
+name = "steps_with_substitution"
+path = "examples/steps_with_substitution.rs"
+required-features = ["steps"]
+
+[features]
+default = []
+trace = []
+bake-integration-variable = []
+steps = []
+
+[dependencies]
+symbolica = { version = "2.2" }
+
+[profile.dev.package."*"]
+opt-level = 3
+
+# The generated Rubi implementation is unusually large. Full debug information
+# substantially increases local build time and peak memory. Temporarily set the
+# package override to `debug = 2` when full source-level debugging is needed.
+[profile.dev.package.symbolica-integrate]
+debug = 0
+
+[profile.test.package.symbolica-integrate]
+debug = 0
