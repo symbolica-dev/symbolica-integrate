@@ -3353,11 +3353,11 @@ fn push_rules_rule_2720(rules: &mut Vec<RubiRule>) {
         pattern: u_atom,
         with: [u_, x_],
         when: {
-            rubi_function_of_exponential_q(&u_, x_)
-                && !rubi_function_of_exponential_rule_exclusion_q(&u_, x_)
+            rubi_function_of_exponential_q(u_.as_view(), x_)
+                && !rubi_function_of_exponential_rule_exclusion_q(u_.as_view(), x_)
         },
         rhs: {
-            let exponential_function = rubi_function_of_exponential(&u_, x_).unwrap();
+            let exponential_function = rubi_function_of_exponential(u_.as_view(), x_).unwrap();
             let v = exponential_function.exponential;
             let dv = v.derivative(x_);
             let inner_integrand = exponential_function.function / x_;

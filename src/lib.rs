@@ -5522,7 +5522,7 @@ fn rubi_normalize_numeric_minus_one_powers(expr: AtomView<'_>) -> Atom {
             if let AtomView::Pow(inner_power) = base.as_view()
                 && inner_power.get_base().to_owned() == Atom::num(-1)
                 && let Some((inner_numerator, inner_denominator)) =
-                    rational_number(&inner_power.get_exp().to_owned())
+                    rational_number_view(inner_power.get_exp())
                 && let Some(outer_integer) = integer_i64(&exponent)
                 && let Some(numerator) = inner_numerator.checked_mul(outer_integer)
             {
@@ -7236,40 +7236,40 @@ struct RubiFunctionOfExponential {
     function: Atom,
 }
 
-fn rubi_function_of_exponential_q(expr: &Atom, x: Symbol) -> bool {
+fn rubi_function_of_exponential_q(expr: AtomView<'_>, x: Symbol) -> bool {
     rubi_function_of_exponential(expr, x).is_some()
 }
 
-fn rubi_function_of_exponential_rule_exclusion_q(expr: &Atom, x: Symbol) -> bool {
+fn rubi_function_of_exponential_rule_exclusion_q(expr: AtomView<'_>, x: Symbol) -> bool {
     rubi_integer_scaled_power_product_match_q(expr, x)
         || rubi_exponential_inverse_function_product_match_q(expr, x)
 }
 
-fn rubi_integer_scaled_power_product_match_q(expr: &Atom, x: Symbol) -> bool {
-    match expr.as_view() {
+fn rubi_integer_scaled_power_product_match_q(expr: AtomView<'_>, x: Symbol) -> bool {
+    match expr {
         AtomView::Mul(mul) => mul
             .into_iter()
-            .any(|factor| rubi_integer_scaled_power_match_q(&factor.to_owned(), x)),
+            .any(|factor| rubi_integer_scaled_power_match_q(factor, x)),
         _ => rubi_integer_scaled_power_match_q(expr, x),
     }
 }
 
-fn rubi_integer_scaled_power_match_q(expr: &Atom, x: Symbol) -> bool {
-    let AtomView::Pow(power) = expr.as_view() else {
+fn rubi_integer_scaled_power_match_q(expr: AtomView<'_>, x: Symbol) -> bool {
+    let AtomView::Pow(power) = expr else {
         return false;
     };
-    let exponent = power.get_exp().to_owned();
-    if !is_free_of(&exponent, x) {
+    let exponent = power.get_exp();
+    if !is_free_of(exponent, x) {
         return false;
     }
 
-    rubi_scaled_power_inner_exponent(&power.get_base().to_owned(), x).is_some_and(
-        |inner_exponent| is_free_of(&inner_exponent, x) && integerq!(exponent * inner_exponent),
-    )
+    rubi_scaled_power_inner_exponent(power.get_base(), x).is_some_and(|inner_exponent| {
+        is_free_of(&inner_exponent, x) && integerq!(exponent.to_owned() * inner_exponent)
+    })
 }
 
-fn rubi_scaled_power_inner_exponent(expr: &Atom, x: Symbol) -> Option<Atom> {
-    match expr.as_view() {
+fn rubi_scaled_power_inner_exponent(expr: AtomView<'_>, x: Symbol) -> Option<Atom> {
+    match expr {
         AtomView::Pow(power)
             if is_free_of(power.get_base(), x) && !is_free_of(power.get_exp(), x) =>
         {
@@ -7299,19 +7299,19 @@ fn rubi_scaled_power_inner_exponent(expr: &Atom, x: Symbol) -> Option<Atom> {
     }
 }
 
-fn rubi_exponential_inverse_function_product_match_q(expr: &Atom, x: Symbol) -> bool {
-    let factors: Vec<_> = match expr.as_view() {
-        AtomView::Mul(mul) => mul.into_iter().map(|factor| factor.to_owned()).collect(),
-        _ => vec![expr.to_owned()],
+fn rubi_exponential_inverse_function_product_match_q(expr: AtomView<'_>, x: Symbol) -> bool {
+    let mut has_linear_euler_factor = false;
+    let mut has_inverse_function_factor = false;
+    let mut visit = |factor| {
+        has_linear_euler_factor |= rubi_exp_argument(factor)
+            .is_some_and(|exponent| rubi_scaled_linear_q(exponent.as_view(), x));
+        has_inverse_function_factor |= rubi_inverse_function_call_q(factor, x);
     };
 
-    let has_linear_euler_factor = factors.iter().any(|factor| {
-        rubi_exp_argument(factor.as_view())
-            .is_some_and(|exponent| rubi_scaled_linear_q(exponent.as_view(), x))
-    });
-    let has_inverse_function_factor = factors
-        .iter()
-        .any(|factor| rubi_inverse_function_call_q(factor.as_view(), x));
+    match expr {
+        AtomView::Mul(mul) => mul.into_iter().for_each(&mut visit),
+        _ => visit(expr),
+    }
 
     has_linear_euler_factor && has_inverse_function_factor
 }
@@ -7402,10 +7402,13 @@ fn rubi_match_affine_inverse_function_q(expr: &Atom, x: Symbol) -> bool {
     )
 }
 
-fn rubi_function_of_exponential(expr: &Atom, x: Symbol) -> Option<RubiFunctionOfExponential> {
+fn rubi_function_of_exponential(
+    expr: AtomView<'_>,
+    x: Symbol,
+) -> Option<RubiFunctionOfExponential> {
     let mut basis = None;
     let mut explicit_exponential = false;
-    if !rubi_function_of_exponential_test(expr.as_view(), x, &mut basis, &mut explicit_exponential)
+    if !rubi_function_of_exponential_test(expr, x, &mut basis, &mut explicit_exponential)
         || !explicit_exponential
     {
         return None;
@@ -7416,7 +7419,7 @@ fn rubi_function_of_exponential(expr: &Atom, x: Symbol) -> Option<RubiFunctionOf
         RubiExponentialBase::Exp => exponent.exp(),
         RubiExponentialBase::Power(base) => base.pow(&exponent),
     };
-    let function = rubi_function_of_exponential_function_aux(expr.as_view(), x, &base, &exponent)?;
+    let function = rubi_function_of_exponential_function_aux(expr, x, &base, &exponent)?;
 
     Some(RubiFunctionOfExponential {
         exponential,
@@ -7438,23 +7441,18 @@ fn rubi_function_of_exponential_test(
         AtomView::Fun(function)
             if function.get_symbol() == symbol!("exp") && function.get_nargs() == 1 =>
         {
-            let arguments: Vec<Atom> = function
-                .into_iter()
-                .map(|argument| argument.to_owned())
-                .collect();
-            let [argument] = arguments.as_slice() else {
-                return false;
-            };
-            if rubi_linear_q(argument.as_view(), x) {
+            let argument = function.get(0);
+            if rubi_linear_q(argument, x) {
+                let argument = argument.to_owned();
                 *explicit_exponential = true;
                 return rubi_function_of_exponential_test_aux(
                     RubiExponentialBase::Exp,
-                    argument,
+                    &argument,
                     x,
                     basis,
                 );
             }
-            if let AtomView::Add(add) = argument.as_view() {
+            if let AtomView::Add(add) = argument {
                 return add.into_iter().all(|term| {
                     rubi_function_of_exponential_test(
                         term.to_owned().exp().as_view(),
@@ -7464,29 +7462,24 @@ fn rubi_function_of_exponential_test(
                     )
                 });
             }
-            rubi_function_of_exponential_test(argument.as_view(), x, basis, explicit_exponential)
+            rubi_function_of_exponential_test(argument, x, basis, explicit_exponential)
         }
         AtomView::Fun(function)
             if function.get_nargs() == 1
                 && rubi_hyperbolic_function_symbol(function.get_symbol()) =>
         {
-            let arguments: Vec<Atom> = function
-                .into_iter()
-                .map(|argument| argument.to_owned())
-                .collect();
-            let [argument] = arguments.as_slice() else {
-                return false;
-            };
-            if rubi_linear_q(argument.as_view(), x) {
+            let argument = function.get(0);
+            if rubi_linear_q(argument, x) {
+                let argument = argument.to_owned();
                 return rubi_function_of_exponential_test_aux(
                     RubiExponentialBase::Exp,
-                    argument,
+                    &argument,
                     x,
                     basis,
                 );
             }
 
-            rubi_function_of_exponential_test(argument.as_view(), x, basis, explicit_exponential)
+            rubi_function_of_exponential_test(argument, x, basis, explicit_exponential)
         }
         AtomView::Fun(function) if rubi_calculus_operator_symbol(function.get_symbol()) => false,
         AtomView::Fun(function) => function.into_iter().all(|argument| {
@@ -7494,22 +7487,21 @@ fn rubi_function_of_exponential_test(
         }),
         AtomView::Pow(power) => {
             let (base, exponent) = power.get_base_exp();
-            let base = base.to_owned();
-            let exponent = exponent.to_owned();
-            if is_free_of(&base, x) && rubi_linear_q(exponent.as_view(), x) {
+            if is_free_of(base, x) && rubi_linear_q(exponent, x) {
+                let exponent = exponent.to_owned();
                 *explicit_exponential = true;
                 return rubi_function_of_exponential_test_aux(
-                    RubiExponentialBase::Power(base),
+                    RubiExponentialBase::Power(base.to_owned()),
                     &exponent,
                     x,
                     basis,
                 );
             }
-            if is_free_of(&base, x) {
-                if let AtomView::Add(add) = exponent.as_view() {
+            if is_free_of(base, x) {
+                if let AtomView::Add(add) = exponent {
                     return add.into_iter().all(|term| {
                         rubi_function_of_exponential_test(
-                            base.pow(term.to_owned()).as_view(),
+                            base.to_owned().pow(term.to_owned()).as_view(),
                             x,
                             basis,
                             explicit_exponential,
@@ -7518,13 +7510,8 @@ fn rubi_function_of_exponential_test(
                 }
             }
 
-            rubi_function_of_exponential_test(base.as_view(), x, basis, explicit_exponential)
-                && rubi_function_of_exponential_test(
-                    exponent.as_view(),
-                    x,
-                    basis,
-                    explicit_exponential,
-                )
+            rubi_function_of_exponential_test(base, x, basis, explicit_exponential)
+                && rubi_function_of_exponential_test(exponent, x, basis, explicit_exponential)
         }
         AtomView::Add(add) => add
             .into_iter()
@@ -7708,23 +7695,18 @@ fn rubi_function_of_exponential_function_aux(
         AtomView::Fun(function)
             if function.get_symbol() == symbol!("exp") && function.get_nargs() == 1 =>
         {
-            let arguments: Vec<Atom> = function
-                .into_iter()
-                .map(|argument| argument.to_owned())
-                .collect();
-            let [argument] = arguments.as_slice() else {
-                return None;
-            };
-            if rubi_linear_q(argument.as_view(), x) {
+            let argument = function.get(0);
+            if rubi_linear_q(argument, x) {
+                let argument = argument.to_owned();
                 return rubi_linear_exponential_as_substitution_power(
                     &RubiExponentialBase::Exp,
-                    argument,
+                    &argument,
                     basis_base,
                     basis_exponent,
                     x,
                 );
             }
-            if let AtomView::Add(add) = argument.as_view() {
+            if let AtomView::Add(add) = argument {
                 let factors: Option<Vec<Atom>> = add
                     .into_iter()
                     .map(|term| {
@@ -7738,12 +7720,8 @@ fn rubi_function_of_exponential_function_aux(
                     .collect();
                 return Some(product_atoms(&factors?));
             }
-            let rewritten_argument = rubi_function_of_exponential_function_aux(
-                argument.as_view(),
-                x,
-                basis_base,
-                basis_exponent,
-            )?;
+            let rewritten_argument =
+                rubi_function_of_exponential_function_aux(argument, x, basis_base, basis_exponent)?;
             Some(rewritten_argument.exp())
         }
         AtomView::Fun(function)
@@ -7751,15 +7729,9 @@ fn rubi_function_of_exponential_function_aux(
                 && rubi_hyperbolic_function_symbol(function.get_symbol()) =>
         {
             let function_symbol = function.get_symbol();
-            let arguments: Vec<Atom> = function
-                .into_iter()
-                .map(|argument| argument.to_owned())
-                .collect();
-            let [argument] = arguments.as_slice() else {
-                return None;
-            };
-            if rubi_linear_q(argument.as_view(), x) {
-                let slope = rubi_coefficient(argument, x, 1)?;
+            let argument = function.get(0);
+            if rubi_linear_q(argument, x) {
+                let slope = rubi_coefficient(&argument.to_owned(), x, 1)?;
                 let basis_slope = rubi_coefficient(basis_exponent, x, 1)?;
                 let log_ratio =
                     rubi_exponential_base_log_ratio(&RubiExponentialBase::Exp, basis_base)?;
@@ -7780,12 +7752,8 @@ fn rubi_function_of_exponential_function_aux(
                 };
             }
 
-            let rewritten_argument = rubi_function_of_exponential_function_aux(
-                argument.as_view(),
-                x,
-                basis_base,
-                basis_exponent,
-            )?;
+            let rewritten_argument =
+                rubi_function_of_exponential_function_aux(argument, x, basis_base, basis_exponent)?;
             Some(function_symbol.call((rewritten_argument,)))
         }
         AtomView::Fun(function) => {
@@ -7804,9 +7772,9 @@ fn rubi_function_of_exponential_function_aux(
         }
         AtomView::Pow(power) => {
             let (base, exponent) = power.get_base_exp();
-            let base_atom = base.to_owned();
-            let exponent_atom = exponent.to_owned();
-            if is_free_of(&base_atom, x) && rubi_linear_q(exponent_atom.as_view(), x) {
+            if is_free_of(base, x) && rubi_linear_q(exponent, x) {
+                let base_atom = base.to_owned();
+                let exponent_atom = exponent.to_owned();
                 return rubi_linear_exponential_as_substitution_power(
                     &RubiExponentialBase::Power(base_atom),
                     &exponent_atom,
@@ -7815,13 +7783,13 @@ fn rubi_function_of_exponential_function_aux(
                     x,
                 );
             }
-            if is_free_of(&base_atom, x) {
-                if let AtomView::Add(add) = exponent_atom.as_view() {
+            if is_free_of(base, x) {
+                if let AtomView::Add(add) = exponent {
                     let factors: Option<Vec<Atom>> = add
                         .into_iter()
                         .map(|term| {
                             rubi_function_of_exponential_function_aux(
-                                base_atom.pow(term.to_owned()).as_view(),
+                                base.to_owned().pow(term.to_owned()).as_view(),
                                 x,
                                 basis_base,
                                 basis_exponent,
@@ -7913,7 +7881,7 @@ fn rubi_linear_power_match_q(expr: &Atom, x: Symbol) -> bool {
     match expr.as_view() {
         AtomView::Pow(power) => {
             let (base, exponent) = power.get_base_exp();
-            is_free_of(exponent, x) && rubi_linear_match_q(&base.to_owned(), x)
+            is_free_of(exponent, x) && rubi_linear_match_q_view(base, x)
         }
         _ => rubi_linear_match_q(expr, x),
     }
@@ -8003,7 +7971,7 @@ fn rubi_power_variable_integer_degree(
     if let AtomView::Pow(power) = expr {
         let (base, exponent) = power.get_base_exp();
         if let Some(base_scale) = rubi_scaled_variable_factor(base, x) {
-            let exponent_value = integer_i64(&exponent.to_owned())?;
+            let exponent_value = integer_i64_view(exponent)?;
             if current_power == 0 {
                 return Some((exponent_value, base_scale));
             }
@@ -8258,7 +8226,7 @@ fn subst_rubi_variable_integer_power(
         AtomView::Pow(power) => {
             let (base, exponent) = power.get_base_exp();
             if rubi_scaled_variable_factor(base, x).is_some() {
-                let exponent_value = integer_i64(&exponent.to_owned())?;
+                let exponent_value = integer_i64_view(exponent)?;
                 if exponent_value % power_value != 0 {
                     return None;
                 }
@@ -8336,7 +8304,7 @@ fn rubi_fractional_power_q(expr: &Atom) -> bool {
     matches!(
         expr.as_view(),
         AtomView::Pow(power)
-            if rational_number(&power.get_exp().to_owned())
+            if rational_number_view(power.get_exp())
                 .is_some_and(|(_, denominator)| denominator != 1)
     )
 }
@@ -8778,7 +8746,7 @@ fn monomial_rational_degree(term: AtomView<'_>, x: Symbol) -> Option<(i64, i64)>
             let (base, exponent) = power.get_base_exp();
             match base {
                 AtomView::Var(variable) if variable.get_symbol() == x => {
-                    rational_number(&exponent.to_owned())
+                    rational_number_view(exponent)
                 }
                 _ => None,
             }
@@ -8796,7 +8764,7 @@ fn monomial_rational_degree(term: AtomView<'_>, x: Symbol) -> Option<(i64, i64)>
                         let (base, exponent) = power.get_base_exp();
                         match base {
                             AtomView::Var(variable) if variable.get_symbol() == x => {
-                                rational_number(&exponent.to_owned())?
+                                rational_number_view(exponent)?
                             }
                             _ => return None,
                         }
@@ -9509,7 +9477,7 @@ fn rubi_collect_square_root_quadratic(
         AtomView::Pow(power) => {
             let (base, exponent) = power.get_base_exp();
             let base_atom = base.to_owned();
-            if rational_number(&exponent.to_owned()).is_some_and(|rational| rational == (1, 2))
+            if rational_number_view(exponent).is_some_and(|rational| rational == (1, 2))
                 && rubi_quadratic_q(&base_atom, x)
             {
                 if let Some(existing) = quadratic {
@@ -9554,7 +9522,11 @@ fn rubi_quadratic_q_list(exprs: &[&Atom], x: Symbol) -> bool {
 }
 
 fn rubi_linear_match_q(expr: &Atom, x: Symbol) -> bool {
-    let Some(terms) = collect_polynomial_terms_without_expanding(expr, x) else {
+    rubi_linear_match_q_view(expr.as_view(), x)
+}
+
+fn rubi_linear_match_q_view(expr: AtomView<'_>, x: Symbol) -> bool {
+    let Some(terms) = collect_polynomial_terms_without_expanding_view(expr, x) else {
         return false;
     };
 
@@ -9699,7 +9671,7 @@ struct PseudoBinomialParts {
 
 fn pseudo_binomial_parts(expr: &Atom, x: Symbol) -> Option<PseudoBinomialParts> {
     if let AtomView::Pow(power) = expr.as_view()
-        && integer_i64(&power.get_exp().to_owned()).is_some_and(|exponent| exponent > 2)
+        && integer_i64_view(power.get_exp()).is_some_and(|exponent| exponent > 2)
         && rubi_linear_q(power.get_base(), x)
     {
         // PseudoBinomialParts[(c+d*x)^n,x] has a zero residual constant, so
@@ -10631,7 +10603,7 @@ fn polynomial_inverse_mod_powered_linear(poly: &Atom, modulus: &Atom, x: Symbol)
         return None;
     };
     let (base, exponent) = power.get_base_exp();
-    let exponent = integer_i64(&exponent.to_owned())?;
+    let exponent = integer_i64_view(exponent)?;
     if exponent <= 1 {
         return None;
     }
@@ -10664,7 +10636,7 @@ fn polynomial_inverse_mod_squared_quadratic(
         return None;
     };
     let (base, exponent) = power.get_base_exp();
-    if integer_i64(&exponent.to_owned())? != 2 {
+    if integer_i64_view(exponent)? != 2 {
         return None;
     }
     let base = base.to_owned();
@@ -10778,7 +10750,7 @@ fn polynomial_remainder_mod_small(
                 Some(terms)
             }
             AtomView::Pow(power) => {
-                let exponent = integer_i64(&power.get_exp().to_owned())?;
+                let exponent = integer_i64_view(power.get_exp())?;
                 if exponent < 0 {
                     return None;
                 }
@@ -11323,7 +11295,7 @@ fn rubi_mathematica_expand(expr: &Atom, x: Option<Symbol>) -> Atom {
             }),
         AtomView::Pow(power) => {
             let (base, exponent) = power.get_base_exp();
-            let Some(exponent) = integer_i64(&exponent.to_owned()) else {
+            let Some(exponent) = integer_i64_view(exponent) else {
                 return expr.to_owned();
             };
             if exponent < 0 {
@@ -12068,7 +12040,7 @@ fn rubi_mathematica_apart(expr: &Atom, variable: Option<Symbol>, x: Symbol) -> A
         let AtomView::Pow(power) = factor.as_view() else {
             return false;
         };
-        integer_i64(&power.get_exp().to_owned()).is_some_and(|exponent| exponent > 1)
+        integer_i64_view(power.get_exp()).is_some_and(|exponent| exponent > 1)
             && rubi_contains_function_symbol(&power.get_base().to_owned(), Symbol::LOG)
     });
     for (index, kernel) in default_kernels.iter().cloned().enumerate() {
@@ -12736,7 +12708,7 @@ fn rubi_split_additive_fraction_numerators_by_radical(expr: &Atom, radical: &Ato
 fn rubi_make_assoc_list(expr: &Atom, x: Symbol, kernels: &mut Vec<Atom>) {
     match expr.as_view() {
         AtomView::Num(_) | AtomView::Var(_) => {}
-        AtomView::Pow(power) if integer_i64(&power.get_exp().to_owned()).is_some() => {
+        AtomView::Pow(power) if integer_i64_view(power.get_exp()).is_some() => {
             rubi_make_assoc_list(&power.get_base().to_owned(), x, kernels);
         }
         AtomView::Add(add) => {
@@ -12759,7 +12731,7 @@ fn rubi_make_assoc_list(expr: &Atom, x: Symbol, kernels: &mut Vec<Atom>) {
 fn rubi_gensym_subst(expr: &Atom, substitutions: &[(Symbol, Atom)]) -> Atom {
     match expr.as_view() {
         AtomView::Num(_) | AtomView::Var(_) => expr.to_owned(),
-        AtomView::Pow(power) if integer_i64(&power.get_exp().to_owned()).is_some() => {
+        AtomView::Pow(power) if integer_i64_view(power.get_exp()).is_some() => {
             rubi_gensym_subst(&power.get_base().to_owned(), substitutions)
                 .pow(power.get_exp().to_owned())
         }
@@ -12821,7 +12793,7 @@ fn rubi_match_polynomial_times_larger_linear_power_q(u: &Atom, m: &Atom, x: Symb
             return false;
         };
         let (base, exponent) = power.get_base_exp();
-        let Some(power_integer) = integer_i64(&exponent.to_owned()) else {
+        let Some(power_integer) = integer_i64_view(exponent) else {
             return false;
         };
         power_integer > m_integer
@@ -13522,7 +13494,7 @@ fn rubi_positive_builtin_trig_power(expr: &Atom) -> Option<(RubiTrigFamily, Atom
     let AtomView::Pow(power) = expr.as_view() else {
         return None;
     };
-    let exponent = integer_i64(&power.get_exp().to_owned())?;
+    let exponent = integer_i64_view(power.get_exp())?;
     if exponent <= 0 {
         return None;
     }
@@ -13557,7 +13529,7 @@ fn rubi_reciprocal_builtin_trig_power(expr: &Atom) -> Option<(RubiTrigFamily, At
     let AtomView::Pow(power) = expr.as_view() else {
         return None;
     };
-    let exponent = integer_i64(&power.get_exp().to_owned())?;
+    let exponent = integer_i64_view(power.get_exp())?;
     if exponent >= 0 {
         return None;
     }
@@ -13770,7 +13742,7 @@ fn rubi_positive_hyperbolic_power(expr: &Atom) -> Option<(RubiTrigFamily, Atom, 
     let AtomView::Pow(power) = expr.as_view() else {
         return None;
     };
-    let exponent = integer_i64(&power.get_exp().to_owned())?;
+    let exponent = integer_i64_view(power.get_exp())?;
     if exponent <= 0 {
         return None;
     }
@@ -13782,7 +13754,7 @@ fn rubi_reciprocal_hyperbolic_power(expr: &Atom) -> Option<(RubiTrigFamily, Atom
     let AtomView::Pow(power) = expr.as_view() else {
         return None;
     };
-    let exponent = integer_i64(&power.get_exp().to_owned())?;
+    let exponent = integer_i64_view(power.get_exp())?;
     if exponent >= 0 {
         return None;
     }
@@ -15640,7 +15612,7 @@ fn rubi_trig_factor_shape(
         }
         AtomView::Pow(power) => {
             let (base, exponent) = power.get_base_exp();
-            let power = integer_i64(&exponent.to_owned())?;
+            let power = integer_i64_view(exponent)?;
             let (func, angle, base_power) = rubi_trig_factor_shape(&base.to_owned(), functions, x)?;
             Some((func, angle, base_power * power))
         }
@@ -16318,7 +16290,7 @@ fn rubi_sin_power_parts(expr: &Atom) -> Option<(Atom, i64)> {
     match expr.as_view() {
         AtomView::Pow(power) => {
             let base = power.get_base();
-            let exponent = integer_i64(&power.get_exp().to_owned())?;
+            let exponent = integer_i64_view(power.get_exp())?;
             rubi_sin_argument(base).map(|angle| (angle, exponent))
         }
         view => rubi_sin_argument(view).map(|angle| (angle, 1)),
@@ -16329,7 +16301,7 @@ fn rubi_cos_power_parts(expr: &Atom) -> Option<(Atom, i64)> {
     match expr.as_view() {
         AtomView::Pow(power) => {
             let base = power.get_base();
-            let exponent = integer_i64(&power.get_exp().to_owned())?;
+            let exponent = integer_i64_view(power.get_exp())?;
             rubi_cos_argument(base).map(|angle| (angle, exponent))
         }
         view => rubi_cos_argument(view).map(|angle| (angle, 1)),
@@ -16340,7 +16312,7 @@ fn rubi_sinh_power_parts(expr: &Atom) -> Option<(Atom, i64)> {
     match expr.as_view() {
         AtomView::Pow(power) => {
             let base = power.get_base();
-            let exponent = integer_i64(&power.get_exp().to_owned())?;
+            let exponent = integer_i64_view(power.get_exp())?;
             rubi_hyperbolic_argument(base, "sinh").map(|angle| (angle, exponent))
         }
         view => rubi_hyperbolic_argument(view, "sinh").map(|angle| (angle, 1)),
@@ -16351,7 +16323,7 @@ fn rubi_cosh_power_parts(expr: &Atom) -> Option<(Atom, i64)> {
     match expr.as_view() {
         AtomView::Pow(power) => {
             let base = power.get_base();
-            let exponent = integer_i64(&power.get_exp().to_owned())?;
+            let exponent = integer_i64_view(power.get_exp())?;
             rubi_hyperbolic_argument(base, "cosh").map(|angle| (angle, exponent))
         }
         view => rubi_hyperbolic_argument(view, "cosh").map(|angle| (angle, 1)),
@@ -16833,7 +16805,7 @@ fn rubi_binomial_square_q(expr: &Atom, x: Symbol) -> bool {
     let AtomView::Pow(power) = expr.as_view() else {
         return false;
     };
-    integer_i64(&power.get_exp().to_owned()) == Some(2) && rubi_binomial_q(power.get_base(), x)
+    integer_i64_view(power.get_exp()) == Some(2) && rubi_binomial_q(power.get_base(), x)
 }
 
 fn rubi_trinomial_match_q(expr: &Atom, x: Symbol) -> bool {
@@ -17158,7 +17130,7 @@ fn coefficient_integer_factor(expr: &Atom) -> Option<i64> {
         return Some(1);
     };
     for factor in mul {
-        if let Some((numerator, denominator)) = rational_number(&factor.to_owned()) {
+        if let Some((numerator, denominator)) = rational_number_view(factor) {
             return (denominator == 1).then_some(numerator.abs());
         }
     }
@@ -17423,7 +17395,7 @@ fn rubi_formally_distribute_product_powers(expr: AtomView<'_>) -> Atom {
                     })
                     .product()
             } else if let AtomView::Pow(inner_power) = base.as_view()
-                && integer_i64(&inner_power.get_exp().to_owned()).is_some()
+                && integer_i64_view(inner_power.get_exp()).is_some()
             {
                 inner_power
                     .get_base()
@@ -17831,8 +17803,15 @@ fn collect_polynomial_terms_without_expanding(
     expr: &Atom,
     x: Symbol,
 ) -> Option<BTreeMap<i64, Atom>> {
+    collect_polynomial_terms_without_expanding_view(expr.as_view(), x)
+}
+
+fn collect_polynomial_terms_without_expanding_view(
+    expr: AtomView<'_>,
+    x: Symbol,
+) -> Option<BTreeMap<i64, Atom>> {
     let mut terms = BTreeMap::new();
-    match expr.as_view() {
+    match expr {
         AtomView::Add(add) => {
             for term in add {
                 let (degree, coefficient) = polynomial_term(term, x)?;
@@ -17862,7 +17841,7 @@ fn polynomial_term(term: AtomView<'_>, x: Symbol) -> Option<(i64, Atom)> {
             let (base, exponent) = power.get_base_exp();
             match base {
                 AtomView::Var(variable) if variable.get_symbol() == x => {
-                    let degree = integer_i64(&exponent.to_owned())?;
+                    let degree = integer_i64_view(exponent)?;
                     if degree >= 0 {
                         Some((degree, Atom::num(1)))
                     } else {
@@ -17889,7 +17868,7 @@ fn polynomial_term(term: AtomView<'_>, x: Symbol) -> Option<(i64, Atom)> {
                         let (base, exponent) = power.get_base_exp();
                         match base {
                             AtomView::Var(variable) if variable.get_symbol() == x => {
-                                let factor_degree = integer_i64(&exponent.to_owned())?;
+                                let factor_degree = integer_i64_view(exponent)?;
                                 if factor_degree < 0 {
                                     return None;
                                 }
@@ -17919,7 +17898,7 @@ fn laurent_monomial_term(term: AtomView<'_>, x: Symbol) -> Option<(i64, Atom)> {
             let (base, exponent) = power.get_base_exp();
             match base {
                 AtomView::Var(variable) if variable.get_symbol() == x => {
-                    Some((integer_i64(&exponent.to_owned())?, Atom::num(1)))
+                    Some((integer_i64_view(exponent)?, Atom::num(1)))
                 }
                 _ => None,
             }
@@ -17941,7 +17920,7 @@ fn laurent_monomial_term(term: AtomView<'_>, x: Symbol) -> Option<(i64, Atom)> {
                         let (base, exponent) = power.get_base_exp();
                         match base {
                             AtomView::Var(variable) if variable.get_symbol() == x => {
-                                degree = degree.checked_add(integer_i64(&exponent.to_owned())?)?;
+                                degree = degree.checked_add(integer_i64_view(exponent)?)?;
                             }
                             _ => return None,
                         }
@@ -18016,7 +17995,7 @@ fn visible_integer_power_of_variable_factor<T: AtomCore>(expr: T, x: Symbol) -> 
             AtomView::Pow(power) => {
                 let (base, exponent) = power.get_base_exp();
                 matches!(base, AtomView::Var(variable) if variable.get_symbol() == x)
-                    && integer_i64(&exponent.to_owned()).is_some()
+                    && integer_i64_view(exponent).is_some()
             }
             _ => false,
         }
@@ -18079,7 +18058,7 @@ fn rubi_monomial_exponents(term: &Atom) -> Option<BTreeMap<String, i64>> {
                 let AtomView::Var(variable) = power.get_base() else {
                     return None;
                 };
-                let exponent = integer_i64(&power.get_exp().to_owned())?;
+                let exponent = integer_i64_view(power.get_exp())?;
                 if exponent < 0 {
                     return None;
                 }
@@ -18168,8 +18147,7 @@ fn rubi_mathematica_first_sum_term_in(expr: &Atom, x: Symbol) -> Option<Atom> {
             return false;
         };
         rubi_linear_q(power.get_base(), x)
-            && rational_number(&power.get_exp().to_owned())
-                .is_some_and(|(_, denominator)| denominator > 1)
+            && rational_number_view(power.get_exp()).is_some_and(|(_, denominator)| denominator > 1)
     }) {
         // Mathematica orders these terms by their x-dependent kernels before
         // applying RemoveContentAux. Symbolica's free algebraic coefficient
@@ -19705,7 +19683,7 @@ fn rubi_simplify_integrand(expr: &Atom, x: Symbol) -> Atom {
     // it prevents downstream Rubi rules from seeing the source-level power.
     if let AtomView::Pow(power) = expr.as_view()
         && rubi_sum_q(&power.get_base().to_owned())
-        && integer_i64(&power.get_exp().to_owned()).is_some()
+        && integer_i64_view(power.get_exp()).is_some()
     {
         return expr.to_owned();
     }
@@ -19742,7 +19720,7 @@ fn rubi_preserve_affine_inverse_function_integer_power(expr: &Atom, x: Symbol) -
         let AtomView::Pow(power) = factor.as_view() else {
             return false;
         };
-        integer_i64(&power.get_exp().to_owned()).is_some_and(|exponent| exponent > 1)
+        integer_i64_view(power.get_exp()).is_some_and(|exponent| exponent > 1)
             && rubi_linear_q(power.get_base(), x)
     });
     if !preserves_integer_power {
@@ -20088,7 +20066,7 @@ fn rubi_simplify_integrand_exponential_denominator_candidate(
         return None;
     }
 
-    let function = rubi_function_of_exponential(&denominator, x)?;
+    let function = rubi_function_of_exponential(denominator.as_view(), x)?;
     let function_denominator =
         rubi_simplify_function_of_exponential_denominator(&function.function);
     let simplified_denominator = rubi_subst(&function_denominator, x, function.exponential);
@@ -20358,7 +20336,7 @@ fn rubi_sin_square_angle(expr: &Atom) -> Option<Atom> {
     let AtomView::Pow(power) = expr.as_view() else {
         return None;
     };
-    if integer_i64(&power.get_exp().to_owned())? != 2 {
+    if integer_i64_view(power.get_exp())? != 2 {
         return None;
     }
     let (symbol, angle) = rubi_active_trig_function(&power.get_base().to_owned())?;
@@ -20380,7 +20358,7 @@ fn rubi_positive_integer_power_of_trig(
     let AtomView::Pow(power) = expr.as_view() else {
         return None;
     };
-    let exponent = integer_i64(&power.get_exp().to_owned())?;
+    let exponent = integer_i64_view(power.get_exp())?;
     if exponent <= 0 {
         return None;
     }
@@ -20822,7 +20800,7 @@ fn rubi_remove_common_symbolic_factor(
 fn rubi_power_factor_residual(factor: &Atom, candidate: &Atom, x: Symbol) -> Option<Atom> {
     if let AtomView::Pow(factor_power) = factor.as_view()
         && factor_power.get_base().to_owned() == *candidate
-        && let Some(exponent) = integer_i64(&factor_power.get_exp().to_owned())
+        && let Some(exponent) = integer_i64_view(factor_power.get_exp())
         && exponent >= 1
     {
         return Some(if exponent == 1 {
@@ -20876,7 +20854,7 @@ fn rubi_normalize_powered_monomial_binomial_derivative(expr: &Atom, x: Symbol) -
             continue;
         };
         let (base, exponent) = power.get_base_exp();
-        let Some(p) = integer_i64(&exponent.to_owned()) else {
+        let Some(p) = integer_i64_view(exponent) else {
             continue;
         };
         if p >= -1 {
@@ -21373,7 +21351,7 @@ fn rubi_factor_symbolic_power_canonicalization(expr: &Atom, x: Symbol) -> Option
             factor.as_view(),
             AtomView::Pow(power)
                 if !matches!(power.get_base(), AtomView::Var(variable) if variable.get_symbol() == x)
-                    && integer_i64(&power.get_exp().to_owned()).is_none()
+                    && integer_i64_view(power.get_exp()).is_none()
         )
     });
     has_symbolic_power.then(|| common * sum)
@@ -22651,7 +22629,7 @@ fn rubi_max_common_positive_integer_binomial_factor_count(expr: AtomView<'_>, x:
         .filter_map(|factor| {
             let base = match factor {
                 AtomView::Pow(power) => {
-                    if integer_i64(&power.get_exp().to_owned()).is_none_or(|power| power <= 0) {
+                    if integer_i64_view(power.get_exp()).is_none_or(|power| power <= 0) {
                         return None;
                     }
                     power.get_base()
@@ -23505,7 +23483,7 @@ fn rubi_fractional_power_factor_q(expr: &Atom) -> bool {
         AtomView::Num(number) => !number.get_coeff_view().is_real(),
         AtomView::Pow(power) => {
             let (_, exponent) = power.get_base_exp();
-            rational_number(&exponent.to_owned()).is_some_and(|(_, denominator)| denominator > 1)
+            rational_number_view(exponent).is_some_and(|(_, denominator)| denominator > 1)
         }
         AtomView::Mul(mul) => mul
             .into_iter()
@@ -24761,7 +24739,7 @@ fn rubi_split_numeric_factor(expr: &Atom) -> (Rational, Atom) {
         AtomView::Pow(power) => {
             let (base, exponent) = power.get_base_exp();
             if let (Some((base_numerator, base_denominator)), Some((exp_numerator, _))) = (
-                rational_number(&base.to_owned()),
+                rational_number_view(base),
                 rubi_fraction_parts(&exponent.to_owned()),
             ) {
                 let numeric = if exp_numerator > 0 {
@@ -31239,7 +31217,7 @@ mod tests {
                     let AtomView::Pow(power) = factor.as_view() else {
                         return false;
                     };
-                    integer_i64(&power.get_exp().to_owned()) == Some(-2)
+                    integer_i64_view(power.get_exp()) == Some(-2)
                         && polynomial_degree(&power.get_base().to_owned(), x) == Some(1)
                 })
             })
@@ -33866,20 +33844,33 @@ mod tests {
         let x = symbol!("x");
 
         assert!(rubi_function_of_exponential_q(
-            &parse!("1/(1 + exp(x) + exp(2*x))"),
+            parse!("1/(1 + exp(x) + exp(2*x))").as_view(),
             x
         ));
         assert!(rubi_function_of_exponential_q(
-            &parse!("sqrt(1+exp(-x))/sinh(x)"),
+            parse!("sqrt(1+exp(-x))/sinh(x)").as_view(),
             x
         ));
-        assert!(!rubi_function_of_exponential_q(&parse!("x + exp(x)"), x));
-        assert!(!rubi_function_of_exponential_q(&parse!("exp(x^2)"), x));
-        assert!(!rubi_function_of_exponential_q(&parse!("csch(x)"), x));
-        assert!(rubi_function_of_exponential_q(&parse!("sech(exp(x))"), x));
+        assert!(!rubi_function_of_exponential_q(
+            parse!("x + exp(x)").as_view(),
+            x
+        ));
+        assert!(!rubi_function_of_exponential_q(
+            parse!("exp(x^2)").as_view(),
+            x
+        ));
+        assert!(!rubi_function_of_exponential_q(
+            parse!("csch(x)").as_view(),
+            x
+        ));
+        assert!(rubi_function_of_exponential_q(
+            parse!("sech(exp(x))").as_view(),
+            x
+        ));
 
-        let exponential_function = rubi_function_of_exponential(&parse!("1/(b*f^(-x)+a*f^x)^3"), x)
-            .expect("opposite same-base exponentials should share a basis");
+        let exponential_function =
+            rubi_function_of_exponential(parse!("1/(b*f^(-x)+a*f^x)^3").as_view(), x)
+                .expect("opposite same-base exponentials should share a basis");
         assert!(eqq!(exponential_function.exponential, parse!("f^x")));
         assert!(
             (exponential_function.function - parse!("x^3/(b+a*x^2)^3"))
@@ -33888,7 +33879,7 @@ mod tests {
         );
 
         let hyperbolic_exponential_function =
-            rubi_function_of_exponential(&parse!("sqrt(1+exp(-x))/sinh(x)"), x)
+            rubi_function_of_exponential(parse!("sqrt(1+exp(-x))/sinh(x)").as_view(), x)
                 .expect("Bondarenko line 29 should follow Rubi FunctionOfExponentialQ");
         assert!(
             eqq!(
@@ -33905,7 +33896,7 @@ mod tests {
         );
 
         let explicit_exponential_function =
-            rubi_function_of_exponential(&parse!("sqrt(1+exp(-x))/(-exp(-x)+exp(x))"), x)
+            rubi_function_of_exponential(parse!("sqrt(1+exp(-x))/(-exp(-x)+exp(x))").as_view(), x)
                 .expect("Bondarenko line 28 should follow Rubi FunctionOfExponentialQ");
         assert!(
             eqq!(
@@ -33922,7 +33913,7 @@ mod tests {
         );
 
         let tanh_exponential_function =
-            rubi_function_of_exponential(&parse!("tanh(x)/sqrt(exp(x)+exp(2*x))"), x)
+            rubi_function_of_exponential(parse!("tanh(x)/sqrt(exp(x)+exp(2*x))").as_view(), x)
                 .expect("Bondarenko line 33 should follow Rubi FunctionOfExponentialQ");
         assert!(
             eqq!(
@@ -33941,8 +33932,9 @@ mod tests {
             tanh_exponential_function.function
         );
 
-        let nested_exponential_function = rubi_function_of_exponential(&parse!("exp(exp(x)+x)"), x)
-            .expect("nested exponential should follow Rubi FunctionOfExponentialQ");
+        let nested_exponential_function =
+            rubi_function_of_exponential(parse!("exp(exp(x)+x)").as_view(), x)
+                .expect("nested exponential should follow Rubi FunctionOfExponentialQ");
         assert!(
             eqq!(
                 nested_exponential_function.exponential,
@@ -33960,7 +33952,7 @@ mod tests {
         );
 
         let logarithmic_exponential_function =
-            rubi_function_of_exponential(&parse!("log(1+exp(x))/(1+exp(2*x))"), x)
+            rubi_function_of_exponential(parse!("log(1+exp(x))/(1+exp(2*x))").as_view(), x)
                 .expect("Bondarenko line 36 should follow Rubi FunctionOfExponentialQ");
         assert!(
             eqq!(
@@ -33979,10 +33971,13 @@ mod tests {
         );
 
         let shifted_exponential_function =
-            rubi_function_of_exponential(&parse!("1/(a+b*exp(c+d*x))"), x)
+            rubi_function_of_exponential(parse!("1/(a+b*exp(c+d*x))").as_view(), x)
                 .expect("Rubi FunctionOfExponentialQ accepts shifted linear exponents");
         assert!(
-            !rubi_function_of_exponential_rule_exclusion_q(&parse!("1/(a+b*exp(c+d*x))"), x),
+            !rubi_function_of_exponential_rule_exclusion_q(
+                parse!("1/(a+b*exp(c+d*x))").as_view(),
+                x
+            ),
             "Rubi 2.3.95 excludes explicit scaled powers, not shifted exponential sums"
         );
         assert!(
@@ -34000,7 +33995,7 @@ mod tests {
         );
 
         let cubed_denominator_function =
-            rubi_function_of_exponential(&parse!("1/(a+b*(F^(g*(e+f*x)))^n)^3"), x)
+            rubi_function_of_exponential(parse!("1/(a+b*(F^(g*(e+f*x)))^n)^3").as_view(), x)
                 .expect("symbolic exponential powers should follow Rubi FunctionOfExponentialQ");
         assert!(
             eqq!(
@@ -34017,7 +34012,7 @@ mod tests {
         );
 
         let nested_hyperbolic_exponential_function =
-            rubi_function_of_exponential(&parse!("exp(x)*sech(exp(x))"), x)
+            rubi_function_of_exponential(parse!("exp(x)*sech(exp(x))").as_view(), x)
                 .expect("Stewart line 370 should follow Rubi FunctionOfExponentialQ");
         assert!(
             eqq!(

@@ -792,7 +792,7 @@ fn push_rules_rule_6897(rules: &mut Vec<RubiRule>) {
         refs: [],
         pattern: Atom::var(u_).asech(),
         with: [u_, x_],
-        when: { rubi_inverse_function_free_q(&u_, x_) && !rubi_function_of_exponential_q(&u_, x_) },
+        when: { rubi_inverse_function_free_q(&u_, x_) && !rubi_function_of_exponential_q(u_.as_view(), x_) },
         rhs: {
             let radical = (Atom::num(1) - u_.pow(2)).sqrt();
             let multiplier = &radical
@@ -817,7 +817,7 @@ fn push_rules_rule_6898(rules: &mut Vec<RubiRule>) {
         refs: [],
         pattern: Atom::var(u_).acsch(),
         with: [u_, x_],
-        when: { rubi_inverse_function_free_q(&u_, x_) && !rubi_function_of_exponential_q(&u_, x_) },
+        when: { rubi_inverse_function_free_q(&u_, x_) && !rubi_function_of_exponential_q(u_.as_view(), x_) },
         rhs: {
             let recursive = rubi_simplify_integrand(
                 &(x_ * u_.derivative(x_) / (&u_ * (-Atom::num(1) - u_.pow(2)).sqrt())),
@@ -846,7 +846,7 @@ fn push_rules_rule_6899(rules: &mut Vec<RubiRule>) {
                 && neq!(m_, -1)
                 && rubi_inverse_function_free_q(&u_, x_)
                 && !rubi_function_of_q(&(&c__ + &d__ * x_).pow(&m_ + 1), &u_, x_)
-                && !rubi_function_of_exponential_q(&u_, x_)
+                && !rubi_function_of_exponential_q(u_.as_view(), x_)
         },
         rhs: {
             let linear = &c__ + &d__ * x_;
@@ -885,7 +885,7 @@ fn push_rules_rule_6900(rules: &mut Vec<RubiRule>) {
                 && neq!(m_, -1)
                 && rubi_inverse_function_free_q(&u_, x_)
                 && !rubi_function_of_q(&(&c__ + &d__ * x_).pow(&m_ + 1), &u_, x_)
-                && !rubi_function_of_exponential_q(&u_, x_)
+                && !rubi_function_of_exponential_q(u_.as_view(), x_)
         },
         rhs: {
             let linear = &c__ + &d__ * x_;
