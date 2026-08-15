@@ -66,7 +66,7 @@ fn push_rules_rule_5137(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5138(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5138,
         source: "Int[(d_.*x_)^m_.*(a_.+b_.*ArcSin[c_.*x_])^n_.,x_Symbol] :=
@@ -75,7 +75,7 @@ fn push_rules_rule_5138(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m},x] && IGtQ[n,0] && NeQ[m,-1]",
         desc: "Integration by parts",
         refs: ["G&R 2.831, CRC 453, A&S 4.4.65", "G&R 2.832, CRC 454, A&S 4.4.67"],
-        pattern: (d__ * x_).pow(m_) * (a__ + b__ * (c__ * x_).asin()).pow(n_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [d__, m_, a__, b__, c__, n_, x_],
         optional: [d__, m_, a__, b__, c__, n_],
         when: {
@@ -97,7 +97,7 @@ fn push_rules_rule_5138(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5139(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5139,
         source: "Int[(d_.*x_)^m_.*(a_.+b_.*ArcCos[c_.*x_])^n_.,x_Symbol] :=
@@ -106,7 +106,7 @@ fn push_rules_rule_5139(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m},x] && IGtQ[n,0] && NeQ[m,-1]",
         desc: "Integration by parts",
         refs: ["G&R 2.831, CRC 453, A&S 4.4.65", "G&R 2.832, CRC 454, A&S 4.4.67"],
-        pattern: (d__ * x_).pow(m_) * (a__ + b__ * (c__ * x_).acos()).pow(n_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [d__, m_, a__, b__, c__, n_, x_],
         optional: [d__, m_, a__, b__, c__, n_],
         when: {
@@ -128,7 +128,7 @@ fn push_rules_rule_5139(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5140(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5140,
         source: "Int[x_^m_.*(a_.+b_.*ArcSin[c_.*x_])^n_,x_Symbol] :=
@@ -137,7 +137,7 @@ fn push_rules_rule_5140(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && IGtQ[m,0] && GtQ[n,0]",
         desc: "Integration by parts",
         refs: ["G&R 2.831, CRC 453, A&S 4.4.65", "G&R 2.832, CRC 454, A&S 4.4.67"],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ * x_).asin()).pow(n_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, a__, b__, c__, n_, x_],
         optional: [m_, a__, b__, c__],
         when: { freeq!([a__, b__, c__], x_) && igtq!(m_, 0) && gtq!(n_, 0) },
@@ -154,7 +154,7 @@ fn push_rules_rule_5140(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5141(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5141,
         source: "Int[x_^m_.*(a_.+b_.*ArcCos[c_.*x_])^n_,x_Symbol] :=
@@ -163,7 +163,7 @@ fn push_rules_rule_5141(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && IGtQ[m,0] && GtQ[n,0]",
         desc: "Integration by parts",
         refs: ["G&R 2.831, CRC 453, A&S 4.4.65", "G&R 2.832, CRC 454, A&S 4.4.67"],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ * x_).acos()).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, n_, x_],
         optional: [m_, a__, b__, c__],
         when: { freeq!([a__, b__, c__], x_) && igtq!(m_, 0) && gtq!(n_, 0) },
@@ -180,7 +180,7 @@ fn push_rules_rule_5141(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5142(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5142,
         source: "Int[x_^m_.*(a_.+b_.*ArcSin[c_.*x_])^n_,x_Symbol] :=
@@ -189,7 +189,7 @@ fn push_rules_rule_5142(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && IGtQ[m,0] && GeQ[n,-2] && LtQ[n,-1]",
         desc: "Integration by parts and integration by substitution",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ * x_).asin()).pow(n_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, a__, b__, c__, n_, x_],
         optional: [m_, a__, b__, c__],
         when: {
@@ -222,7 +222,7 @@ fn push_rules_rule_5142(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5143(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5143,
         source: "Int[x_^m_.*(a_.+b_.*ArcCos[c_.*x_])^n_,x_Symbol] :=
@@ -231,7 +231,7 @@ fn push_rules_rule_5143(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && IGtQ[m,0] && GeQ[n,-2] && LtQ[n,-1]",
         desc: "Integration by parts and integration by substitution",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ * x_).acos()).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, n_, x_],
         optional: [m_, a__, b__, c__],
         when: {
@@ -264,7 +264,7 @@ fn push_rules_rule_5143(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5144(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5144,
         source: "Int[x_^m_.*(a_.+b_.*ArcSin[c_.*x_])^n_,x_Symbol] :=
@@ -274,7 +274,7 @@ fn push_rules_rule_5144(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && IGtQ[m,0] && LtQ[n,-2]",
         desc: "Decompose the integrand into a sum of simpler integrals.",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ * x_).asin()).pow(n_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, a__, b__, c__, n_, x_],
         optional: [m_, a__, b__, c__],
         when: { freeq!([a__, b__, c__], x_) && igtq!(m_, 0) && ltq!(n_, -2) },
@@ -296,7 +296,7 @@ fn push_rules_rule_5144(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5145(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5145,
         source: "Int[x_^m_.*(a_.+b_.*ArcCos[c_.*x_])^n_,x_Symbol] :=
@@ -306,7 +306,7 @@ fn push_rules_rule_5145(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && IGtQ[m,0] && LtQ[n,-2]",
         desc: "Decompose the integrand into a sum of simpler integrals.",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ * x_).acos()).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, n_, x_],
         optional: [m_, a__, b__, c__],
         when: { freeq!([a__, b__, c__], x_) && igtq!(m_, 0) && ltq!(n_, -2) },
@@ -328,7 +328,7 @@ fn push_rules_rule_5145(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5146(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5146,
         source: "Int[x_^m_.*(a_.+b_.*ArcSin[c_.*x_])^n_,x_Symbol] :=
@@ -336,7 +336,7 @@ fn push_rules_rule_5146(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,n},x] && IGtQ[m,0]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ * x_).asin()).pow(n_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, a__, b__, c__, n_, x_],
         optional: [m_, a__, b__, c__],
         when: { freeq!([a__, b__, c__, n_], x_) && igtq!(m_, 0) },
@@ -355,7 +355,7 @@ fn push_rules_rule_5146(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5147(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5147,
         source: "Int[x_^m_.*(a_.+b_.*ArcCos[c_.*x_])^n_,x_Symbol] :=
@@ -363,7 +363,7 @@ fn push_rules_rule_5147(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,n},x] && IGtQ[m,0]",
         desc: "Substitute a new variable and integrate the transformed expression.",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ * x_).acos()).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, n_, x_],
         optional: [m_, a__, b__, c__],
         when: { freeq!([a__, b__, c__, n_], x_) && igtq!(m_, 0) },
@@ -382,7 +382,7 @@ fn push_rules_rule_5147(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5148(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5148,
         source: "Int[(d_.*x_)^m_.*(a_.+b_.*ArcSin[c_.*x_])^n_.,x_Symbol] :=
@@ -390,7 +390,7 @@ fn push_rules_rule_5148(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n},x]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: (d__ * x_).pow(m_) * (a__ + b__ * (c__ * x_).asin()).pow(n_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [d__, m_, a__, b__, c__, n_, x_],
         optional: [d__, m_, a__, b__, c__, n_],
         when: { freeq!([a__, b__, c__, d__, m_, n_], x_) },
@@ -402,7 +402,7 @@ fn push_rules_rule_5148(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5149(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 5149,
         source: "Int[(d_.*x_)^m_.*(a_.+b_.*ArcCos[c_.*x_])^n_.,x_Symbol] :=
@@ -410,7 +410,7 @@ fn push_rules_rule_5149(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n},x]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: (d__ * x_).pow(m_) * (a__ + b__ * (c__ * x_).acos()).pow(n_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [d__, m_, a__, b__, c__, n_, x_],
         optional: [d__, m_, a__, b__, c__, n_],
         when: { freeq!([a__, b__, c__, d__, m_, n_], x_) },
@@ -450,4 +450,52 @@ mod tests {
             .collect::<Vec<_>>();
         assert_eq!(orders, (5143..=5149).collect::<Vec<_>>());
     }
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (d__ * x_).pow(m_) * (a__ + b__ * (c__ * x_).acos()).pow(n_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (d__ * x_).pow(m_) * (a__ + b__ * (c__ * x_).asin()).pow(n_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (a__ + b__ * (c__ * x_).acos()).pow(n_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (a__ + b__ * (c__ * x_).asin()).pow(n_)
 }

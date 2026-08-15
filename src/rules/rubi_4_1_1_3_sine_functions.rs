@@ -32,7 +32,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3185(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, g__, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, g__, p_, x_);
     rules.push(rubi_rule!(
         order: 3185,
         source: "Int[(g_.*tan[e_.+f_.*x_])^p_./(a_+b_.*sin[e_.+f_.*x_]),x_Symbol] :=
@@ -40,8 +40,7 @@ fn push_rules_rule_3185(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,g,p},x] && EqQ[a^2-b^2,0] && NeQ[p,-1]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (g__ * i_tan(e__ + f__ * x_)).pow(p_)
-            / (a__ + b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [g__, e__, f__, p_, a__, b__, x_],
         optional: [g__, p_, b__, e__, f__],
         when: {
@@ -62,7 +61,7 @@ fn push_rules_rule_3185(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3186(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3186,
         source: "Int[tan[e_.+f_.*x_]^p_.*(a_+b_.*sin[e_.+f_.*x_])^m_.,x_Symbol] :=
@@ -70,8 +69,7 @@ fn push_rules_rule_3186(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,m},x] && EqQ[a^2-b^2,0] && IntegerQ[(p+1)/2]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: i_tan(e__ + f__ * x_).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [e__, f__, p_, a__, b__, m_, x_],
         optional: [p_, b__, e__, f__, m_],
         when: {
@@ -95,7 +93,7 @@ fn push_rules_rule_3186(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3187(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3187,
         source: "Int[tan[e_.+f_.*x_]^p_*(a_+b_.*sin[e_.+f_.*x_])^m_.,x_Symbol] :=
@@ -103,8 +101,7 @@ fn push_rules_rule_3187(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f},x] && EqQ[a^2-b^2,0] && IntegersQ[m,p] && EqQ[p,2*m]",
         desc: "Algebraic simplification",
         refs: [],
-        pattern: i_tan(e__ + f__ * x_).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [e__, f__, p_, a__, b__, m_, x_],
         optional: [b__, e__, f__, m_],
         when: {
@@ -125,7 +122,7 @@ fn push_rules_rule_3187(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3188(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3188,
         source: "Int[tan[e_.+f_.*x_]^p_*(a_+b_.*sin[e_.+f_.*x_])^m_,x_Symbol] :=
@@ -133,8 +130,7 @@ fn push_rules_rule_3188(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f},x] && EqQ[a^2-b^2,0] && IntegersQ[m,p/2] && (LtQ[p,0] || GtQ[m-p/2,0])",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: i_tan(e__ + f__ * x_).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [e__, f__, p_, a__, b__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -157,7 +153,7 @@ fn push_rules_rule_3188(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3189(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, g__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, g__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3189,
         source: "Int[(g_.*tan[e_.+f_.*x_])^p_.*(a_+b_.*sin[e_.+f_.*x_])^m_.,x_Symbol] :=
@@ -165,8 +161,7 @@ fn push_rules_rule_3189(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,g,p},x] && EqQ[a^2-b^2,0] && IGtQ[m,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (g__ * i_tan(e__ + f__ * x_)).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [g__, e__, f__, p_, a__, b__, m_, x_],
         optional: [g__, p_, b__, e__, f__, m_],
         when: {
@@ -186,7 +181,7 @@ fn push_rules_rule_3189(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3190(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, g__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, g__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3190,
         source: "Int[(g_.*tan[e_.+f_.*x_])^p_.*(a_+b_.*sin[e_.+f_.*x_])^m_,x_Symbol] :=
@@ -194,8 +189,7 @@ fn push_rules_rule_3190(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,g,p},x] && EqQ[a^2-b^2,0] && ILtQ[m,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (g__ * i_tan(e__ + f__ * x_)).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [g__, e__, f__, p_, a__, b__, m_, x_],
         optional: [g__, p_, b__, e__, f__],
         when: {
@@ -217,7 +211,7 @@ fn push_rules_rule_3190(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3191(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3191,
         source: "Int[tan[e_.+f_.*x_]^2*(a_+b_.*sin[e_.+f_.*x_])^m_,x_Symbol] :=
@@ -226,8 +220,7 @@ fn push_rules_rule_3191(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f},x] && EqQ[a^2-b^2,0] && Not[IntegerQ[m]] && LtQ[m,0]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: i_tan(e__ + f__ * x_).pow(2)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_4(symbols),
         with: [e__, f__, a__, b__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -253,7 +246,7 @@ fn push_rules_rule_3191(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3192(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3192,
         source: "Int[tan[e_.+f_.*x_]^2*(a_+b_.*sin[e_.+f_.*x_])^m_,x_Symbol] :=
@@ -262,8 +255,7 @@ fn push_rules_rule_3192(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,m},x] && EqQ[a^2-b^2,0] && Not[IntegerQ[m]] && Not[LtQ[m,0]]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: i_tan(e__ + f__ * x_).pow(2)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_4(symbols),
         with: [e__, f__, a__, b__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -322,7 +314,7 @@ fn push_rules_rule_3193(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3194(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3194,
         source: "Int[(a_+b_.*sin[e_.+f_.*x_])^m_/tan[e_.+f_.*x_]^2,x_Symbol] :=
@@ -331,8 +323,7 @@ fn push_rules_rule_3194(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f},x] && EqQ[a^2-b^2,0] && IntegerQ[m-1/2] && LtQ[m,-1]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            / i_tan(e__ + f__ * x_).pow(2),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -358,7 +349,7 @@ fn push_rules_rule_3194(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3195(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3195,
         source: "Int[(a_+b_.*sin[e_.+f_.*x_])^m_./tan[e_.+f_.*x_]^2,x_Symbol] :=
@@ -367,8 +358,7 @@ fn push_rules_rule_3195(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,m},x] && EqQ[a^2-b^2,0] && IntegerQ[m-1/2] && Not[LtQ[m,-1]]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            / i_tan(e__ + f__ * x_).pow(2),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, x_],
         optional: [b__, e__, f__, m_],
         when: {
@@ -394,7 +384,7 @@ fn push_rules_rule_3195(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3196(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3196,
         source: "Int[(a_+b_.*sin[e_.+f_.*x_])^m_/tan[e_.+f_.*x_]^4,x_Symbol] :=
@@ -403,8 +393,7 @@ fn push_rules_rule_3196(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f},x] && EqQ[a^2-b^2,0] && IntegerQ[m-1/2] && LtQ[m,-1]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            / i_tan(e__ + f__ * x_).pow(4),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, e__, f__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -430,7 +419,7 @@ fn push_rules_rule_3196(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3197(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3197,
         source: "Int[(a_+b_.*sin[e_.+f_.*x_])^m_/tan[e_.+f_.*x_]^4,x_Symbol] :=
@@ -438,8 +427,7 @@ fn push_rules_rule_3197(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,m},x] && EqQ[a^2-b^2,0] && IntegerQ[m-1/2] && Not[LtQ[m,-1]]",
         desc: "Decompose the integrand into a sum of simpler integrals.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            / i_tan(e__ + f__ * x_).pow(4),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, e__, f__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -464,7 +452,7 @@ fn push_rules_rule_3197(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3198(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3198,
         source: "Int[tan[e_.+f_.*x_]^p_*(a_+b_.*sin[e_.+f_.*x_])^m_,x_Symbol] :=
@@ -473,8 +461,7 @@ fn push_rules_rule_3198(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,m},x] && EqQ[a^2-b^2,0] && Not[IntegerQ[m]] && IntegerQ[p/2]",
         desc: "Substitute a new variable and integrate the transformed expression.",
         refs: [],
-        pattern: i_tan(e__ + f__ * x_).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [e__, f__, p_, a__, b__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -503,7 +490,7 @@ fn push_rules_rule_3198(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3199(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, g__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, g__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3199,
         source: "Int[(g_.*tan[e_.+f_.*x_])^p_*(a_+b_.*sin[e_.+f_.*x_])^m_,x_Symbol] :=
@@ -512,8 +499,7 @@ fn push_rules_rule_3199(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,g,m,p},x] && EqQ[a^2-b^2,0] && Not[IntegerQ[m]] && Not[IntegerQ[p]]",
         desc: "Piecewise constant extraction and integration by substitution",
         refs: [],
-        pattern: (g__ * i_tan(e__ + f__ * x_)).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [g__, e__, f__, p_, a__, b__, m_, x_],
         optional: [g__, b__, e__, f__],
         when: {
@@ -544,7 +530,7 @@ fn push_rules_rule_3199(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3200(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3200,
         source: "Int[tan[e_.+f_.*x_]^p_.*(a_+b_.*sin[e_.+f_.*x_])^m_.,x_Symbol] :=
@@ -552,8 +538,7 @@ fn push_rules_rule_3200(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,m},x] && NeQ[a^2-b^2,0] && IntegerQ[(p+1)/2]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: i_tan(e__ + f__ * x_).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [e__, f__, p_, a__, b__, m_, x_],
         optional: [p_, b__, e__, f__, m_],
         when: {
@@ -577,7 +562,7 @@ fn push_rules_rule_3200(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3201(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, g__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, g__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3201,
         source: "Int[(g_.*tan[e_.+f_.*x_])^p_.*(a_+b_.*sin[e_.+f_.*x_])^m_.,x_Symbol] :=
@@ -585,8 +570,7 @@ fn push_rules_rule_3201(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,g,p},x] && NeQ[a^2-b^2,0] && IGtQ[m,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (g__ * i_tan(e__ + f__ * x_)).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [g__, e__, f__, p_, a__, b__, m_, x_],
         optional: [g__, p_, b__, e__, f__, m_],
         when: {
@@ -606,7 +590,7 @@ fn push_rules_rule_3201(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3202(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3202,
         source: "Int[(a_+b_.*sin[e_.+f_.*x_])^m_/tan[e_.+f_.*x_]^2,x_Symbol] :=
@@ -614,8 +598,7 @@ fn push_rules_rule_3202(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,m},x] && NeQ[a^2-b^2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            / i_tan(e__ + f__ * x_).pow(2),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -635,7 +618,7 @@ fn push_rules_rule_3202(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3203(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3203,
         source: "Int[(a_+b_.*sin[e_.+f_.*x_])^m_/tan[e_.+f_.*x_]^4,x_Symbol] :=
@@ -646,8 +629,7 @@ fn push_rules_rule_3203(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f},x] && NeQ[a^2-b^2,0] && LtQ[m,-1] && IntegerQ[2*m]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            / i_tan(e__ + f__ * x_).pow(4),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, e__, f__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -686,7 +668,7 @@ fn push_rules_rule_3203(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3204(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, x_);
     rules.push(rubi_rule!(
         order: 3204,
         source: "Int[(a_+b_.*sin[e_.+f_.*x_])^m_/tan[e_.+f_.*x_]^4,x_Symbol] :=
@@ -697,8 +679,7 @@ fn push_rules_rule_3204(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,m},x] && NeQ[a^2-b^2,0] && Not[LtQ[m,-1]] && IntegerQ[2*m]",
         desc: "Simplify the integrand and continue with the simpler form.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            / i_tan(e__ + f__ * x_).pow(4),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, e__, f__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -787,7 +768,7 @@ fn push_rules_rule_3205(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3206(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, g__, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, g__, p_, x_);
     rules.push(rubi_rule!(
         order: 3206,
         source: "Int[(g_.*tan[e_.+f_.*x_])^p_/(a_+b_.*sin[e_.+f_.*x_]),x_Symbol] :=
@@ -797,8 +778,7 @@ fn push_rules_rule_3206(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,g},x] && NeQ[a^2-b^2,0] && IntegersQ[2*p] && GtQ[p,1]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (g__ * i_tan(e__ + f__ * x_)).pow(p_)
-            / (a__ + b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [g__, e__, f__, p_, a__, b__, x_],
         optional: [g__, b__, e__, f__],
         when: {
@@ -826,7 +806,7 @@ fn push_rules_rule_3206(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3207(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, g__, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, g__, p_, x_);
     rules.push(rubi_rule!(
         order: 3207,
         source: "Int[(g_.*tan[e_.+f_.*x_])^p_/(a_+b_.*sin[e_.+f_.*x_]),x_Symbol] :=
@@ -836,8 +816,7 @@ fn push_rules_rule_3207(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,g},x] && NeQ[a^2-b^2,0] && IntegersQ[2*p] && LtQ[p,-1]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (g__ * i_tan(e__ + f__ * x_)).pow(p_)
-            / (a__ + b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [g__, e__, f__, p_, a__, b__, x_],
         optional: [g__, b__, e__, f__],
         when: {
@@ -925,7 +904,7 @@ fn push_rules_rule_3209(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3210(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3210,
         source: "Int[tan[e_.+f_.*x_]^p_*(a_+b_.*sin[e_.+f_.*x_])^m_,x_Symbol] :=
@@ -933,8 +912,7 @@ fn push_rules_rule_3210(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f},x] && NeQ[a^2-b^2,0] && IntegersQ[m,p/2]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: i_tan(e__ + f__ * x_).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [e__, f__, p_, a__, b__, m_, x_],
         optional: [b__, e__, f__],
         when: {
@@ -956,7 +934,7 @@ fn push_rules_rule_3210(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3211(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, e__, f__, g__, m_, p_, x_);
+    rubi_symb!(symbols; a__, b__, e__, f__, g__, m_, p_, x_);
     rules.push(rubi_rule!(
         order: 3211,
         source: "Int[(g_.*tan[e_.+f_.*x_])^p_.*(a_+b_.*sin[e_.+f_.*x_])^m_.,x_Symbol] :=
@@ -964,8 +942,7 @@ fn push_rules_rule_3211(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,e,f,g,m,p},x]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: (g__ * i_tan(e__ + f__ * x_)).pow(p_)
-            * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [g__, e__, f__, p_, a__, b__, m_, x_],
         optional: [g__, p_, b__, e__, f__, m_],
         when: {
@@ -1044,4 +1021,76 @@ mod tests {
 
         assert_eq!(orders, (3193..=3212).collect::<Vec<_>>());
     }
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_) / i_tan(e__ + f__ * x_).pow(2)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_) / i_tan(e__ + f__ * x_).pow(4)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let g__ = symbols.g__;
+    let m_ = symbols.m_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (g__ * i_tan(e__ + f__ * x_)).pow(p_) * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let g__ = symbols.g__;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (g__ * i_tan(e__ + f__ * x_)).pow(p_) / (a__ + b__ * i_sin(e__ + f__ * x_))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_4(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    i_tan(e__ + f__ * x_).pow(2) * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_5(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let m_ = symbols.m_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    i_tan(e__ + f__ * x_).pow(p_) * (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
 }

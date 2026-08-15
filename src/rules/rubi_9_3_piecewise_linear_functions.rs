@@ -78,7 +78,7 @@ fn push_rules_rule_2589(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2590(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u_, v_);
+    rubi_symb!(symbols; n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2590,
         source: "Int[v_^n_/u_,x_Symbol] :=
@@ -88,7 +88,7 @@ fn push_rules_rule_2590(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x] && GtQ[n,0] && NeQ[n,1]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: Atom::var(v_).pow(n_) / Atom::var(u_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [v_, n_, u_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_)
@@ -138,7 +138,7 @@ fn push_rules_rule_2591(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2592(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(u_, v_);
+    rubi_symb!(symbols; u_, v_);
     rules.push(rubi_rule!(
         order: 2592,
         source: "Int[1/(u_*Sqrt[v_]),x_Symbol] :=
@@ -148,7 +148,7 @@ fn push_rules_rule_2592(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: Atom::num(1) / (Atom::var(u_) * Atom::var(v_).sqrt()),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [u_, v_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_) && {
@@ -168,7 +168,7 @@ fn push_rules_rule_2592(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2593(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(u_, v_);
+    rubi_symb!(symbols; u_, v_);
     rules.push(rubi_rule!(
         order: 2593,
         source: "Int[1/(u_*Sqrt[v_]),x_Symbol] :=
@@ -178,7 +178,7 @@ fn push_rules_rule_2593(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: Atom::num(1) / (Atom::var(u_) * Atom::var(v_).sqrt()),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [u_, v_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_) && {
@@ -198,7 +198,7 @@ fn push_rules_rule_2593(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2594(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u_, v_);
+    rubi_symb!(symbols; n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2594,
         source: "Int[v_^n_/u_,x_Symbol] :=
@@ -209,7 +209,7 @@ fn push_rules_rule_2594(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x] && LtQ[n,-1]",
         desc: "Integration by parts",
         refs: [],
-        pattern: Atom::var(v_).pow(n_) / Atom::var(u_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [v_, n_, u_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_)
@@ -230,7 +230,7 @@ fn push_rules_rule_2594(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2595(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u_, v_);
+    rubi_symb!(symbols; n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2595,
         source: "Int[v_^n_/u_,x_Symbol] :=
@@ -240,7 +240,7 @@ fn push_rules_rule_2595(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x] && Not[IntegerQ[n]]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: Atom::var(v_).pow(n_) / Atom::var(u_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [v_, n_, u_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_)
@@ -267,7 +267,7 @@ fn push_rules_rule_2595(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2596(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(u_, v_);
+    rubi_symb!(symbols; u_, v_);
     rules.push(rubi_rule!(
         order: 2596,
         source: "Int[1/(Sqrt[u_]*Sqrt[v_]),x_Symbol] :=
@@ -277,7 +277,7 @@ fn push_rules_rule_2596(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: Atom::num(1) / (Atom::var(u_).sqrt() * Atom::var(v_).sqrt()),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [u_, v_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_) && {
@@ -297,7 +297,7 @@ fn push_rules_rule_2596(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2597(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(u_, v_);
+    rubi_symb!(symbols; u_, v_);
     rules.push(rubi_rule!(
         order: 2597,
         source: "Int[1/(Sqrt[u_]*Sqrt[v_]),x_Symbol] :=
@@ -307,7 +307,7 @@ fn push_rules_rule_2597(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: Atom::num(1) / (Atom::var(u_).sqrt() * Atom::var(v_).sqrt()),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [u_, v_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_) && {
@@ -327,7 +327,7 @@ fn push_rules_rule_2597(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2598(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(m_, n_, u_, v_);
+    rubi_symb!(symbols; m_, n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2598,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
@@ -337,7 +337,7 @@ fn push_rules_rule_2598(rules: &mut Vec<RubiRule>) {
         FreeQ[{m,n},x] && PiecewiseLinearQ[u,v,x] && EqQ[m+n+2,0] && NeQ[m,-1]",
         desc: "Piecewise linear recurrence 3 with m+n+2\\[Equal]0",
         refs: [],
-        pattern: Atom::var(u_).pow(m_) * Atom::var(v_).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [u_, m_, v_, n_, x_],
         when: {
             freeq!([m_, n_], x_)
@@ -360,7 +360,7 @@ fn push_rules_rule_2598(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2599(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(m_, n_, u_, v_);
+    rubi_symb!(symbols; m_, n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2599,
         source: "Int[u_^m_*v_^n_.,x_Symbol] :=
@@ -376,7 +376,7 @@ fn push_rules_rule_2599(rules: &mut Vec<RubiRule>) {
           ILtQ[m,0] && Not[IntegerQ[n]])",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: Atom::var(u_).pow(m_) * Atom::var(v_).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [u_, m_, v_, n_, x_],
         optional: [n_],
         when: {
@@ -407,7 +407,7 @@ fn push_rules_rule_2599(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2600(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(m_, n_, u_, v_);
+    rubi_symb!(symbols; m_, n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2600,
         source: "Int[u_^m_*v_^n_.,x_Symbol] :=
@@ -420,7 +420,7 @@ fn push_rules_rule_2600(rules: &mut Vec<RubiRule>) {
           Not[ILtQ[m+n,-2]]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: Atom::var(u_).pow(m_) * Atom::var(v_).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [u_, m_, v_, n_, x_],
         optional: [n_],
         when: {
@@ -448,7 +448,7 @@ fn push_rules_rule_2600(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2601(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(m_, n_, u_, v_);
+    rubi_symb!(symbols; m_, n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2601,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
@@ -459,7 +459,7 @@ fn push_rules_rule_2601(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x] && NeQ[m+n+1,0] && Not[RationalQ[n]] && SumSimplerQ[n,-1]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: Atom::var(u_).pow(m_) * Atom::var(v_).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [u_, m_, v_, n_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_)
@@ -485,7 +485,7 @@ fn push_rules_rule_2601(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2602(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(m_, n_, u_, v_);
+    rubi_symb!(symbols; m_, n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2602,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
@@ -496,7 +496,7 @@ fn push_rules_rule_2602(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x] && NeQ[m+n+2,0] && LtQ[m,-1]",
         desc: "Integration by parts",
         refs: [],
-        pattern: Atom::var(u_).pow(m_) * Atom::var(v_).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [u_, m_, v_, n_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_)
@@ -519,7 +519,7 @@ fn push_rules_rule_2602(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2603(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(m_, n_, u_, v_);
+    rubi_symb!(symbols; m_, n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2603,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
@@ -530,7 +530,7 @@ fn push_rules_rule_2603(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x] && Not[RationalQ[m]] && SumSimplerQ[m,1]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: Atom::var(u_).pow(m_) * Atom::var(v_).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [u_, m_, v_, n_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_)
@@ -554,7 +554,7 @@ fn push_rules_rule_2603(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_2604(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(m_, n_, u_, v_);
+    rubi_symb!(symbols; m_, n_, u_, v_);
     rules.push(rubi_rule!(
         order: 2604,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
@@ -564,7 +564,7 @@ fn push_rules_rule_2604(rules: &mut Vec<RubiRule>) {
         PiecewiseLinearQ[u,v,x] && Not[IntegerQ[m]] && Not[IntegerQ[n]]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: Atom::var(u_).pow(m_) * Atom::var(v_).pow(n_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [u_, m_, v_, n_, x_],
         when: {
             rubi_piecewise_linear_pair_q(&u_, &v_, x_)
@@ -662,4 +662,37 @@ fn push_rules_rule_2606(rules: &mut Vec<RubiRule>) {
                     - rubi_star(second_multiplier, second)
         },
     ));
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let u_ = symbols.u_;
+    let v_ = symbols.v_;
+    Atom::num(1) / (Atom::var(u_) * Atom::var(v_).sqrt())
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let u_ = symbols.u_;
+    let v_ = symbols.v_;
+    Atom::num(1) / (Atom::var(u_).sqrt() * Atom::var(v_).sqrt())
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let u_ = symbols.u_;
+    let v_ = symbols.v_;
+    Atom::var(u_).pow(m_) * Atom::var(v_).pow(n_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let n_ = symbols.n_;
+    let u_ = symbols.u_;
+    let v_ = symbols.v_;
+    Atom::var(v_).pow(n_) / Atom::var(u_)
 }

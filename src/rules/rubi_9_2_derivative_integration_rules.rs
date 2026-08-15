@@ -41,7 +41,7 @@ fn push_rules_rule_7210(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7211(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_f_, a__, b__, c__, f_, n_, p_, x_);
+    rubi_symb!(symbols; capital_f_, a__, b__, c__, f_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7211,
         source: "Int[(c_.*F_^(a_.+b_.*x_))^p_.*Derivative[n_][f_][x_],x_Symbol] :=
@@ -49,8 +49,7 @@ fn push_rules_rule_7211(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,f,F,p},x] && IGtQ[n,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ * capital_f_.pow(a__ + b__ * x_)).pow(p_)
-            * rubi_derivative(Atom::var(n_), Atom::var(f_), x_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [c__, capital_f_, a__, b__, p_, n_, f_, x_],
         optional: [c__, a__, b__, p_],
         when: {
@@ -67,7 +66,7 @@ fn push_rules_rule_7211(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7212(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_f_, a__, b__, c__, f_, n_, p_, x_);
+    rubi_symb!(symbols; capital_f_, a__, b__, c__, f_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7212,
         source: "Int[(c_.*F_^(a_.+b_.*x_))^p_.*Derivative[n_][f_][x_],x_Symbol] :=
@@ -75,8 +74,7 @@ fn push_rules_rule_7212(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,f,F,p},x] && ILtQ[n,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ * capital_f_.pow(a__ + b__ * x_)).pow(p_)
-            * rubi_derivative(Atom::var(n_), Atom::var(f_), x_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [c__, capital_f_, a__, b__, p_, n_, f_, x_],
         optional: [c__, a__, b__, p_],
         when: {
@@ -93,7 +91,7 @@ fn push_rules_rule_7212(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7213(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, f_, n_, x_);
+    rubi_symb!(symbols; a__, b__, f_, n_, x_);
     rules.push(rubi_rule!(
         order: 7213,
         source: "Int[Sin[a_.+b_.*x_]*Derivative[n_][f_][x_],x_Symbol] :=
@@ -101,8 +99,7 @@ fn push_rules_rule_7213(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,f},x] && IGtQ[n,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (a__ + b__ * x_).sin()
-            * rubi_derivative(Atom::var(n_), Atom::var(f_), x_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, n_, f_, x_],
         optional: [a__, b__],
         when: { freeq!([a__, b__, f_], x_) && igtq!(n_, 0) },
@@ -115,7 +112,7 @@ fn push_rules_rule_7213(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7214(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, f_, n_, x_);
+    rubi_symb!(symbols; a__, b__, f_, n_, x_);
     rules.push(rubi_rule!(
         order: 7214,
         source: "Int[Cos[a_.+b_.*x_]*Derivative[n_][f_][x_],x_Symbol] :=
@@ -123,8 +120,7 @@ fn push_rules_rule_7214(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,f},x] && IGtQ[n,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (a__ + b__ * x_).cos()
-            * rubi_derivative(Atom::var(n_), Atom::var(f_), x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, n_, f_, x_],
         optional: [a__, b__],
         when: { freeq!([a__, b__, f_], x_) && igtq!(n_, 0) },
@@ -137,7 +133,7 @@ fn push_rules_rule_7214(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7215(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, f_, n_, x_);
+    rubi_symb!(symbols; a__, b__, f_, n_, x_);
     rules.push(rubi_rule!(
         order: 7215,
         source: "Int[Sin[a_.+b_.*x_]*Derivative[n_][f_][x_],x_Symbol] :=
@@ -145,8 +141,7 @@ fn push_rules_rule_7215(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,f},x] && ILtQ[n,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (a__ + b__ * x_).sin()
-            * rubi_derivative(Atom::var(n_), Atom::var(f_), x_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, n_, f_, x_],
         optional: [a__, b__],
         when: { freeq!([a__, b__, f_], x_) && iltq!(n_, 0) },
@@ -159,7 +154,7 @@ fn push_rules_rule_7215(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7216(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, f_, n_, x_);
+    rubi_symb!(symbols; a__, b__, f_, n_, x_);
     rules.push(rubi_rule!(
         order: 7216,
         source: "Int[Cos[a_.+b_.*x_]*Derivative[n_][f_][x_],x_Symbol] :=
@@ -167,8 +162,7 @@ fn push_rules_rule_7216(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,f},x] && ILtQ[n,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (a__ + b__ * x_).cos()
-            * rubi_derivative(Atom::var(n_), Atom::var(f_), x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, n_, f_, x_],
         optional: [a__, b__],
         when: { freeq!([a__, b__, f_], x_) && iltq!(n_, 0) },
@@ -600,4 +594,40 @@ fn push_rules_rule_7230(rules: &mut Vec<RubiRule>) {
             rubi_simp(&((f_.call(x_) / g_.call(x_)).log()), x_)
         },
     ));
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let f_ = symbols.f_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (a__ + b__ * x_).cos() * rubi_derivative(Atom::var(n_), Atom::var(f_), x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let f_ = symbols.f_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (a__ + b__ * x_).sin() * rubi_derivative(Atom::var(n_), Atom::var(f_), x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let capital_f_ = symbols.capital_f_;
+    let f_ = symbols.f_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (c__ * capital_f_.pow(a__ + b__ * x_)).pow(p_)
+        * rubi_derivative(Atom::var(n_), Atom::var(f_), x_)
 }

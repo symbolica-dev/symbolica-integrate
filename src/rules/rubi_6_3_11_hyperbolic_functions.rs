@@ -24,7 +24,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5923(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5923,
         source: "Int[(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -32,7 +32,7 @@ fn push_rules_rule_5923(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,p},x] && IGtQ[1/n,0] && IntegerQ[p]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: (a__ + b__ * (c__ + d__ * x_.pow(n_)).tanh()).pow(p_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, c__, d__, n_, p_, x_],
         optional: [a__, b__, c__, d__, p_],
         when: {
@@ -54,7 +54,7 @@ fn push_rules_rule_5923(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5924(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5924,
         source: "Int[(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -62,7 +62,7 @@ fn push_rules_rule_5924(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,p},x] && IGtQ[1/n,0] && IntegerQ[p]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: (a__ + b__ * (c__ + d__ * x_.pow(n_)).coth()).pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, d__, n_, p_, x_],
         optional: [a__, b__, c__, d__, p_],
         when: {
@@ -84,7 +84,7 @@ fn push_rules_rule_5924(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5925(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5925,
         source: "Int[(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -92,7 +92,7 @@ fn push_rules_rule_5925(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,n,p},x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (a__ + b__ * (c__ + d__ * x_.pow(n_)).tanh()).pow(p_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, c__, d__, n_, p_, x_],
         optional: [a__, b__, c__, d__, p_],
         when: {
@@ -108,7 +108,7 @@ fn push_rules_rule_5925(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5926(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5926,
         source: "Int[(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -116,7 +116,7 @@ fn push_rules_rule_5926(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,n,p},x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (a__ + b__ * (c__ + d__ * x_.pow(n_)).coth()).pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, d__, n_, p_, x_],
         optional: [a__, b__, c__, d__, p_],
         when: {
@@ -246,7 +246,7 @@ fn push_rules_rule_5930(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5931(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5931,
         source: "Int[x_^m_.*(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -254,7 +254,7 @@ fn push_rules_rule_5931(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n,p},x] && IGtQ[Simplify[(m+1)/n],0] && IntegerQ[p]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).tanh()).pow(p_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, a__, b__, c__, d__, n_, p_, x_],
         optional: [m_, a__, b__, c__, d__, p_],
         when: {
@@ -277,7 +277,7 @@ fn push_rules_rule_5931(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5932(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5932,
         source: "Int[x_^m_.*(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -285,7 +285,7 @@ fn push_rules_rule_5932(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n,p},x] && IGtQ[Simplify[(m+1)/n],0] && IntegerQ[p]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).coth()).pow(p_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, d__, n_, p_, x_],
         optional: [m_, a__, b__, c__, d__, p_],
         when: {
@@ -358,7 +358,7 @@ fn push_rules_rule_5934(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5935(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5935,
         source: "Int[x_^m_.*(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -366,7 +366,7 @@ fn push_rules_rule_5935(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n,p},x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).tanh()).pow(p_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, a__, b__, c__, d__, n_, p_, x_],
         optional: [m_, a__, b__, c__, d__, p_],
         when: {
@@ -383,7 +383,7 @@ fn push_rules_rule_5935(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5936(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5936,
         source: "Int[x_^m_.*(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -391,7 +391,7 @@ fn push_rules_rule_5936(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n,p},x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).coth()).pow(p_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, d__, n_, p_, x_],
         optional: [m_, a__, b__, c__, d__, p_],
         when: {
@@ -592,4 +592,56 @@ mod tests {
             .collect::<Vec<_>>();
         assert_eq!(orders, (5923..=5942).collect::<Vec<_>>());
     }
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (a__ + b__ * (c__ + d__ * x_.pow(n_)).coth()).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (a__ + b__ * (c__ + d__ * x_.pow(n_)).tanh()).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).coth()).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).tanh()).pow(p_)
 }

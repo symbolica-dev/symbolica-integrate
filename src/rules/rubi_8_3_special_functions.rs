@@ -49,7 +49,7 @@ fn push_rules_rule_7027(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7028(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, m_, n_, x_);
+    rubi_symb!(symbols; b__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 7028,
         source: "Int[x_^m_.*ExpIntegralE[n_,b_.*x_],x_Symbol] :=
@@ -58,7 +58,7 @@ fn push_rules_rule_7028(rules: &mut Vec<RubiRule>) {
         FreeQ[b,x] && EqQ[m+n,0] && IGtQ[m,0]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: x_.pow(m_) * rubi_exp_integral_e(Atom::var(n_), b__ * x_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, n_, b__, x_],
         optional: [m_, b__],
         when: { freeq!(b__, x_) && eqq!(&m_ + &n_, 0) && igtq!(m_, 0) },
@@ -104,7 +104,7 @@ fn push_rules_rule_7029(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7030(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, m_, n_, x_);
+    rubi_symb!(symbols; b__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 7030,
         source: "Int[x_^m_*ExpIntegralE[n_,b_.*x_],x_Symbol] :=
@@ -113,7 +113,7 @@ fn push_rules_rule_7030(rules: &mut Vec<RubiRule>) {
         FreeQ[b,x] && EqQ[m+n,0] && ILtQ[m,-1]",
         desc: "Integration by parts",
         refs: [],
-        pattern: x_.pow(m_) * rubi_exp_integral_e(Atom::var(n_), b__ * x_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, n_, b__, x_],
         optional: [b__],
         when: { freeq!(b__, x_) && eqq!(&m_ + &n_, 0) && iltq!(m_, -1) },
@@ -125,7 +125,7 @@ fn push_rules_rule_7030(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7031(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, n_, x_);
+    rubi_symb!(symbols; b__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 7031,
         source: "Int[(d_.*x_)^m_*ExpIntegralE[n_,b_.*x_],x_Symbol] :=
@@ -133,7 +133,7 @@ fn push_rules_rule_7031(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d,m,n},x] && EqQ[m+n,0] && Not[IntegerQ[m]]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (d__ * x_).pow(m_) * rubi_exp_integral_e(Atom::var(n_), b__ * x_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [d__, m_, n_, b__, x_],
         optional: [d__, b__],
         when: { freeq!([b__, d__, m_, n_], x_) && eqq!(&m_ + &n_, 0) && !integerq!(m_) },
@@ -149,7 +149,7 @@ fn push_rules_rule_7031(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7032(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, n_, x_);
+    rubi_symb!(symbols; b__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 7032,
         source: "Int[(d_.*x_)^m_.*ExpIntegralE[n_,b_.*x_],x_Symbol] :=
@@ -157,7 +157,7 @@ fn push_rules_rule_7032(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d,m,n},x] && NeQ[m+n,0]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (d__ * x_).pow(m_) * rubi_exp_integral_e(Atom::var(n_), b__ * x_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [d__, m_, n_, b__, x_],
         optional: [d__, m_, b__],
         when: { freeq!([b__, d__, m_, n_], x_) && neq!(&m_ + &n_, 0) },
@@ -171,7 +171,7 @@ fn push_rules_rule_7032(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7033(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 7033,
         source: "Int[(c_.+d_.*x_)^m_.*ExpIntegralE[n_,a_+b_.*x_],x_Symbol] :=
@@ -180,7 +180,7 @@ fn push_rules_rule_7033(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n},x] && (IGtQ[m,0] || ILtQ[n,0] || GtQ[m,0] && LtQ[n,-1])",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * rubi_exp_integral_e(Atom::var(n_), a__ + b__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, d__, m_, n_, a__, b__, x_],
         optional: [c__, d__, m_, b__],
         when: {
@@ -197,7 +197,7 @@ fn push_rules_rule_7033(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7034(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 7034,
         source: "Int[(c_.+d_.*x_)^m_.*ExpIntegralE[n_,a_+b_.*x_],x_Symbol] :=
@@ -206,7 +206,7 @@ fn push_rules_rule_7034(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n},x] && (IGtQ[n,0] || LtQ[m,-1] && GtQ[n,0]) && NeQ[m,-1]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * rubi_exp_integral_e(Atom::var(n_), a__ + b__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, d__, m_, n_, a__, b__, x_],
         optional: [c__, d__, m_, b__],
         when: {
@@ -224,7 +224,7 @@ fn push_rules_rule_7034(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7035(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
     rules.push(rubi_rule!(
         order: 7035,
         source: "Int[(c_.+d_.*x_)^m_.*ExpIntegralE[n_,a_+b_.*x_],x_Symbol] :=
@@ -232,7 +232,7 @@ fn push_rules_rule_7035(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n},x]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * rubi_exp_integral_e(Atom::var(n_), a__ + b__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, d__, m_, n_, a__, b__, x_],
         optional: [c__, d__, m_, b__],
         when: { freeq!([a__, b__, c__, d__, m_, n_], x_) },
@@ -425,7 +425,7 @@ fn push_rules_rule_7043(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7044(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7044,
         source: "Int[x_^m_.*E^(a_.+b_.*x_)*ExpIntegralEi[c_.+d_.*x_],x_Symbol] :=
@@ -435,7 +435,7 @@ fn push_rules_rule_7044(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d},x] && IGtQ[m,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * x_).exp() * rubi_exp_integral_ei(c__ + d__ * x_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, d__, x_],
         optional: [m_, a__, b__, c__, d__],
         when: { freeq!([a__, b__, c__, d__], x_) && igtq!(m_, 0) },
@@ -451,7 +451,7 @@ fn push_rules_rule_7044(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7045(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7045,
         source: "Int[x_^m_*E^(a_.+b_.*x_)*ExpIntegralEi[c_.+d_.*x_],x_Symbol] :=
@@ -461,7 +461,7 @@ fn push_rules_rule_7045(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d},x] && ILtQ[m,-1]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * x_).exp() * rubi_exp_integral_ei(c__ + d__ * x_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, d__, x_],
         optional: [a__, b__, c__, d__],
         when: { freeq!([a__, b__, c__, d__], x_) && iltq!(m_, -1) },
@@ -630,4 +630,48 @@ fn push_rules_rule_7052(rules: &mut Vec<RubiRule>) {
                     - rubi_star(b__, rubi_rhs_int(&(linear.pow(&m_ + 1) / argument.log()), x_) / (&d__ * (&m_ + 1)))
         },
     ));
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (c__ + d__ * x_).pow(m_) * rubi_exp_integral_e(Atom::var(n_), a__ + b__ * x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let b__ = symbols.b__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (d__ * x_).pow(m_) * rubi_exp_integral_e(Atom::var(n_), b__ * x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (a__ + b__ * x_).exp() * rubi_exp_integral_ei(c__ + d__ * x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let b__ = symbols.b__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * rubi_exp_integral_e(Atom::var(n_), b__ * x_)
 }

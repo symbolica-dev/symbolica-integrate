@@ -22,7 +22,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5951(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5951,
         source: "Int[(a_.+b_.*Sech[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -30,7 +30,7 @@ fn push_rules_rule_5951(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,p},x] && IGtQ[1/n,0] && IntegerQ[p]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: (a__ + b__ * (c__ + d__ * x_.pow(n_)).sech()).pow(p_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, c__, d__, n_, p_, x_],
         optional: [a__, b__, c__, d__, p_],
         when: {
@@ -52,7 +52,7 @@ fn push_rules_rule_5951(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5952(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5952,
         source: "Int[(a_.+b_.*Csch[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -60,7 +60,7 @@ fn push_rules_rule_5952(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,p},x] && IGtQ[1/n,0] && IntegerQ[p]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: (a__ + b__ * (c__ + d__ * x_.pow(n_)).csch()).pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, d__, n_, p_, x_],
         optional: [a__, b__, c__, d__, p_],
         when: {
@@ -82,7 +82,7 @@ fn push_rules_rule_5952(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5953(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5953,
         source: "Int[(a_.+b_.*Sech[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -90,7 +90,7 @@ fn push_rules_rule_5953(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,n,p},x]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: (a__ + b__ * (c__ + d__ * x_.pow(n_)).sech()).pow(p_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, c__, d__, n_, p_, x_],
         optional: [a__, b__, c__, d__, p_],
         when: {
@@ -106,7 +106,7 @@ fn push_rules_rule_5953(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5954(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5954,
         source: "Int[(a_.+b_.*Csch[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -114,7 +114,7 @@ fn push_rules_rule_5954(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,n,p},x]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: (a__ + b__ * (c__ + d__ * x_.pow(n_)).csch()).pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, d__, n_, p_, x_],
         optional: [a__, b__, c__, d__, p_],
         when: {
@@ -244,7 +244,7 @@ fn push_rules_rule_5958(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5959(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5959,
         source: "Int[x_^m_.*(a_.+b_.*Sech[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -252,7 +252,7 @@ fn push_rules_rule_5959(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n,p},x] && IGtQ[Simplify[(m+1)/n],0] && IntegerQ[p]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).sech()).pow(p_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, a__, b__, c__, d__, n_, p_, x_],
         optional: [m_, a__, b__, c__, d__, p_],
         when: {
@@ -275,7 +275,7 @@ fn push_rules_rule_5959(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5960(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5960,
         source: "Int[x_^m_.*(a_.+b_.*Csch[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -283,7 +283,7 @@ fn push_rules_rule_5960(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n,p},x] && IGtQ[Simplify[(m+1)/n],0] && IntegerQ[p]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).csch()).pow(p_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, d__, n_, p_, x_],
         optional: [m_, a__, b__, c__, d__, p_],
         when: {
@@ -306,7 +306,7 @@ fn push_rules_rule_5960(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5961(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5961,
         source: "Int[x_^m_.*(a_.+b_.*Sech[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -314,7 +314,7 @@ fn push_rules_rule_5961(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n,p},x]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).sech()).pow(p_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, a__, b__, c__, d__, n_, p_, x_],
         optional: [m_, a__, b__, c__, d__, p_],
         when: {
@@ -331,7 +331,7 @@ fn push_rules_rule_5961(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5962(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 5962,
         source: "Int[x_^m_.*(a_.+b_.*Csch[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
@@ -339,7 +339,7 @@ fn push_rules_rule_5962(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n,p},x]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).csch()).pow(p_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, a__, b__, c__, d__, n_, p_, x_],
         optional: [m_, a__, b__, c__, d__, p_],
         when: {
@@ -540,4 +540,56 @@ mod tests {
             .collect::<Vec<_>>();
         assert_eq!(orders, (5951..=5968).collect::<Vec<_>>());
     }
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (a__ + b__ * (c__ + d__ * x_.pow(n_)).csch()).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (a__ + b__ * (c__ + d__ * x_.pow(n_)).sech()).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).csch()).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (a__ + b__ * (c__ + d__ * x_.pow(n_)).sech()).pow(p_)
 }

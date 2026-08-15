@@ -935,7 +935,7 @@ fn push_rules_rule_7007(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7008(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, x_);
+    rubi_symb!(symbols; b__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7008,
         source: "Int[x_^m_*Sin[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
@@ -945,7 +945,7 @@ fn push_rules_rule_7008(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d},x] && EqQ[d^2,Pi^2/4*b^4] && IGtQ[m,1]",
         desc: "Integration by parts and algebraic simplification",
         refs: [],
-        pattern: x_.pow(m_) * (d__ * x_.pow(2)).sin() * rubi_fresnel_s(b__ * x_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, d__, b__, x_],
         optional: [d__, b__],
         when: {
@@ -964,7 +964,7 @@ fn push_rules_rule_7008(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7009(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, x_);
+    rubi_symb!(symbols; b__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7009,
         source: "Int[x_^m_*Cos[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
@@ -974,7 +974,7 @@ fn push_rules_rule_7009(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d},x] && EqQ[d^2,Pi^2/4*b^4] && IGtQ[m,1]",
         desc: "Integration by parts and algebraic simplification",
         refs: [],
-        pattern: x_.pow(m_) * (d__ * x_.pow(2)).cos() * rubi_fresnel_c(b__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [m_, d__, b__, x_],
         optional: [d__, b__],
         when: {
@@ -994,7 +994,7 @@ fn push_rules_rule_7009(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7010(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, x_);
+    rubi_symb!(symbols; b__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7010,
         source: "Int[x_^m_*Sin[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
@@ -1005,7 +1005,7 @@ fn push_rules_rule_7010(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d},x] && EqQ[d^2,Pi^2/4*b^4] && ILtQ[m,-2]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: x_.pow(m_) * (d__ * x_.pow(2)).sin() * rubi_fresnel_s(b__ * x_),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [m_, d__, b__, x_],
         optional: [d__, b__],
         when: {
@@ -1025,7 +1025,7 @@ fn push_rules_rule_7010(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7011(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, x_);
+    rubi_symb!(symbols; b__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7011,
         source: "Int[x_^m_*Cos[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
@@ -1036,7 +1036,7 @@ fn push_rules_rule_7011(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d},x] && EqQ[d^2,Pi^2/4*b^4] && ILtQ[m,-2]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: x_.pow(m_) * (d__ * x_.pow(2)).cos() * rubi_fresnel_c(b__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [m_, d__, b__, x_],
         optional: [d__, b__],
         when: {
@@ -1148,7 +1148,7 @@ fn push_rules_rule_7015(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7016(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, x_);
+    rubi_symb!(symbols; b__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7016,
         source: "Int[x_^m_*Cos[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
@@ -1158,7 +1158,7 @@ fn push_rules_rule_7016(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d},x] && EqQ[d^2,Pi^2/4*b^4] && IGtQ[m,1]",
         desc: "Integration by parts and algebraic simplification",
         refs: [],
-        pattern: x_.pow(m_) * (d__ * x_.pow(2)).cos() * rubi_fresnel_s(b__ * x_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [m_, d__, b__, x_],
         optional: [d__, b__],
         when: {
@@ -1177,7 +1177,7 @@ fn push_rules_rule_7016(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7017(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, x_);
+    rubi_symb!(symbols; b__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7017,
         source: "Int[x_^m_*Sin[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
@@ -1187,7 +1187,7 @@ fn push_rules_rule_7017(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d},x] && EqQ[d^2,Pi^2/4*b^4] && IGtQ[m,1]",
         desc: "Integration by parts and algebraic simplification",
         refs: [],
-        pattern: x_.pow(m_) * (d__ * x_.pow(2)).sin() * rubi_fresnel_c(b__ * x_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, d__, b__, x_],
         optional: [d__, b__],
         when: {
@@ -1207,7 +1207,7 @@ fn push_rules_rule_7017(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7018(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, x_);
+    rubi_symb!(symbols; b__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7018,
         source: "Int[x_^m_*Cos[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
@@ -1217,7 +1217,7 @@ fn push_rules_rule_7018(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d},x] && EqQ[d^2,Pi^2/4*b^4] && ILtQ[m,-1]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: x_.pow(m_) * (d__ * x_.pow(2)).cos() * rubi_fresnel_s(b__ * x_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [m_, d__, b__, x_],
         optional: [d__, b__],
         when: {
@@ -1236,7 +1236,7 @@ fn push_rules_rule_7018(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7019(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(b__, d__, m_, x_);
+    rubi_symb!(symbols; b__, d__, m_, x_);
     rules.push(rubi_rule!(
         order: 7019,
         source: "Int[x_^m_*Sin[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
@@ -1246,7 +1246,7 @@ fn push_rules_rule_7019(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,d},x] && EqQ[d^2,Pi^2/4*b^4] && ILtQ[m,-1]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: x_.pow(m_) * (d__ * x_.pow(2)).sin() * rubi_fresnel_c(b__ * x_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [m_, d__, b__, x_],
         optional: [d__, b__],
         when: {
@@ -1429,4 +1429,42 @@ fn push_rules_rule_7026(rules: &mut Vec<RubiRule>) {
                     - rubi_star(&b__ * &d__ * &n_ / (&m_ + 1), rubi_rhs_int(&(scaled.pow(&m_) * (pi / 2 * argument.pow(2)).cos()), x_))
         },
     ));
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let b__ = symbols.b__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (d__ * x_.pow(2)).cos() * rubi_fresnel_c(b__ * x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let b__ = symbols.b__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (d__ * x_.pow(2)).cos() * rubi_fresnel_s(b__ * x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let b__ = symbols.b__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (d__ * x_.pow(2)).sin() * rubi_fresnel_c(b__ * x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let b__ = symbols.b__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (d__ * x_.pow(2)).sin() * rubi_fresnel_s(b__ * x_)
 }

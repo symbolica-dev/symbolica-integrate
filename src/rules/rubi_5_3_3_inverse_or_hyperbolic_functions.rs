@@ -458,7 +458,7 @@ fn push_rules_rule_5390(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5391(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, e__, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, e__, n_, x_);
     rules.push(rubi_rule!(
         order: 5391,
         source: "Int[(a_.+b_.*ArcTan[c_.*x_^n_])/(d_+e_.*x_),x_Symbol] :=
@@ -467,7 +467,7 @@ fn push_rules_rule_5391(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,n},x] && IntegerQ[n]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (a__ + b__ * (c__ * x_.pow(n_)).atan()) / (d_ + e__ * x_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, c__, n_, d_, e__, x_],
         optional: [a__, b__, c__, e__],
         when: { freeq!([a__, b__, c__, d_, e__, n_], x_) && integerq!(n_) },
@@ -483,7 +483,7 @@ fn push_rules_rule_5391(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5392(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, e__, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, e__, n_, x_);
     rules.push(rubi_rule!(
         order: 5392,
         source: "Int[(a_.+b_.*ArcCot[c_.*x_^n_])/(d_+e_.*x_),x_Symbol] :=
@@ -492,7 +492,7 @@ fn push_rules_rule_5392(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,n},x] && IntegerQ[n]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (a__ + b__ * (c__ * x_.pow(n_)).acot()) / (d_ + e__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, n_, d_, e__, x_],
         optional: [a__, b__, c__, e__],
         when: { freeq!([a__, b__, c__, d_, e__, n_], x_) && integerq!(n_) },
@@ -508,7 +508,7 @@ fn push_rules_rule_5392(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5393(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, e__, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, e__, n_, x_);
     rules.push(rubi_rule!(
         order: 5393,
         source: "Int[(a_.+b_.*ArcTan[c_.*x_^n_])/(d_+e_.*x_),x_Symbol] :=
@@ -517,7 +517,7 @@ fn push_rules_rule_5393(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e},x] && FractionQ[n]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: (a__ + b__ * (c__ * x_.pow(n_)).atan()) / (d_ + e__ * x_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, c__, n_, d_, e__, x_],
         optional: [a__, b__, c__, e__],
         when: { freeq!([a__, b__, c__, d_, e__], x_) && fractionq!(n_) },
@@ -537,7 +537,7 @@ fn push_rules_rule_5393(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_5394(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, e__, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, e__, n_, x_);
     rules.push(rubi_rule!(
         order: 5394,
         source: "Int[(a_.+b_.*ArcCot[c_.*x_^n_])/(d_+e_.*x_),x_Symbol] :=
@@ -546,7 +546,7 @@ fn push_rules_rule_5394(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e},x] && FractionQ[n]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: (a__ + b__ * (c__ * x_.pow(n_)).acot()) / (d_ + e__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, n_, d_, e__, x_],
         optional: [a__, b__, c__, e__],
         when: { freeq!([a__, b__, c__, d_, e__], x_) && fractionq!(n_) },
@@ -773,4 +773,30 @@ mod tests {
             );
         }
     }
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d_ = symbols.d_;
+    let e__ = symbols.e__;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (a__ + b__ * (c__ * x_.pow(n_)).acot()) / (d_ + e__ * x_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d_ = symbols.d_;
+    let e__ = symbols.e__;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (a__ + b__ * (c__ * x_.pow(n_)).atan()) / (d_ + e__ * x_)
 }

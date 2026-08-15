@@ -70,7 +70,7 @@ fn push_rules_rule_7137(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7138(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, s_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, s_, x_);
     rules.push(rubi_rule!(
         order: 7138,
         source: "Int[(c_.+d_.*x_)^m_.*Zeta[s_,a_.+b_.*x_],x_Symbol] :=
@@ -79,7 +79,7 @@ fn push_rules_rule_7138(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,s},x] && NeQ[s,1] && NeQ[s,2] && GtQ[m,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * rubi_zeta(Atom::var(s_), a__ + b__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, d__, m_, s_, a__, b__, x_],
         optional: [c__, d__, m_, a__, b__],
         when: {
@@ -98,7 +98,7 @@ fn push_rules_rule_7138(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7139(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, s_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, s_, x_);
     rules.push(rubi_rule!(
         order: 7139,
         source: "Int[(c_.+d_.*x_)^m_.*Zeta[s_,a_.+b_.*x_],x_Symbol] :=
@@ -107,7 +107,7 @@ fn push_rules_rule_7139(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,s},x] && NeQ[s,1] && NeQ[s,2] && LtQ[m,-1]",
         desc: "Inverted integration by parts",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * rubi_zeta(Atom::var(s_), a__ + b__ * x_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, d__, m_, s_, a__, b__, x_],
         optional: [c__, d__, m_, a__, b__],
         when: {
@@ -123,4 +123,18 @@ fn push_rules_rule_7139(rules: &mut Vec<RubiRule>) {
                     + rubi_star(&b__ * &s_ / (&d__ * (&m_ + 1)), rubi_rhs_int(&(linear.pow(&m_ + 1) * rubi_zeta(&s_ + 1, argument)), x_))
         },
     ));
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let s_ = symbols.s_;
+    let x_ = symbols.x_;
+    (c__ + d__ * x_).pow(m_) * rubi_zeta(Atom::var(s_), a__ + b__ * x_)
 }

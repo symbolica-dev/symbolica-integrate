@@ -3135,6 +3135,10 @@ macro_rules! int_linearq {
 
 /// Introduces local bindings for symbols from the shared Rubi symbol table.
 macro_rules! rubi_symb {
+    ($symbols:ident; $($name:ident),+ $(,)?) => {
+        let $symbols = rubi_symbols();
+        $(#[allow(unused_variables)] let $name = $symbols.$name;)+
+    };
     ($($name:ident),+ $(,)?) => {
         let symbols = rubi_symbols();
         $(let $name = symbols.$name;)+

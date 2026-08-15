@@ -604,12 +604,12 @@ fn push_rules_rule_34(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_35(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 35,
         source: "FixInertTrigFunction[u_.*sec[v_]^n_.*w_,x_]",
-        pattern: u__ * i_sec(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_3(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -619,12 +619,12 @@ fn push_rules_rule_35(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_36(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 36,
         source: "FixInertTrigFunction[u_.*csc[v_]^n_.*w_,x_]",
-        pattern: u__ * i_csc(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_2(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -634,12 +634,12 @@ fn push_rules_rule_36(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_37(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 37,
         source: "FixInertTrigFunction[u_.*sec[v_]^n_.*w_,x_]",
-        pattern: u__ * i_sec(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_3(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -649,12 +649,12 @@ fn push_rules_rule_37(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_38(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 38,
         source: "FixInertTrigFunction[u_.*csc[v_]^n_.*w_,x_]",
-        pattern: u__ * i_csc(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_2(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -664,12 +664,12 @@ fn push_rules_rule_38(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_39(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 39,
         source: "FixInertTrigFunction[u_.*cot[v_]^n_.*w_,x_]",
-        pattern: u__ * i_cot(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_1(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -679,12 +679,12 @@ fn push_rules_rule_39(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_40(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 40,
         source: "FixInertTrigFunction[u_.*cos[v_]^n_.*w_,x_]",
-        pattern: u__ * i_cos(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_0(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -694,12 +694,12 @@ fn push_rules_rule_40(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_41(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 41,
         source: "FixInertTrigFunction[u_.*cos[v_]^n_*w_,x_]",
-        pattern: u__ * i_cos(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_0(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__],
@@ -709,12 +709,12 @@ fn push_rules_rule_41(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_42(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 42,
         source: "FixInertTrigFunction[u_.*csc[v_]^n_.*w_,x_]",
-        pattern: u__ * i_csc(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_2(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -724,12 +724,12 @@ fn push_rules_rule_42(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_43(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 43,
         source: "FixInertTrigFunction[u_.*tan[v_]^n_.*w_,x_]",
-        pattern: u__ * i_tan(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_5(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -739,12 +739,12 @@ fn push_rules_rule_43(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_44(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 44,
         source: "FixInertTrigFunction[u_.*sin[v_]^n_.*w_,x_]",
-        pattern: u__ * i_sin(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_4(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -754,12 +754,12 @@ fn push_rules_rule_44(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_45(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 45,
         source: "FixInertTrigFunction[u_.*sec[v_]^n_.*w_,x_]",
-        pattern: u__ * i_sec(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_3(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -769,12 +769,12 @@ fn push_rules_rule_45(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_46(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 46,
         source: "FixInertTrigFunction[u_.*cos[v_]^n_.*w_,x_]",
-        pattern: u__ * i_cos(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_0(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -784,12 +784,12 @@ fn push_rules_rule_46(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_47(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 47,
         source: "FixInertTrigFunction[u_.*cot[v_]^n_.*w_,x_]",
-        pattern: u__ * i_cot(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_1(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -799,12 +799,12 @@ fn push_rules_rule_47(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_48(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 48,
         source: "FixInertTrigFunction[u_.*csc[v_]^n_.*w_,x_]",
-        pattern: u__ * i_csc(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_2(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -814,12 +814,12 @@ fn push_rules_rule_48(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_49(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 49,
         source: "FixInertTrigFunction[u_.*sin[v_]^n_.*w_,x_]",
-        pattern: u__ * i_sin(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_4(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -829,12 +829,12 @@ fn push_rules_rule_49(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_50(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 50,
         source: "FixInertTrigFunction[u_.*tan[v_]^n_.*w_,x_]",
-        pattern: u__ * i_tan(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_5(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -844,12 +844,12 @@ fn push_rules_rule_50(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_51(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(n_, u__, v_, w_);
+    rubi_symb!(symbols; n_, u__, v_, w_);
     let head = rubi_symbols().rubi_fix_inert_trig_function;
     rules.push(rubi_helper_row!(
         order: 51,
         source: "FixInertTrigFunction[u_.*sec[v_]^n_.*w_,x_]",
-        pattern: u__ * i_sec(Atom::var(v_)).pow(n_) * Atom::var(w_),
+        pattern:  rubi_shared_pattern_3(symbols),
         head: head,
         with: [u__, v_, n_, w_, x_],
         optional: [u__, n_],
@@ -1046,4 +1046,60 @@ fn push_rules_rule_60(rules: &mut Vec<RubiRule>) {
         when: { true },
         rhs: { u__ },
     ));
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let n_ = symbols.n_;
+    let u__ = symbols.u__;
+    let v_ = symbols.v_;
+    let w_ = symbols.w_;
+    u__ * i_cos(Atom::var(v_)).pow(n_) * Atom::var(w_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let n_ = symbols.n_;
+    let u__ = symbols.u__;
+    let v_ = symbols.v_;
+    let w_ = symbols.w_;
+    u__ * i_cot(Atom::var(v_)).pow(n_) * Atom::var(w_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let n_ = symbols.n_;
+    let u__ = symbols.u__;
+    let v_ = symbols.v_;
+    let w_ = symbols.w_;
+    u__ * i_csc(Atom::var(v_)).pow(n_) * Atom::var(w_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let n_ = symbols.n_;
+    let u__ = symbols.u__;
+    let v_ = symbols.v_;
+    let w_ = symbols.w_;
+    u__ * i_sec(Atom::var(v_)).pow(n_) * Atom::var(w_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_4(symbols: &RubiSymbols) -> Atom {
+    let n_ = symbols.n_;
+    let u__ = symbols.u__;
+    let v_ = symbols.v_;
+    let w_ = symbols.w_;
+    u__ * i_sin(Atom::var(v_)).pow(n_) * Atom::var(w_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_5(symbols: &RubiSymbols) -> Atom {
+    let n_ = symbols.n_;
+    let u__ = symbols.u__;
+    let v_ = symbols.v_;
+    let w_ = symbols.w_;
+    u__ * i_tan(Atom::var(v_)).pow(n_) * Atom::var(w_)
 }

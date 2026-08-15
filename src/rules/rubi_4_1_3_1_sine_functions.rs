@@ -81,7 +81,7 @@ fn push_rules_rule_3445(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3446(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -101,9 +101,7 @@ fn push_rules_rule_3446(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,n},x] && EqQ[b*c+a*d,0] && EqQ[a^2-b^2,0] && IntegerQ[m] && Not[IntegerQ[n] && (LtQ[m,0] && GtQ[n,0] || LtQ[0,n,m] || LtQ[m,n,0])]",
         desc: "Algebraic simplification",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, m_, d__, n_, capital_a__, capital_b__],
         when: {
@@ -174,7 +172,7 @@ fn push_rules_rule_3447(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3448(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_a__, capital_b__, a__, b__, c__, d__, e__, f__, x_);
+    rubi_symb!(symbols; capital_a__, capital_b__, a__, b__, c__, d__, e__, f__, x_);
     rules.push(rubi_rule!(
         order: 3448,
         source: "Int[(A_.+B_.*sin[e_.+f_.*x_])/(Sqrt[a_+b_.*sin[e_.+f_.*x_]]*Sqrt[c_+d_.*sin[e_.+f_.*x_]]),x_Symbol] :=
@@ -183,9 +181,7 @@ fn push_rules_rule_3448(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && EqQ[b*c+a*d,0] && EqQ[a^2-b^2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
-            / ((a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
-                * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt()),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [capital_a__, capital_b__, e__, f__, a__, b__, c__, d__, x_],
         optional: [capital_a__, capital_b__, e__, f__, b__, d__],
         when: {
@@ -212,7 +208,7 @@ fn push_rules_rule_3448(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3449(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -232,9 +228,7 @@ fn push_rules_rule_3449(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m,n},x] && EqQ[b*c+a*d,0] && EqQ[a^2-b^2,0] && EqQ[A*b*(m+n+1)+a*B*(m-n),0] && NeQ[m,-1/2]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, d__, n_, capital_a__, capital_b__],
         when: {
@@ -257,7 +251,7 @@ fn push_rules_rule_3449(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3450(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -277,9 +271,7 @@ fn push_rules_rule_3450(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,n},x] && EqQ[b*c+a*d,0] && EqQ[a^2-b^2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [a__, b__, e__, f__, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [a__, b__, e__, f__, d__, capital_a__, capital_b__],
         when: {
@@ -305,7 +297,7 @@ fn push_rules_rule_3450(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3451(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -326,9 +318,7 @@ fn push_rules_rule_3451(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m,n},x] && EqQ[b*c+a*d,0] && EqQ[a^2-b^2,0] && (LtQ[m,-1/2] || ILtQ[m+n,0] && Not[SumSimplerQ[n,1]]) && NeQ[2*m+1,0]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, d__, n_, capital_a__, capital_b__],
         when: {
@@ -359,7 +349,7 @@ fn push_rules_rule_3451(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3452(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -380,9 +370,7 @@ fn push_rules_rule_3452(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m,n},x] && EqQ[b*c+a*d,0] && EqQ[a^2-b^2,0] && Not[LtQ[m,-1/2]] && NeQ[m+n+1,0]",
         desc: "Algebraic expansion and doubly degenerate sine recurrence 1b with m\\[Rule]m+1,p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, d__, m_, capital_a__, capital_b__],
         when: {
@@ -413,7 +401,7 @@ fn push_rules_rule_3452(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3453(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -433,9 +421,7 @@ fn push_rules_rule_3453(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m,n},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && EqQ[m+n+2,0] && EqQ[A*(a*d*m+b*c*(n+1))-B*(a*c*m+b*d*(n+1)),0]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -463,7 +449,7 @@ fn push_rules_rule_3453(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3454(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -486,9 +472,7 @@ fn push_rules_rule_3454(rules: &mut Vec<RubiRule>) {
           IntegerQ[2*m] && (IntegerQ[2*n] || EqQ[c,0])",
         desc: "Singly degenerate sine recurrence 1a with p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -528,7 +512,7 @@ fn push_rules_rule_3454(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3455(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -551,9 +535,7 @@ fn push_rules_rule_3455(rules: &mut Vec<RubiRule>) {
           (IntegerQ[2*n] || EqQ[c,0])",
         desc: "Simplify the integrand and continue with the simpler form.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -593,7 +575,7 @@ fn push_rules_rule_3455(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3456(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -616,9 +598,7 @@ fn push_rules_rule_3456(rules: &mut Vec<RubiRule>) {
           (IntegerQ[2*n] || EqQ[c,0])",
         desc: "Simplify the integrand and continue with the simpler form.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -656,7 +636,7 @@ fn push_rules_rule_3456(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3457(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -679,9 +659,7 @@ fn push_rules_rule_3457(rules: &mut Vec<RubiRule>) {
           (IntegerQ[2*n] || EqQ[c,0])",
         desc: "Simplify the integrand and continue with the simpler form.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -722,7 +700,7 @@ fn push_rules_rule_3457(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3458(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -741,9 +719,7 @@ fn push_rules_rule_3458(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,n},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && EqQ[A*b*d*(2*n+3)-B*(b*c-2*a*d*(n+1)),0]",
         desc: "Singly degenerate sine recurrence 1b with B\\[Rule]-A b (3+2 n)2 a (1+n),m\\[Rule]12,p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [a__, b__, e__, f__, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -772,7 +748,7 @@ fn push_rules_rule_3458(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3459(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -792,9 +768,7 @@ fn push_rules_rule_3459(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && LtQ[n,-1]",
         desc: "Singly degenerate sine recurrence 1a with m\\[Rule]12,p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [a__, b__, e__, f__, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -829,7 +803,7 @@ fn push_rules_rule_3459(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3460(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -849,9 +823,7 @@ fn push_rules_rule_3460(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,n},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && Not[LtQ[n,-1]]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [a__, b__, e__, f__, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -884,7 +856,7 @@ fn push_rules_rule_3460(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3461(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_a__, capital_b__, a__, b__, c__, d__, e__, f__, x_);
+    rubi_symb!(symbols; capital_a__, capital_b__, a__, b__, c__, d__, e__, f__, x_);
     rules.push(rubi_rule!(
         order: 3461,
         source: "Int[(A_.+B_.*sin[e_.+f_.*x_])/(Sqrt[a_+b_.*sin[e_.+f_.*x_]]*Sqrt[c_.+d_.*sin[e_.+f_.*x_]]),x_Symbol] :=
@@ -893,9 +865,7 @@ fn push_rules_rule_3461(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
-            / ((a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
-                * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt()),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [capital_a__, capital_b__, e__, f__, a__, b__, c__, d__, x_],
         optional: [capital_a__, capital_b__, e__, f__, b__, c__, d__],
         when: {
@@ -922,7 +892,7 @@ fn push_rules_rule_3461(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3462(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -944,9 +914,7 @@ fn push_rules_rule_3462(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && GtQ[n,0] && (IntegerQ[n] || EqQ[m+1/2,0])",
         desc: "Singly degenerate sine recurrence 2c with p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -983,7 +951,7 @@ fn push_rules_rule_3462(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3463(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1005,9 +973,7 @@ fn push_rules_rule_3463(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && LtQ[n,-1] && (IntegerQ[n] || EqQ[m+1/2,0])",
         desc: "Singly degenerate sine recurrence 1c with p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -1078,7 +1044,7 @@ fn push_rules_rule_3464(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3465(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1097,9 +1063,7 @@ fn push_rules_rule_3465(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && NeQ[m+1/2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
-            / (c__ + d__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, e__, f__, m_, capital_a__, capital_b__, c__, d__, x_],
         optional: [b__, e__, f__, capital_a__, capital_b__, c__, d__],
         when: {
@@ -1124,7 +1088,7 @@ fn push_rules_rule_3465(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3466(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1145,9 +1109,7 @@ fn push_rules_rule_3466(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m,n},x] && NeQ[b*c-a*d,0] && EqQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && NeQ[A*b+a*B,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [b__, e__, f__, m_, c__, d__, capital_a__, capital_b__],
         when: {
@@ -1246,7 +1208,7 @@ fn push_rules_rule_3467(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3468(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1270,9 +1232,7 @@ fn push_rules_rule_3468(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && NeQ[b*c-a*d,0] && NeQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && GtQ[m,1] && LtQ[n,-1]",
         desc: "Nondegenerate sine recurrence 1a with A\\[Rule]a A,B\\[Rule]A b+a B,C\\[Rule]b B,m\\[Rule]m-1,p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [a__, b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -1328,7 +1288,7 @@ fn push_rules_rule_3468(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3469(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1353,9 +1313,7 @@ fn push_rules_rule_3469(rules: &mut Vec<RubiRule>) {
           (Not[IntegerQ[m]] || EqQ[a,0] && NeQ[c,0])]",
         desc: "Simplify the integrand and continue with the simpler form.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [a__, b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -1509,7 +1467,7 @@ fn push_rules_rule_3472(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3473(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_a_, capital_b__, b__, c__, d__, e__, f__, x_);
+    rubi_symb!(symbols; capital_a_, capital_b__, b__, c__, d__, e__, f__, x_);
     rules.push(rubi_rule!(
         order: 3473,
         source: "Int[(A_+B_.*sin[e_.+f_.*x_])/((b_.*sin[e_.+f_.*x_])^(3/2)*Sqrt[c_+d_.*sin[e_.+f_.*x_]]),x_Symbol] :=
@@ -1518,9 +1476,7 @@ fn push_rules_rule_3473(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,c,d,e,f,A,B},x] && NeQ[c^2-d^2,0] && EqQ[A,B] && PosQ[(c+d)/b]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (capital_a_ + capital_b__ * i_sin(e__ + f__ * x_))
-            / ((b__ * i_sin(e__ + f__ * x_)).pow(Atom::num(3) / Atom::num(2))
-                * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt()),
+        pattern:  rubi_shared_pattern_4(symbols),
         with: [capital_a_, capital_b__, e__, f__, b__, c__, d__, x_],
         optional: [capital_b__, e__, f__, b__, d__],
         when: {
@@ -1552,7 +1508,7 @@ fn push_rules_rule_3473(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3474(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_a_, capital_b__, b__, c__, d__, e__, f__, x_);
+    rubi_symb!(symbols; capital_a_, capital_b__, b__, c__, d__, e__, f__, x_);
     rules.push(rubi_rule!(
         order: 3474,
         source: "Int[(A_+B_.*sin[e_.+f_.*x_])/((b_.*sin[e_.+f_.*x_])^(3/2)*Sqrt[c_+d_.*sin[e_.+f_.*x_]]),x_Symbol] :=
@@ -1560,9 +1516,7 @@ fn push_rules_rule_3474(rules: &mut Vec<RubiRule>) {
         FreeQ[{b,c,d,e,f,A,B},x] && NeQ[c^2-d^2,0] && EqQ[A,B] && NegQ[(c+d)/b]",
         desc: "Piecewise constant extraction",
         refs: [],
-        pattern: (capital_a_ + capital_b__ * i_sin(e__ + f__ * x_))
-            / ((b__ * i_sin(e__ + f__ * x_)).pow(Atom::num(3) / Atom::num(2))
-                * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt()),
+        pattern:  rubi_shared_pattern_4(symbols),
         with: [capital_a_, capital_b__, e__, f__, b__, c__, d__, x_],
         optional: [capital_b__, e__, f__, b__, d__],
         when: {
@@ -1587,7 +1541,7 @@ fn push_rules_rule_3474(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3475(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_a_, capital_b__, a__, b__, c__, d__, e__, f__, x_);
+    rubi_symb!(symbols; capital_a_, capital_b__, a__, b__, c__, d__, e__, f__, x_);
     rules.push(rubi_rule!(
         order: 3475,
         source: "Int[(A_+B_.*sin[e_.+f_.*x_])/((a_+b_.*sin[e_.+f_.*x_])^(3/2)*Sqrt[c_+d_.*sin[e_.+f_.*x_]]),x_Symbol] :=
@@ -1598,9 +1552,7 @@ fn push_rules_rule_3475(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && NeQ[b*c-a*d,0] && NeQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && EqQ[A,B] && PosQ[(a+b)/(c+d)]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (capital_a_ + capital_b__ * i_sin(e__ + f__ * x_))
-            / ((a__ + b__ * i_sin(e__ + f__ * x_)).pow(Atom::num(3) / Atom::num(2))
-                * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt()),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [capital_a_, capital_b__, e__, f__, a__, b__, c__, d__, x_],
         optional: [capital_b__, e__, f__, b__, d__],
         when: {
@@ -1635,7 +1587,7 @@ fn push_rules_rule_3475(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3476(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_a_, capital_b__, a__, b__, c__, d__, e__, f__, x_);
+    rubi_symb!(symbols; capital_a_, capital_b__, a__, b__, c__, d__, e__, f__, x_);
     rules.push(rubi_rule!(
         order: 3476,
         source: "Int[(A_+B_.*sin[e_.+f_.*x_])/((a_+b_.*sin[e_.+f_.*x_])^(3/2)*Sqrt[c_+d_.*sin[e_.+f_.*x_]]),x_Symbol] :=
@@ -1643,9 +1595,7 @@ fn push_rules_rule_3476(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && NeQ[b*c-a*d,0] && NeQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && EqQ[A,B] && NegQ[(a+b)/(c+d)]",
         desc: "Piecewise constant extraction",
         refs: [],
-        pattern: (capital_a_ + capital_b__ * i_sin(e__ + f__ * x_))
-            / ((a__ + b__ * i_sin(e__ + f__ * x_)).pow(Atom::num(3) / Atom::num(2))
-                * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt()),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [capital_a_, capital_b__, e__, f__, a__, b__, c__, d__, x_],
         optional: [capital_b__, e__, f__, b__, d__],
         when: {
@@ -1714,7 +1664,7 @@ fn push_rules_rule_3477(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3478(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1736,9 +1686,7 @@ fn push_rules_rule_3478(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && NeQ[b*c-a*d,0] && NeQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && LtQ[m,-1] && GtQ[n,0]",
         desc: "Nondegenerate sine recurrence 1a with C\\[Rule]0,p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [a__, b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -1777,7 +1725,7 @@ fn push_rules_rule_3478(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3479(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1802,9 +1750,7 @@ fn push_rules_rule_3479(rules: &mut Vec<RubiRule>) {
           (EqQ[a,0] && IntegerQ[m] && Not[IntegerQ[n]] || Not[IntegerQ[2*n] && LtQ[n,-1] && (IntegerQ[n] && Not[IntegerQ[m]] || EqQ[a,0])])",
         desc: "Simplify the integrand and continue with the simpler form.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [a__, b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -1880,7 +1826,7 @@ fn push_rules_rule_3480(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3481(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1899,9 +1845,7 @@ fn push_rules_rule_3481(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m},x] && NeQ[b*c-a*d,0] && NeQ[a^2-b^2,0] && NeQ[c^2-d^2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
-            / (c__ + d__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [a__, b__, e__, f__, m_, capital_a__, capital_b__, c__, d__, x_],
         optional: [a__, b__, e__, f__, capital_a__, capital_b__, c__, d__],
         when: {
@@ -1926,7 +1870,7 @@ fn push_rules_rule_3481(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3482(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -1949,9 +1893,7 @@ fn push_rules_rule_3482(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && NeQ[b*c-a*d,0] && NeQ[a^2-b^2,0] && NeQ[c^2-d^2,0] && EqQ[n^2,1/4]",
         desc: "Nondegenerate sine recurrence 1b with A\\[Rule]A c,B\\[Rule]B c+A d,C\\[Rule]B d,n\\[Rule]n-1,p\\[Rule]0",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [a__, b__, e__, f__, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [a__, b__, e__, f__, c__, d__, capital_a__, capital_b__],
         when: {
@@ -2059,7 +2001,7 @@ fn push_rules_rule_3484(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3485(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(capital_a__, capital_b__, a__, b__, c__, d__, e__, f__, x_);
+    rubi_symb!(symbols; capital_a__, capital_b__, a__, b__, c__, d__, e__, f__, x_);
     rules.push(rubi_rule!(
         order: 3485,
         source: "Int[(A_.+B_.*sin[e_.+f_.*x_])/(Sqrt[a_+b_.*sin[e_.+f_.*x_]]*Sqrt[c_.+d_.*sin[e_.+f_.*x_]]),x_Symbol] :=
@@ -2068,9 +2010,7 @@ fn push_rules_rule_3485(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B},x] && NeQ[b*c-a*d,0] && NeQ[a^2-b^2,0] && NeQ[c^2-d^2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
-            / ((a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
-                * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt()),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [capital_a__, capital_b__, e__, f__, a__, b__, c__, d__, x_],
         optional: [capital_a__, capital_b__, e__, f__, b__, c__, d__],
         when: {
@@ -2099,7 +2039,7 @@ fn push_rules_rule_3485(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3486(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(
+    rubi_symb!(symbols;
         capital_a__,
         capital_b__,
         a__,
@@ -2119,9 +2059,7 @@ fn push_rules_rule_3486(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,f,A,B,m,n},x] && NeQ[b*c-a*d,0] && NeQ[a^2-b^2,0] && NeQ[c^2-d^2,0]",
         desc: "Mark the integral as unintegrable by Rubi's terminal rule.",
         refs: [],
-        pattern: (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
-            * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
-            * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_)),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, e__, f__, m_, c__, d__, n_, capital_a__, capital_b__, x_],
         optional: [a__, b__, e__, f__, c__, d__, n_, capital_a__, capital_b__],
         when: {
@@ -2258,4 +2196,104 @@ mod tests {
             .collect::<Vec<_>>();
         assert_eq!(orders, (3445..=3488).collect::<Vec<_>>());
     }
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let capital_a__ = symbols.capital_a__;
+    let capital_b__ = symbols.capital_b__;
+    let d__ = symbols.d__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
+        * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
+        * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let capital_a__ = symbols.capital_a__;
+    let capital_b__ = symbols.capital_b__;
+    let d__ = symbols.d__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    (a__ + b__ * i_sin(e__ + f__ * x_)).pow(m_)
+        * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
+        / (c__ + d__ * i_sin(e__ + f__ * x_))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let capital_a__ = symbols.capital_a__;
+    let capital_b__ = symbols.capital_b__;
+    let d__ = symbols.d__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (a__ + b__ * i_sin(e__ + f__ * x_)).sqrt()
+        * (c__ + d__ * i_sin(e__ + f__ * x_)).pow(n_)
+        * (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let capital_a_ = symbols.capital_a_;
+    let capital_b__ = symbols.capital_b__;
+    let d__ = symbols.d__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let x_ = symbols.x_;
+    (capital_a_ + capital_b__ * i_sin(e__ + f__ * x_))
+        / ((a__ + b__ * i_sin(e__ + f__ * x_)).pow(Atom::num(3) / Atom::num(2))
+            * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt())
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_4(symbols: &RubiSymbols) -> Atom {
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let capital_a_ = symbols.capital_a_;
+    let capital_b__ = symbols.capital_b__;
+    let d__ = symbols.d__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let x_ = symbols.x_;
+    (capital_a_ + capital_b__ * i_sin(e__ + f__ * x_))
+        / ((b__ * i_sin(e__ + f__ * x_)).pow(Atom::num(3) / Atom::num(2))
+            * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt())
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_5(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let capital_a__ = symbols.capital_a__;
+    let capital_b__ = symbols.capital_b__;
+    let d__ = symbols.d__;
+    let e__ = symbols.e__;
+    let f__ = symbols.f__;
+    let x_ = symbols.x_;
+    (capital_a__ + capital_b__ * i_sin(e__ + f__ * x_))
+        / ((a__ + b__ * i_sin(e__ + f__ * x_)).sqrt() * (c__ + d__ * i_sin(e__ + f__ * x_)).sqrt())
 }

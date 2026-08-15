@@ -7,7 +7,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_6187(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, n_, x_);
     rules.push(rubi_rule!(
         order: 6187,
         source: "Int[(a_.+b_.*ArcSinh[c_.*x_])^n_.,x_Symbol] :=
@@ -16,7 +16,7 @@ fn push_rules_rule_6187(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && GtQ[n,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (a__ + b__ * (c__ * x_).asinh()).pow(n_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, n_, x_],
         optional: [a__, b__, c__, n_],
         when: { freeq!([a__, b__, c__], x_) && gtq!(n_, 0) },
@@ -33,7 +33,7 @@ fn push_rules_rule_6187(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_6188(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, n_, x_);
     rules.push(rubi_rule!(
         order: 6188,
         source: "Int[(a_.+b_.*ArcSinh[c_.*x_])^n_,x_Symbol] :=
@@ -42,7 +42,7 @@ fn push_rules_rule_6188(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && LtQ[n,-1]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (a__ + b__ * (c__ * x_).asinh()).pow(n_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, n_, x_],
         optional: [a__, b__, c__],
         when: { freeq!([a__, b__, c__], x_) && ltq!(n_, -1) },
@@ -60,7 +60,7 @@ fn push_rules_rule_6188(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_6189(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, n_, x_);
+    rubi_symb!(symbols; a__, b__, c__, n_, x_);
     rules.push(rubi_rule!(
         order: 6189,
         source: "Int[(a_.+b_.*ArcSinh[c_.*x_])^n_,x_Symbol] :=
@@ -68,7 +68,7 @@ fn push_rules_rule_6189(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,n},x]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: (a__ + b__ * (c__ * x_).asinh()).pow(n_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [a__, b__, c__, n_, x_],
         optional: [a__, b__, c__],
         when: { freeq!([a__, b__, c__, n_], x_) },
@@ -105,4 +105,16 @@ mod tests {
             .collect::<Vec<_>>();
         assert_eq!(orders, (6187..=6189).collect::<Vec<_>>());
     }
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let n_ = symbols.n_;
+    let x_ = symbols.x_;
+    (a__ + b__ * (c__ * x_).asinh()).pow(n_)
 }

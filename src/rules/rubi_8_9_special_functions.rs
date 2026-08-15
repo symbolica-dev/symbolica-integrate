@@ -48,7 +48,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7166(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, p_, x_);
     rules.push(rubi_rule!(
         order: 7166,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_,x_Symbol] :=
@@ -57,7 +57,7 @@ fn push_rules_rule_7166(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && LtQ[p,-1]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ + b__ * x_)).pow(p_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [c__, a__, b__, p_, x_],
         optional: [c__, a__, b__],
         when: { freeq!([a__, b__, c__], x_) && ltq!(p_, -1) },
@@ -72,7 +72,7 @@ fn push_rules_rule_7166(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7167(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, p_, x_);
     rules.push(rubi_rule!(
         order: 7167,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_.,x_Symbol] :=
@@ -81,7 +81,7 @@ fn push_rules_rule_7167(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c},x] && Not[LtQ[p,-1]]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ + b__ * x_)).pow(p_),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [c__, a__, b__, p_, x_],
         optional: [c__, a__, b__, p_],
         when: { freeq!([a__, b__, c__], x_) && !ltq!(p_, -1) },
@@ -123,7 +123,7 @@ fn push_rules_rule_7168(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7169(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7169,
         source: "Int[(c_.*ProductLog[a_.*x_^n_])^p_.,x_Symbol] :=
@@ -132,7 +132,7 @@ fn push_rules_rule_7169(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,n,p},x] && (EqQ[n*(p-1),-1] || IntegerQ[p-1/2] && EqQ[n*(p-1/2),-1])",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, a__, n_, p_, x_],
         optional: [c__, a__, p_],
         when: {
@@ -150,7 +150,7 @@ fn push_rules_rule_7169(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7170(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7170,
         source: "Int[(c_.*ProductLog[a_.*x_^n_])^p_.,x_Symbol] :=
@@ -159,7 +159,7 @@ fn push_rules_rule_7170(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,n},x] && (IntegerQ[p] && EqQ[n*(p+1),-1] || IntegerQ[p-1/2] && EqQ[n*(p+1/2),-1])",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, a__, n_, p_, x_],
         optional: [c__, a__, p_],
         when: {
@@ -178,7 +178,7 @@ fn push_rules_rule_7170(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7171(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7171,
         source: "Int[(c_.*ProductLog[a_.*x_^n_])^p_.,x_Symbol] :=
@@ -186,7 +186,7 @@ fn push_rules_rule_7171(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,p},x] && ILtQ[n,0]",
         desc: "Substitute a new variable and integrate the transformed expression.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, a__, n_, p_, x_],
         optional: [c__, a__, p_],
         when: { freeq!([a__, c__, p_], x_) && iltq!(n_, 0) },
@@ -202,7 +202,7 @@ fn push_rules_rule_7171(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7172(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7172,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_.,x_Symbol] :=
@@ -212,7 +212,7 @@ fn push_rules_rule_7172(rules: &mut Vec<RubiRule>) {
         (IntegerQ[p-1/2] && IGtQ[2*Simplify[p+(m+1)/n],0] || Not[IntegerQ[p-1/2]] && IGtQ[Simplify[p+(m+1)/n]+1,0])",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [m_, c__, a__, n_, p_, x_],
         optional: [m_, c__, a__, n_, p_],
         when: {
@@ -232,7 +232,7 @@ fn push_rules_rule_7172(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7173(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7173,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_.,x_Symbol] :=
@@ -242,7 +242,7 @@ fn push_rules_rule_7173(rules: &mut Vec<RubiRule>) {
         (EqQ[m,-1] || IntegerQ[p-1/2] && ILtQ[Simplify[p+(m+1)/n]-1/2,0] || Not[IntegerQ[p-1/2]] && ILtQ[Simplify[p+(m+1)/n],0])",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [m_, c__, a__, n_, p_, x_],
         optional: [m_, c__, a__, n_, p_],
         when: {
@@ -285,7 +285,7 @@ fn push_rules_rule_7174(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7175(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7175,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_])^p_.,x_Symbol] :=
@@ -293,7 +293,7 @@ fn push_rules_rule_7175(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,p},x] && ILtQ[n,0] && IntegerQ[m] && NeQ[m,-1]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [m_, c__, a__, n_, p_, x_],
         optional: [m_, c__, a__, p_],
         when: {
@@ -354,7 +354,7 @@ fn push_rules_rule_7177(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7178(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, p_, x_);
     rules.push(rubi_rule!(
         order: 7178,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_/(d_+d_.*ProductLog[a_.+b_.*x_]),x_Symbol] :=
@@ -363,8 +363,7 @@ fn push_rules_rule_7178(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d},x] && GtQ[p,0]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ + b__ * x_)).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ + b__ * x_)),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [c__, a__, b__, p_, d_, x_],
         optional: [c__, a__, b__, d_],
         when: { freeq!([a__, b__, c__, d_], x_) && gtq!(p_, 0) },
@@ -400,7 +399,7 @@ fn push_rules_rule_7179(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7180(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, x_);
     rules.push(rubi_rule!(
         order: 7180,
         source: "Int[1/(Sqrt[c_.*ProductLog[a_.+b_.*x_]]*(d_+d_.*ProductLog[a_.+b_.*x_])),x_Symbol] :=
@@ -408,9 +407,7 @@ fn push_rules_rule_7180(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d},x] && PosQ[c]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: Atom::num(1)
-            / ((c__ * rubi_product_log(a__ + b__ * x_)).sqrt()
-                * (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ + b__ * x_))),
+        pattern:  rubi_shared_pattern_4(symbols),
         with: [c__, a__, b__, d_, x_],
         optional: [c__, a__, b__, d_],
         when: { freeq!([a__, b__, c__, d_], x_) && posq!(c__) },
@@ -423,7 +420,7 @@ fn push_rules_rule_7180(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7181(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, x_);
     rules.push(rubi_rule!(
         order: 7181,
         source: "Int[1/(Sqrt[c_.*ProductLog[a_.+b_.*x_]]*(d_+d_.*ProductLog[a_.+b_.*x_])),x_Symbol] :=
@@ -431,9 +428,7 @@ fn push_rules_rule_7181(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d},x] && NegQ[c]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: Atom::num(1)
-            / ((c__ * rubi_product_log(a__ + b__ * x_)).sqrt()
-                * (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ + b__ * x_))),
+        pattern:  rubi_shared_pattern_4(symbols),
         with: [c__, a__, b__, d_, x_],
         optional: [c__, a__, b__, d_],
         when: { freeq!([a__, b__, c__, d_], x_) && negq!(c__) },
@@ -446,7 +441,7 @@ fn push_rules_rule_7181(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7182(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, p_, x_);
     rules.push(rubi_rule!(
         order: 7182,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_/(d_+d_.*ProductLog[a_.+b_.*x_]),x_Symbol] :=
@@ -455,8 +450,7 @@ fn push_rules_rule_7182(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d},x] && LtQ[p,-1]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ + b__ * x_)).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ + b__ * x_)),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [c__, a__, b__, p_, d_, x_],
         optional: [c__, a__, b__, d_],
         when: { freeq!([a__, b__, c__, d_], x_) && ltq!(p_, -1) },
@@ -471,7 +465,7 @@ fn push_rules_rule_7182(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7183(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d_, p_, x_);
     rules.push(rubi_rule!(
         order: 7183,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_./(d_+d_.*ProductLog[a_.+b_.*x_]),x_Symbol] :=
@@ -479,8 +473,7 @@ fn push_rules_rule_7183(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,p},x]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ + b__ * x_)).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ + b__ * x_)),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [c__, a__, b__, p_, d_, x_],
         optional: [c__, a__, b__, p_, d_],
         when: { freeq!([a__, b__, c__, d_, p_], x_) },
@@ -574,7 +567,7 @@ fn push_rules_rule_7186(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7187(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7187,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -582,8 +575,7 @@ fn push_rules_rule_7187(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d,n,p},x] && EqQ[n*(p-1),-1]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, a__, n_, p_, d_, x_],
         optional: [c__, a__, n_, p_, d_],
         when: { freeq!([a__, c__, d_, n_, p_], x_) && eqq!(&n_ * (&p_ - 1), -1) },
@@ -616,7 +608,7 @@ fn push_rules_rule_7188(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7189(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7189,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_/(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -624,8 +616,7 @@ fn push_rules_rule_7189(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d},x] && IntegerQ[1/n] && EqQ[p,1/2-1/n] && PosQ[c*n]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, a__, n_, p_, d_, x_],
         optional: [c__, a__, n_, d_],
         when: {
@@ -644,7 +635,7 @@ fn push_rules_rule_7189(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7190(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7190,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_/(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -652,8 +643,7 @@ fn push_rules_rule_7190(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d},x] && IntegerQ[1/n] && EqQ[p,1/2-1/n] && NegQ[c*n]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, a__, n_, p_, d_, x_],
         optional: [c__, a__, n_, d_],
         when: {
@@ -672,7 +662,7 @@ fn push_rules_rule_7190(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7191(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7191,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -681,8 +671,7 @@ fn push_rules_rule_7191(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d},x] && GtQ[n,0] && GtQ[n*(p-1)+1,0]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, a__, n_, p_, d_, x_],
         optional: [c__, a__, n_, p_, d_],
         when: { freeq!([a__, c__, d_], x_) && gtq!(n_, 0) && gtq!(&n_ * (&p_ - 1) + 1, 0) },
@@ -696,7 +685,7 @@ fn push_rules_rule_7191(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7192(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7192,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -705,8 +694,7 @@ fn push_rules_rule_7192(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d},x] && GtQ[n,0] && LtQ[n*p+1,0]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, a__, n_, p_, d_, x_],
         optional: [c__, a__, n_, p_, d_],
         when: { freeq!([a__, c__, d_], x_) && gtq!(n_, 0) && ltq!(&n_ * &p_ + 1, 0) },
@@ -720,7 +708,7 @@ fn push_rules_rule_7192(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7193(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7193,
         source: "Int[(c_.*ProductLog[a_.*x_^n_])^p_./(d_+d_.*ProductLog[a_.*x_^n_]),x_Symbol] :=
@@ -728,8 +716,7 @@ fn push_rules_rule_7193(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d,p},x] && ILtQ[n,0]",
         desc: "Integration by substitution",
         refs: [],
-        pattern: (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, a__, n_, p_, d_, x_],
         optional: [c__, a__, p_, d_],
         when: { freeq!([a__, c__, d_, p_], x_) && iltq!(n_, 0) },
@@ -746,7 +733,7 @@ fn push_rules_rule_7193(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7194(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, d_, m_, x_);
+    rubi_symb!(symbols; a__, d_, m_, x_);
     rules.push(rubi_rule!(
         order: 7194,
         source: "Int[x_^m_./(d_+d_.*ProductLog[a_.*x_]),x_Symbol] :=
@@ -755,7 +742,7 @@ fn push_rules_rule_7194(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,d},x] && GtQ[m,0]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: x_.pow(m_) / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_)),
+        pattern:  rubi_shared_pattern_7(symbols),
         with: [m_, d_, a__, x_],
         optional: [m_, a__, d_],
         when: { freeq!([a__, d_], x_) && gtq!(m_, 0) },
@@ -786,7 +773,7 @@ fn push_rules_rule_7195(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7196(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, d_, m_, x_);
+    rubi_symb!(symbols; a__, d_, m_, x_);
     rules.push(rubi_rule!(
         order: 7196,
         source: "Int[x_^m_./(d_+d_.*ProductLog[a_.*x_]),x_Symbol] :=
@@ -795,7 +782,7 @@ fn push_rules_rule_7196(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,d},x] && LtQ[m,-1]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: x_.pow(m_) / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_)),
+        pattern:  rubi_shared_pattern_7(symbols),
         with: [m_, d_, a__, x_],
         optional: [m_, a__, d_],
         when: { freeq!([a__, d_], x_) && ltq!(m_, -1) },
@@ -807,7 +794,7 @@ fn push_rules_rule_7196(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7197(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, d_, m_, x_);
+    rubi_symb!(symbols; a__, d_, m_, x_);
     rules.push(rubi_rule!(
         order: 7197,
         source: "Int[x_^m_./(d_+d_.*ProductLog[a_.*x_]),x_Symbol] :=
@@ -816,7 +803,7 @@ fn push_rules_rule_7197(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,d,m},x] && Not[IntegerQ[m]]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: x_.pow(m_) / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_)),
+        pattern:  rubi_shared_pattern_7(symbols),
         with: [m_, d_, a__, x_],
         optional: [a__, m_, d_],
         when: { freeq!([a__, d_, m_], x_) && !integerq!(m_) },
@@ -897,7 +884,7 @@ fn push_rules_rule_7200(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7201(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7201,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -905,8 +892,7 @@ fn push_rules_rule_7201(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d,m,n,p},x] && NeQ[m,-1] && EqQ[m+n*(p-1),-1]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_6(symbols),
         with: [m_, c__, a__, n_, p_, d_, x_],
         optional: [m_, c__, a__, n_, p_, d_],
         when: {
@@ -943,7 +929,7 @@ fn push_rules_rule_7202(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7203(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7203,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_/(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -951,8 +937,7 @@ fn push_rules_rule_7203(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d,m,n},x] && NeQ[m,-1] && IntegerQ[p-1/2] && EqQ[m+n*(p-1/2),-1] && PosQ[c/(p-1/2)]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_6(symbols),
         with: [m_, c__, a__, n_, p_, d_, x_],
         optional: [m_, c__, a__, n_, d_],
         when: {
@@ -975,7 +960,7 @@ fn push_rules_rule_7203(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7204(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7204,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_/(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -983,8 +968,7 @@ fn push_rules_rule_7204(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d,m,n},x] && NeQ[m,-1] && IntegerQ[p-1/2] && EqQ[m+n*(p-1/2),-1] && NegQ[c/(p-1/2)]",
         desc: "Apply the direct antiderivative formula.",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_6(symbols),
         with: [m_, c__, a__, n_, p_, d_, x_],
         optional: [m_, c__, a__, n_, d_],
         when: {
@@ -1007,7 +991,7 @@ fn push_rules_rule_7204(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7205(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7205,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -1016,8 +1000,7 @@ fn push_rules_rule_7205(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d,m,n,p},x] && NeQ[m,-1] && GtQ[Simplify[p+(m+1)/n],1]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_6(symbols),
         with: [m_, c__, a__, n_, p_, d_, x_],
         optional: [m_, c__, a__, n_, p_, d_],
         when: {
@@ -1035,7 +1018,7 @@ fn push_rules_rule_7205(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7206(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7206,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -1044,8 +1027,7 @@ fn push_rules_rule_7206(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d,m,n,p},x] && NeQ[m,-1] && LtQ[Simplify[p+(m+1)/n],0]",
         desc: "Apply a recurrence relation that reduces the integral.",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_6(symbols),
         with: [m_, c__, a__, n_, p_, d_, x_],
         optional: [m_, c__, a__, n_, p_, d_],
         when: {
@@ -1088,7 +1070,7 @@ fn push_rules_rule_7207(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_7208(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, c__, d_, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 7208,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
@@ -1096,8 +1078,7 @@ fn push_rules_rule_7208(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,c,d,p},x] && NeQ[m,-1] && IntegerQ[m] && LtQ[n,0]",
         desc: "Substitute a new variable and integrate the transformed expression.",
         refs: [],
-        pattern: x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
-            / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_))),
+        pattern:  rubi_shared_pattern_6(symbols),
         with: [m_, c__, a__, n_, p_, d_, x_],
         optional: [m_, c__, a__, n_, p_, d_],
         when: {
@@ -1141,4 +1122,95 @@ fn push_rules_rule_7209(rules: &mut Vec<RubiRule>) {
             rubi_subst(&integrated, sub, replacement)
         },
     ));
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let c__ = symbols.c__;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let c__ = symbols.c__;
+    let d_ = symbols.d_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
+        / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_)))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (c__ * rubi_product_log(a__ + b__ * x_)).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d_ = symbols.d_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (c__ * rubi_product_log(a__ + b__ * x_)).pow(p_)
+        / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ + b__ * x_))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_4(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d_ = symbols.d_;
+    let x_ = symbols.x_;
+    Atom::num(1)
+        / ((c__ * rubi_product_log(a__ + b__ * x_)).sqrt()
+            * (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ + b__ * x_)))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_5(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let c__ = symbols.c__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_6(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let c__ = symbols.c__;
+    let d_ = symbols.d_;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    x_.pow(m_) * (c__ * rubi_product_log(a__ * x_.pow(n_))).pow(p_)
+        / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_.pow(n_)))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_7(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let d_ = symbols.d_;
+    let m_ = symbols.m_;
+    let x_ = symbols.x_;
+    x_.pow(m_) / (Atom::var(d_) + Atom::var(d_) * rubi_product_log(a__ * x_))
 }

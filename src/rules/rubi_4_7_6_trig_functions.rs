@@ -181,7 +181,7 @@ fn push_rules_rule_4908(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_4909(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 4909,
         source: "Int[(c_.+d_.*x_)^m_.*Sec[a_.+b_.*x_]^n_.*Tan[a_.+b_.*x_]^p_.,x_Symbol] :=
@@ -190,7 +190,7 @@ fn push_rules_rule_4909(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,n},x] && EqQ[p,1] && GtQ[m,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * (a__ + b__ * x_).sec().pow(n_) * (a__ + b__ * x_).tan().pow(p_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, d__, m_, a__, b__, n_, p_, x_],
         optional: [c__, d__, m_, a__, b__, p_, n_],
         when: {
@@ -211,7 +211,7 @@ fn push_rules_rule_4909(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_4910(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 4910,
         source: "Int[(c_.+d_.*x_)^m_.*Csc[a_.+b_.*x_]^n_.*Cot[a_.+b_.*x_]^p_.,x_Symbol] :=
@@ -220,7 +220,7 @@ fn push_rules_rule_4910(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,n},x] && EqQ[p,1] && GtQ[m,0]",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * (a__ + b__ * x_).csc().pow(n_) * (a__ + b__ * x_).cot().pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, d__, m_, a__, b__, n_, p_, x_],
         optional: [c__, d__, m_, a__, b__, p_, n_],
         when: {
@@ -330,7 +330,7 @@ fn push_rules_rule_4913(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_4914(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 4914,
         source: "Int[(c_.+d_.*x_)^m_.*Sec[a_.+b_.*x_]^n_.*Tan[a_.+b_.*x_]^p_,x_Symbol] :=
@@ -338,7 +338,7 @@ fn push_rules_rule_4914(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n},x] && IGtQ[p/2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * (a__ + b__ * x_).sec().pow(n_) * (a__ + b__ * x_).tan().pow(p_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, d__, m_, a__, b__, n_, p_, x_],
         optional: [c__, d__, m_, a__, b__, n_],
         when: {
@@ -387,7 +387,7 @@ fn push_rules_rule_4915(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_4916(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 4916,
         source: "Int[(c_.+d_.*x_)^m_.*Csc[a_.+b_.*x_]^n_.*Cot[a_.+b_.*x_]^p_,x_Symbol] :=
@@ -395,7 +395,7 @@ fn push_rules_rule_4916(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,m,n},x] && IGtQ[p/2,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * (a__ + b__ * x_).csc().pow(n_) * (a__ + b__ * x_).cot().pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, d__, m_, a__, b__, n_, p_, x_],
         optional: [c__, d__, m_, a__, b__, n_],
         when: {
@@ -416,7 +416,7 @@ fn push_rules_rule_4916(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_4917(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 4917,
         source: "Int[(c_.+d_.*x_)^m_.*Sec[a_.+b_.*x_]^n_.*Tan[a_.+b_.*x_]^p_.,x_Symbol] :=
@@ -425,7 +425,7 @@ fn push_rules_rule_4917(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,n,p},x] && IGtQ[m,0] && (IntegerQ[n/2] || IntegerQ[(p-1)/2])",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * (a__ + b__ * x_).sec().pow(n_) * (a__ + b__ * x_).tan().pow(p_),
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [c__, d__, m_, a__, b__, n_, p_, x_],
         optional: [c__, d__, m_, a__, b__, p_, n_],
         when: {
@@ -447,7 +447,7 @@ fn push_rules_rule_4917(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_4918(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, m_, n_, p_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
     rules.push(rubi_rule!(
         order: 4918,
         source: "Int[(c_.+d_.*x_)^m_.*Csc[a_.+b_.*x_]^n_.*Cot[a_.+b_.*x_]^p_.,x_Symbol] :=
@@ -456,7 +456,7 @@ fn push_rules_rule_4918(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,n,p},x] && IGtQ[m,0] && (IntegerQ[n/2] || IntegerQ[(p-1)/2])",
         desc: "Integration by parts",
         refs: [],
-        pattern: (c__ + d__ * x_).pow(m_) * (a__ + b__ * x_).csc().pow(n_) * (a__ + b__ * x_).cot().pow(p_),
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, d__, m_, a__, b__, n_, p_, x_],
         optional: [c__, d__, m_, a__, b__, p_, n_],
         when: {
@@ -899,4 +899,32 @@ mod tests {
             .collect::<Vec<_>>();
         assert_eq!(orders, (4904..=4931).collect::<Vec<_>>());
     }
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (c__ + d__ * x_).pow(m_) * (a__ + b__ * x_).csc().pow(n_) * (a__ + b__ * x_).cot().pow(p_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let x_ = symbols.x_;
+    (c__ + d__ * x_).pow(m_) * (a__ + b__ * x_).sec().pow(n_) * (a__ + b__ * x_).tan().pow(p_)
 }

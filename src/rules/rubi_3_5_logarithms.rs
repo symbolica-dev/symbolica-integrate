@@ -341,7 +341,7 @@ fn push_rules_rule_3007(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3008(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, n_, p_, rfx__, rgx__);
+    rubi_symb!(symbols; a__, b__, c__, n_, p_, rfx__, rgx__);
     rules.push(rubi_rule!(
         order: 3008,
         source: "Int[RGx_*(a_.+b_.*Log[c_.*RFx_^p_.])^n_.,x_Symbol] :=
@@ -351,7 +351,7 @@ fn push_rules_rule_3008(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,p},x] && RationalFunctionQ[RFx,x] && RationalFunctionQ[RGx,x] && IGtQ[n,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: rgx__ * (a__ + b__ * (c__ * rfx__.pow(p_)).log()).pow(n_),
+        pattern:  rubi_shared_pattern_4(symbols),
         with: [rgx__, a__, b__, c__, rfx__, p_, n_, x_],
         optional: [a__, b__, c__, p_, n_],
         when: {
@@ -380,7 +380,7 @@ fn push_rules_rule_3008(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3009(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, n_, p_, rfx__, rgx__);
+    rubi_symb!(symbols; a__, b__, c__, n_, p_, rfx__, rgx__);
     rules.push(rubi_rule!(
         order: 3009,
         source: "Int[RGx_*(a_.+b_.*Log[c_.*RFx_^p_.])^n_.,x_Symbol] :=
@@ -390,7 +390,7 @@ fn push_rules_rule_3009(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,p},x] && RationalFunctionQ[RFx,x] && RationalFunctionQ[RGx,x] && IGtQ[n,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: rgx__ * (a__ + b__ * (c__ * rfx__.pow(p_)).log()).pow(n_),
+        pattern:  rubi_shared_pattern_4(symbols),
         with: [rgx__, a__, b__, c__, rfx__, p_, n_, x_],
         optional: [a__, b__, c__, p_, n_],
         when: {
@@ -755,7 +755,7 @@ fn push_rules_rule_3018(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3019(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, p_, q_, r_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, p_, q_, r_, x_);
     rules.push(rubi_rule!(
         order: 3019,
         source: "Int[Log[c_.*x_^n_.]^r_.*(a_.*x_^m_.+b_.*Log[c_.*x_^n_.]^q_)^p_./x_,x_Symbol] :=
@@ -763,9 +763,7 @@ fn push_rules_rule_3019(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,m,n,p,q,r},x] && EqQ[r,q-1] && IGtQ[p,0]",
         desc: "Algebraic expansion",
         refs: [],
-        pattern: (c__ * x_.pow(n_)).log().pow(r_)
-            * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_)).pow(p_)
-            / x_,
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, n_, r_, a__, m_, b__, q_, p_, x_],
         optional: [c__, n_, r_, a__, m_, b__, p_],
         when: {
@@ -786,7 +784,7 @@ fn push_rules_rule_3019(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3020(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, m_, n_, p_, q_, r_, x_);
+    rubi_symb!(symbols; a__, b__, c__, m_, n_, p_, q_, r_, x_);
     rules.push(rubi_rule!(
         order: 3020,
         source: "Int[Log[c_.*x_^n_.]^r_.*(a_.*x_^m_.+b_.*Log[c_.*x_^n_.]^q_)^p_./x_,x_Symbol] :=
@@ -795,9 +793,7 @@ fn push_rules_rule_3020(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,m,n,p,q,r},x] && EqQ[r,q-1] && NeQ[p,-1]",
         desc: "Algebraic expansion and reciprocal rule for integration",
         refs: [],
-        pattern: (c__ * x_.pow(n_)).log().pow(r_)
-            * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_)).pow(p_)
-            / x_,
+        pattern:  rubi_shared_pattern_0(symbols),
         with: [c__, n_, r_, a__, m_, b__, q_, p_, x_],
         optional: [c__, n_, r_, a__, m_, b__, p_],
         when: {
@@ -821,7 +817,7 @@ fn push_rules_rule_3020(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3021(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, e__, m_, n_, q_, r_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, e__, m_, n_, q_, r_, x_);
     rules.push(rubi_rule!(
         order: 3021,
         source: "Int[(d_.*x_^m_.+e_.*Log[c_.*x_^n_.]^r_.)/(x_*(a_.*x_^m_.+b_.*Log[c_.*x_^n_.]^q_)),x_Symbol] :=
@@ -829,8 +825,7 @@ fn push_rules_rule_3021(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,m,n,q,r},x] && EqQ[r,q-1] && EqQ[a*e*m-b*d*n*q,0]",
         desc: "Reciprocal rule for integration",
         refs: [],
-        pattern: (d__ * x_.pow(m_) + e__ * (c__ * x_.pow(n_)).log().pow(r_))
-            / (x_ * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_))),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [d__, m_, e__, c__, n_, r_, a__, b__, q_, x_],
         optional: [d__, m_, e__, c__, n_, r_, a__, b__],
         when: {
@@ -880,7 +875,7 @@ fn push_rules_rule_3022(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3023(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, e__, m_, n_, q_, r_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, e__, m_, n_, q_, r_, x_);
     rules.push(rubi_rule!(
         order: 3023,
         source: "Int[(d_.*x_^m_.+e_.*Log[c_.*x_^n_.]^r_.)/(x_*(a_.*x_^m_.+b_.*Log[c_.*x_^n_.]^q_)),x_Symbol] :=
@@ -889,8 +884,7 @@ fn push_rules_rule_3023(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,m,n,q,r},x] && EqQ[r,q-1] && NeQ[a*e*m-b*d*n*q,0]",
         desc: "Algebraic expansion and reciprocal rule for integration",
         refs: [],
-        pattern: (d__ * x_.pow(m_) + e__ * (c__ * x_.pow(n_)).log().pow(r_))
-            / (x_ * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_))),
+        pattern:  rubi_shared_pattern_2(symbols),
         with: [d__, m_, e__, c__, n_, r_, a__, b__, q_, x_],
         optional: [d__, m_, e__, c__, n_, r_, a__, b__],
         when: {
@@ -913,7 +907,7 @@ fn push_rules_rule_3023(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3024(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, e__, m_, n_, p_, q_, r_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, e__, m_, n_, p_, q_, r_, x_);
     rules.push(rubi_rule!(
         order: 3024,
         source: "Int[(d_.*x_^m_.+e_.*Log[c_.*x_^n_.]^r_.)*(a_.*x_^m_.+b_.*Log[c_.*x_^n_.]^q_)^p_./x_,x_Symbol] :=
@@ -921,9 +915,7 @@ fn push_rules_rule_3024(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,m,n,p,q,r},x] && EqQ[r,q-1] && NeQ[p,-1] && EqQ[a*e*m-b*d*n*q,0]",
         desc: "Algebraic expansion and reciprocal rule for integration",
         refs: [],
-        pattern: (d__ * x_.pow(m_) + e__ * (c__ * x_.pow(n_)).log().pow(r_))
-            * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_)).pow(p_)
-            / x_,
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [d__, m_, e__, c__, n_, r_, a__, b__, q_, p_, x_],
         optional: [d__, m_, e__, c__, n_, r_, a__, b__, p_],
         when: {
@@ -945,7 +937,7 @@ fn push_rules_rule_3024(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3025(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(a__, b__, c__, d__, e__, m_, n_, p_, q_, r_, x_);
+    rubi_symb!(symbols; a__, b__, c__, d__, e__, m_, n_, p_, q_, r_, x_);
     rules.push(rubi_rule!(
         order: 3025,
         source: "Int[(d_.*x_^m_.+e_.*Log[c_.*x_^n_.]^r_.)*(a_.*x_^m_.+b_.*Log[c_.*x_^n_.]^q_)^p_./x_,x_Symbol] :=
@@ -954,9 +946,7 @@ fn push_rules_rule_3025(rules: &mut Vec<RubiRule>) {
         FreeQ[{a,b,c,d,e,m,n,p,q,r},x] && EqQ[r,q-1] && NeQ[p,-1] && NeQ[a*e*m-b*d*n*q,0]",
         desc: "Algebraic expansion and reciprocal rule for integration",
         refs: [],
-        pattern: (d__ * x_.pow(m_) + e__ * (c__ * x_.pow(n_)).log().pow(r_))
-            * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_)).pow(p_)
-            / x_,
+        pattern:  rubi_shared_pattern_1(symbols),
         with: [d__, m_, e__, c__, n_, r_, a__, b__, q_, p_, x_],
         optional: [d__, m_, e__, c__, n_, r_, a__, b__, p_],
         when: {
@@ -1040,7 +1030,7 @@ fn push_rules_rule_3027(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3028(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(u__);
+    rubi_symb!(symbols; u__);
     rules.push(rubi_rule!(
         order: 3028,
         source: "Int[Log[u_],x_Symbol] :=
@@ -1048,7 +1038,7 @@ fn push_rules_rule_3028(rules: &mut Vec<RubiRule>) {
         InverseFunctionFreeQ[u,x]",
         desc: "Integration by parts",
         refs: ["A&S 4.1.53"],
-        pattern: Atom::var(u__).log(),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [u__, x_],
         when: { rubi_inverse_function_free_q(&u__, x_) },
         rhs: {
@@ -1062,7 +1052,7 @@ fn push_rules_rule_3028(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3029(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(u__);
+    rubi_symb!(symbols; u__);
     rules.push(rubi_rule!(
         order: 3029,
         source: "Int[Log[u_],x_Symbol] :=
@@ -1070,7 +1060,7 @@ fn push_rules_rule_3029(rules: &mut Vec<RubiRule>) {
         ProductQ[u]",
         desc: "Integration by parts",
         refs: ["A&S 4.1.53"],
-        pattern: Atom::var(u__).log(),
+        pattern:  rubi_shared_pattern_3(symbols),
         with: [u__, x_],
         when: { rubi_product_q(&u__) },
         rhs: {
@@ -1202,7 +1192,7 @@ fn push_rules_rule_3033(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3034(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(u__, v__);
+    rubi_symb!(symbols; u__, v__);
     rules.push(rubi_rule!(
         order: 3034,
         source: "Int[v_*Log[u_],x_Symbol] :=
@@ -1212,7 +1202,7 @@ fn push_rules_rule_3034(rules: &mut Vec<RubiRule>) {
         InverseFunctionFreeQ[u,x]",
         desc: "Integration by parts",
         refs: [],
-        pattern: v__ * Atom::var(u__).log(),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [v__, u__, x_],
         when: {
             rubi_inverse_function_free_q(&u__, x_)
@@ -1232,7 +1222,7 @@ fn push_rules_rule_3034(rules: &mut Vec<RubiRule>) {
 }
 
 fn push_rules_rule_3035(rules: &mut Vec<RubiRule>) {
-    rubi_symb!(u__, v__);
+    rubi_symb!(symbols; u__, v__);
     rules.push(rubi_rule!(
         order: 3035,
         source: "Int[v_*Log[u_],x_Symbol] :=
@@ -1242,7 +1232,7 @@ fn push_rules_rule_3035(rules: &mut Vec<RubiRule>) {
         ProductQ[u]",
         desc: "Integration by parts",
         refs: [],
-        pattern: v__ * Atom::var(u__).log(),
+        pattern:  rubi_shared_pattern_5(symbols),
         with: [v__, u__, x_],
         when: {
             rubi_product_q(&u__)
@@ -1430,4 +1420,81 @@ fn push_rules_rule_3041(rules: &mut Vec<RubiRule>) {
             rubi_rhs_int(&transformed_integrand, x_)
         },
     ));
+}
+
+// Generated shared pattern builders.
+
+#[inline(never)]
+fn rubi_shared_pattern_0(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let q_ = symbols.q_;
+    let r_ = symbols.r_;
+    let x_ = symbols.x_;
+    (c__ * x_.pow(n_)).log().pow(r_)
+        * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_)).pow(p_)
+        / x_
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_1(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let e__ = symbols.e__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let q_ = symbols.q_;
+    let r_ = symbols.r_;
+    let x_ = symbols.x_;
+    (d__ * x_.pow(m_) + e__ * (c__ * x_.pow(n_)).log().pow(r_))
+        * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_)).pow(p_)
+        / x_
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_2(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let d__ = symbols.d__;
+    let e__ = symbols.e__;
+    let m_ = symbols.m_;
+    let n_ = symbols.n_;
+    let q_ = symbols.q_;
+    let r_ = symbols.r_;
+    let x_ = symbols.x_;
+    (d__ * x_.pow(m_) + e__ * (c__ * x_.pow(n_)).log().pow(r_))
+        / (x_ * (a__ * x_.pow(m_) + b__ * (c__ * x_.pow(n_)).log().pow(q_)))
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_3(symbols: &RubiSymbols) -> Atom {
+    let u__ = symbols.u__;
+    Atom::var(u__).log()
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_4(symbols: &RubiSymbols) -> Atom {
+    let a__ = symbols.a__;
+    let b__ = symbols.b__;
+    let c__ = symbols.c__;
+    let n_ = symbols.n_;
+    let p_ = symbols.p_;
+    let rfx__ = symbols.rfx__;
+    let rgx__ = symbols.rgx__;
+    rgx__ * (a__ + b__ * (c__ * rfx__.pow(p_)).log()).pow(n_)
+}
+
+#[inline(never)]
+fn rubi_shared_pattern_5(symbols: &RubiSymbols) -> Atom {
+    let u__ = symbols.u__;
+    let v__ = symbols.v__;
+    v__ * Atom::var(u__).log()
 }
