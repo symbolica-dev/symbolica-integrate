@@ -944,8 +944,9 @@ fn rubi_mathematica_builtin_special_function_values(expr: &Atom) -> Option<Atom>
 
 /// A compiled Rubi pattern together with its guards, action, and scan metadata.
 struct RubiRule {
+    #[cfg(any(test, feature = "trace"))]
     id: &'static str,
-    #[cfg_attr(not(any(test, feature = "trace")), allow(dead_code))]
+    #[cfg(any(test, feature = "trace"))]
     block: Option<u16>,
     downvalue_order: Option<u16>,
     #[cfg(any(test, feature = "steps"))]
@@ -1664,21 +1665,22 @@ trait RubiRhsInvariant<T> {
 }
 
 impl<T> RubiRhsInvariant<T> for Option<T> {
-    #[track_caller]
+    #[cfg_attr(any(test, feature = "trace"), track_caller)]
     fn rubi_rhs(self) -> T {
         self.expect("Rubi RHS invariant was not established by the rule condition")
     }
 }
 
 impl<T, E: std::fmt::Debug> RubiRhsInvariant<T> for Result<T, E> {
-    #[track_caller]
+    #[cfg_attr(any(test, feature = "trace"), track_caller)]
     fn rubi_rhs(self) -> T {
         self.expect("Rubi RHS invariant was not established by the rule condition")
     }
 }
 
 fn build_rubi_rule(
-    id: &'static str,
+    #[cfg(any(test, feature = "trace"))] id: &'static str,
+    #[cfg(not(any(test, feature = "trace")))] id: (),
     downvalue_order: Option<u16>,
     pattern: Atom,
     required: &[Symbol],
@@ -1700,7 +1702,8 @@ fn build_rubi_rule(
 }
 
 fn build_rubi_helper_rule(
-    id: &'static str,
+    #[cfg(any(test, feature = "trace"))] id: &'static str,
+    #[cfg(not(any(test, feature = "trace")))] id: (),
     downvalue_order: u16,
     pattern: Atom,
     head: Symbol,
@@ -1873,6 +1876,41 @@ macro_rules! with_rubi_rule_explanation {
     }};
 }
 
+#[cfg(any(test, feature = "trace"))]
+macro_rules! rubi_rule_id {
+    () => {
+        concat!(module_path!(), ":", line!())
+    };
+}
+
+#[cfg(not(any(test, feature = "trace")))]
+macro_rules! rubi_rule_id {
+    () => {
+        ()
+    };
+}
+
+/// Uses the symbol cached by a generated `push_rules` function. A few helper
+/// rule modules do not bind the reserved integration wildcard locally.
+#[cfg(not(test))]
+macro_rules! rubi_rule_symbol {
+    (x_) => {
+        rubi_symbols().x_
+    };
+    ($symbol:ident) => {
+        $symbol
+    };
+}
+
+// Inline test rules are intentionally concise and do not always introduce
+// local bindings for every wildcard before invoking `rubi_rule!`.
+#[cfg(test)]
+macro_rules! rubi_rule_symbol {
+    ($symbol:ident) => {
+        rubi_symbols().$symbol
+    };
+}
+
 /// Builds a translated Rubi integration rule and its guarded action.
 macro_rules! rubi_rule {
     (
@@ -1903,10 +1941,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_scaled_equal(
-                rubi_symbols().$scaled_left,
+                symbols.$scaled_left,
                 $scale,
-                rubi_symbols().$scaled_right,
+                symbols.$scaled_right,
             );)*
             rule
         }
@@ -1939,10 +1978,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_scaled_equal(
-                rubi_symbols().$scaled_left,
+                symbols.$scaled_left,
                 $scale,
-                rubi_symbols().$scaled_right,
+                symbols.$scaled_right,
             );)*
             rule
         }
@@ -1975,10 +2015,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_scaled_equal(
-                rubi_symbols().$scaled_left,
+                symbols.$scaled_left,
                 $scale,
-                rubi_symbols().$scaled_right,
+                symbols.$scaled_right,
             );)*
             rule
         }
@@ -2011,10 +2052,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_scaled_equal(
-                rubi_symbols().$scaled_left,
+                symbols.$scaled_left,
                 $scale,
-                rubi_symbols().$scaled_right,
+                symbols.$scaled_right,
             );)*
             rule
         }
@@ -2045,10 +2087,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_scaled_equal(
-                rubi_symbols().$scaled_left,
+                symbols.$scaled_left,
                 $scale,
-                rubi_symbols().$scaled_right,
+                symbols.$scaled_right,
             );)*
             rule
         }
@@ -2079,8 +2122,9 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_numeric_bound(
-                rubi_symbols().$integer,
+                symbols.$integer,
                 RubiEarlyNumericBound::Integer,
             );)*
             rule
@@ -2112,8 +2156,9 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_numeric_bound(
-                rubi_symbols().$integer_gt,
+                symbols.$integer_gt,
                 RubiEarlyNumericBound::IntegerGreaterThan($integer_gt_bound),
             );)*
             rule
@@ -2145,8 +2190,9 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_numeric_bound(
-                rubi_symbols().$integer_lt,
+                symbols.$integer_lt,
                 RubiEarlyNumericBound::IntegerLessThan($integer_lt_bound),
             );)*
             rule
@@ -2178,9 +2224,10 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_polynomial_derivative_pair(
-                rubi_symbols().$polynomial,
-                rubi_symbols().$derivative,
+                symbols.$polynomial,
+                symbols.$derivative,
             );)*
             rule
         }
@@ -2211,11 +2258,12 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_proportional_common_expression([
-                rubi_symbols().$a,
-                rubi_symbols().$b,
-                rubi_symbols().$c,
-                rubi_symbols().$d,
+                symbols.$a,
+                symbols.$b,
+                symbols.$c,
+                symbols.$d,
             ]);)*
             rule
         }
@@ -2246,11 +2294,12 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
+            let symbols = rubi_symbols();
             $(rule = rule.with_early_proportional_affine([
-                rubi_symbols().$a,
-                rubi_symbols().$b,
-                rubi_symbols().$c,
-                rubi_symbols().$d,
+                symbols.$a,
+                symbols.$b,
+                symbols.$c,
+                symbols.$d,
             ]);)*
             rule
         }
@@ -2281,7 +2330,8 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            $(rule = rule.with_early_x_linear(rubi_symbols().$x_linear);)*
+            let symbols = rubi_symbols();
+            $(rule = rule.with_early_x_linear(symbols.$x_linear);)*
             rule
         }
     };
@@ -2313,7 +2363,8 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            $(rule = rule.with_early_x_linear(rubi_symbols().$x_linear);)*
+            let symbols = rubi_symbols();
+            $(rule = rule.with_early_x_linear(symbols.$x_linear);)*
             rule
         }
     };
@@ -2343,7 +2394,8 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            $(rule = rule.with_early_zero(rubi_symbols().$zero);)*
+            let symbols = rubi_symbols();
+            $(rule = rule.with_early_zero(symbols.$zero);)*
             rule
         }
     };
@@ -2395,7 +2447,8 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            $(rule = rule.with_early_x_free(rubi_symbols().$x_free);)*
+            let symbols = rubi_symbols();
+            $(rule = rule.with_early_x_free(symbols.$x_free);)*
             rule
         }
     };
@@ -2443,7 +2496,8 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            $(rule = rule.with_early_x_free(rubi_symbols().$x_free);)*
+            let symbols = rubi_symbols();
+            $(rule = rule.with_early_x_free(symbols.$x_free);)*
             rule
         }
     };
@@ -2498,8 +2552,9 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            $(rule = rule.with_early_x_dependent(rubi_symbols().$x_dependent);)*
-            $(rule = rule.with_early_x_free(rubi_symbols().$x_free);)*
+            let symbols = rubi_symbols();
+            $(rule = rule.with_early_x_dependent(symbols.$x_dependent);)*
+            $(rule = rule.with_early_x_free(symbols.$x_free);)*
             rule
         }
     };
@@ -2550,8 +2605,9 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            $(rule = rule.with_early_x_dependent(rubi_symbols().$x_dependent);)*
-            $(rule = rule.with_early_x_free(rubi_symbols().$x_free);)*
+            let symbols = rubi_symbols();
+            $(rule = rule.with_early_x_dependent(symbols.$x_dependent);)*
+            $(rule = rule.with_early_x_free(symbols.$x_free);)*
             rule
         }
     };
@@ -2614,14 +2670,14 @@ macro_rules! rubi_rule {
         rhs: $rhs:block $(,)?
     ) => {
         with_rubi_rule_explanation!(build_rubi_rule(
-            concat!(module_path!(), ":", line!()),
+            rubi_rule_id!(),
             Some($order),
             $pattern,
-            &[$(rubi_symbols().$wildcard),*],
-            &[$(rubi_symbols().$optional),*],
+            &[$(rubi_rule_symbol!($wildcard)),*],
+            &[$(rubi_rule_symbol!($optional)),*],
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
-                    match wildcard_atoms_for_rule(matches, [$(rubi_symbols().$wildcard),*], rule) {
+                    match required_wildcard_atoms_for_rule(matches, rule) {
                         Some(values) => values,
                         None => return ConditionResult::False,
                     };
@@ -2638,7 +2694,7 @@ macro_rules! rubi_rule {
             }) as RubiCondition,
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
-                    wildcard_atoms_for_rule(matches, [$(rubi_symbols().$wildcard),*], rule)?;
+                    required_wildcard_atoms_for_rule(matches, rule)?;
                 $(let _ = &$wildcard;)*
                 // The closure deliberately scopes `return` inside a generated rule RHS.
                 #[allow(clippy::redundant_closure_call)]
@@ -2684,14 +2740,14 @@ macro_rules! rubi_rule {
         rhs: $rhs:block $(,)?
     ) => {
         with_rubi_rule_explanation!(build_rubi_rule(
-            concat!(module_path!(), ":", line!()),
+            rubi_rule_id!(),
             None,
             $pattern,
-            &[$(rubi_symbols().$wildcard),*],
-            &[$(rubi_symbols().$optional),*],
+            &[$(rubi_rule_symbol!($wildcard)),*],
+            &[$(rubi_rule_symbol!($optional)),*],
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
-                    match wildcard_atoms_for_rule(matches, [$(rubi_symbols().$wildcard),*], rule) {
+                    match required_wildcard_atoms_for_rule(matches, rule) {
                         Some(values) => values,
                         None => return ConditionResult::False,
                     };
@@ -2708,7 +2764,7 @@ macro_rules! rubi_rule {
             }) as RubiCondition,
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
-                    wildcard_atoms_for_rule(matches, [$(rubi_symbols().$wildcard),*], rule)?;
+                    required_wildcard_atoms_for_rule(matches, rule)?;
                 $(let _ = &$wildcard;)*
                 // The closure deliberately scopes `return` inside a generated rule RHS.
                 #[allow(clippy::redundant_closure_call)]
@@ -2793,8 +2849,9 @@ macro_rules! rubi_helper_row {
                 when: $when,
                 rhs: $rhs,
             );
-            $(rule = rule.with_early_x_dependent(rubi_symbols().$x_dependent);)*
-            $(rule = rule.with_early_x_free(rubi_symbols().$x_free);)*
+            let symbols = rubi_symbols();
+            $(rule = rule.with_early_x_dependent(symbols.$x_dependent);)*
+            $(rule = rule.with_early_x_free(symbols.$x_free);)*
             rule
         }
     };
@@ -2829,15 +2886,15 @@ macro_rules! rubi_helper_row {
         rhs: $rhs:block $(,)?
     ) => {
         with_rubi_rule_source!(build_rubi_helper_rule(
-            concat!(module_path!(), ":", line!()),
+            rubi_rule_id!(),
             $order,
             $pattern,
             $head,
-            &[$(rubi_symbols().$wildcard),*],
-            &[$(rubi_symbols().$optional),*],
+            &[$(rubi_rule_symbol!($wildcard)),*],
+            &[$(rubi_rule_symbol!($optional)),*],
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
-                    match wildcard_atoms_for_rule(matches, [$(rubi_symbols().$wildcard),*], rule) {
+                    match required_wildcard_atoms_for_rule(matches, rule) {
                         Some(values) => values,
                         None => return ConditionResult::False,
                     };
@@ -2854,7 +2911,7 @@ macro_rules! rubi_helper_row {
             }) as RubiCondition,
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
-                    wildcard_atoms_for_rule(matches, [$(rubi_symbols().$wildcard),*], rule)?;
+                    required_wildcard_atoms_for_rule(matches, rule)?;
                 $(let _ = &$wildcard;)*
                 // The closure deliberately scopes `return` inside a generated helper RHS.
                 #[allow(clippy::redundant_closure_call)]
@@ -4249,7 +4306,8 @@ fn push_deactivate_trig_rules(rules: &mut Vec<RubiRule>) {
 
 #[allow(non_snake_case)]
 fn rubi_rule_with_optional_action(
-    id: &'static str,
+    #[cfg(any(test, feature = "trace"))] id: &'static str,
+    #[cfg(not(any(test, feature = "trace")))] id: (),
     integrand_pattern: Atom,
     required: &[Symbol],
     rubi_int: Symbol,
@@ -4257,6 +4315,9 @@ fn rubi_rule_with_optional_action(
     condition: RubiCondition,
     action: RubiAction,
 ) -> RubiRule {
+    #[cfg(not(any(test, feature = "trace")))]
+    let _ = id;
+
     let explicit_x_factor_bound =
         rubi_explicit_pattern_x_factor_bound(&integrand_pattern, required);
     let require_explicit_variable_power_factor =
@@ -4282,7 +4343,9 @@ fn rubi_rule_with_optional_action(
         .when(Condition::match_stack(rubi_replacement_condition));
 
     RubiRule {
+        #[cfg(any(test, feature = "trace"))]
         id,
+        #[cfg(any(test, feature = "trace"))]
         block: None,
         downvalue_order: None,
         #[cfg(any(test, feature = "steps"))]
@@ -4576,6 +4639,7 @@ fn matcher_rule_with_target_inner(
     target: &Atom,
     candidate_bounds: &RubiCandidateBounds,
 ) -> Option<Atom> {
+    #[cfg(any(test, feature = "trace"))]
     debug_assert!(!rule.id.is_empty());
 
     if !rule
@@ -4811,6 +4875,7 @@ fn matcher_helper_rule(
     rule: &'static RubiRule,
     head: Symbol,
 ) -> Option<Atom> {
+    #[cfg(any(test, feature = "trace"))]
     debug_assert!(!rule.id.is_empty());
 
     #[cfg(feature = "trace")]
@@ -22910,6 +22975,14 @@ fn wildcard_atoms_for_rule<const N: usize>(
         atoms.push(wildcard_atom_for_rule(matches, wildcard, rule)?);
     }
     atoms.try_into().ok()
+}
+
+fn required_wildcard_atoms_for_rule<const N: usize>(
+    matches: &symbolica::id::MatchStack<'_>,
+    rule: &RubiRule,
+) -> Option<[Atom; N]> {
+    let wildcards: [Symbol; N] = rule.required.as_slice().try_into().ok()?;
+    wildcard_atoms_for_rule(matches, wildcards, rule)
 }
 
 #[cfg(feature = "trace")]
