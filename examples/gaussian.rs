@@ -3,7 +3,7 @@ use symbolica_integrate::Integrate;
 
 fn main() {
     let x = symbol!("x");
-    let integrand = parse!("cos(a*x)*sin(b*x)");
+    let integrand = parse!("exp(-x^2)");
     let primitive = integrand
         .integrate(x)
         .expect("the Gaussian integral should produce erf");

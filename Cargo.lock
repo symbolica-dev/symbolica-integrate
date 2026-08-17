@@ -735,7 +735,10 @@ dependencies = [
 name = "symbolica-integrate"
 version = "1.0.0"
 dependencies = [
+ "brotli",
+ "proc-macro2",
  "symbolica",
+ "syn 2.0.119",
 ]
 
 [[package]]

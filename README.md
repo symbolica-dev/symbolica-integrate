@@ -62,9 +62,12 @@ These timings are competitive, as an integration run on the independent test sui
 | --------------------------------- | -------: |
 | `symbolica-integrate`             | 111.24 s |
 | Rubi 4.17.3.0 in Mathematica 13.2 | 155.78 s |
+| Symja `Integrate` 3.3.0 [^1] | ≥ 1,316.02 s |
 
-In this run, `symbolica-integrate` was **1.40× faster**.
+In these runs, `symbolica-integrate` was **1.40× faster** than Rubi in
+Mathematica and at least **11.83× faster** than Symja.
 
+[^1]: Symja timed out on 18 problems.
 
 ## Acknowledgements
 

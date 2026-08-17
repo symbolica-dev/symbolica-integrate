@@ -36,6 +36,9 @@ use std::sync::{
     atomic::{AtomicU64, AtomicUsize},
 };
 
+#[cfg(all(feature = "steps", feature = "compressed-step-metadata"))]
+use std::sync::OnceLock;
+
 use symbolica::domains::{
     float::Complex,
     integer::{Integer, IntegerRing},
@@ -1000,6 +1003,104 @@ struct RubiRule {
     action: RubiAction,
 }
 
+#[cfg(all(feature = "steps", feature = "compressed-step-metadata"))]
+include!(concat!(env!("OUT_DIR"), "/rubi_rule_texts.rs"));
+
+#[cfg(all(feature = "steps", feature = "compressed-step-metadata"))]
+struct RubiRuleTextCatalog {
+    decoded: Box<[u8]>,
+}
+
+#[cfg(all(feature = "steps", feature = "compressed-step-metadata"))]
+impl RubiRuleTextCatalog {
+    fn decode() -> Self {
+        let mut decoder = brotli::Decompressor::new(RUBI_RULE_TEXT_COMPRESSED, 4096);
+        let mut decoded = Vec::new();
+        std::io::Read::read_to_end(&mut decoder, &mut decoded)
+            .expect("the embedded Rubi rule text catalog should decompress");
+        assert!(
+            decoded.len() >= RUBI_RULE_TEXT_DIRECTORY_BYTES,
+            "the embedded Rubi rule text catalog has a truncated directory"
+        );
+        let catalog = Self {
+            decoded: decoded.into_boxed_slice(),
+        };
+        for order in 0..RUBI_RULE_TEXT_RECORD_COUNT {
+            let _ = catalog.get(order as u16);
+        }
+        catalog
+    }
+
+    fn get(&self, order: u16) -> Option<(&str, &str)> {
+        let order = usize::from(order);
+        if order >= RUBI_RULE_TEXT_RECORD_COUNT {
+            return None;
+        }
+        let record_start = order * RUBI_RULE_TEXT_RECORD_BYTES;
+        let record = &self.decoded[record_start..record_start + RUBI_RULE_TEXT_RECORD_BYTES];
+        let source_offset = u32::from_le_bytes(record[0..4].try_into().unwrap()) as usize;
+        let description_offset = u32::from_le_bytes(record[4..8].try_into().unwrap()) as usize;
+        let source_len = u16::from_le_bytes(record[8..10].try_into().unwrap()) as usize;
+        let description_len = u16::from_le_bytes(record[10..12].try_into().unwrap()) as usize;
+        if source_len == 0 || description_len == 0 {
+            return None;
+        }
+        let text = &self.decoded[RUBI_RULE_TEXT_DIRECTORY_BYTES..];
+        let source = text.get(source_offset..source_offset.checked_add(source_len)?)?;
+        let description =
+            text.get(description_offset..description_offset.checked_add(description_len)?)?;
+        Some((
+            std::str::from_utf8(source).expect("Rubi rule sources should be UTF-8"),
+            std::str::from_utf8(description).expect("Rubi rule descriptions should be UTF-8"),
+        ))
+    }
+}
+
+#[cfg(all(feature = "steps", feature = "compressed-step-metadata"))]
+static RUBI_RULE_TEXTS: OnceLock<RubiRuleTextCatalog> = OnceLock::new();
+
+#[cfg(all(feature = "steps", feature = "compressed-step-metadata"))]
+fn rubi_rule_text(order: u16) -> Option<(&'static str, &'static str)> {
+    RUBI_RULE_TEXTS
+        .get_or_init(RubiRuleTextCatalog::decode)
+        .get(order)
+}
+
+#[cfg(feature = "steps")]
+fn rubi_rule_source_pattern(rule: &RubiRule) -> Option<&'static str> {
+    #[cfg(feature = "compressed-step-metadata")]
+    {
+        rule.source_pattern.or_else(|| {
+            rule.downvalue_order
+                .and_then(rubi_rule_text)
+                .map(|(source, _)| source)
+        })
+    }
+    #[cfg(not(feature = "compressed-step-metadata"))]
+    {
+        rule.source_pattern
+    }
+}
+
+#[cfg(feature = "steps")]
+fn rubi_rule_description(rule: &RubiRule) -> Option<&'static str> {
+    #[cfg(feature = "compressed-step-metadata")]
+    {
+        rule.description.or_else(|| {
+            if rule.source_pattern.is_some() {
+                return None;
+            }
+            rule.downvalue_order
+                .and_then(rubi_rule_text)
+                .map(|(_, description)| description)
+        })
+    }
+    #[cfg(not(feature = "compressed-step-metadata"))]
+    {
+        rule.description
+    }
+}
+
 /// Factor-shape limits derived from a rule that explicitly contains `x`.
 struct ExplicitPatternXFactorBound {
     factor_count: usize,
@@ -1127,8 +1228,8 @@ fn begin_explanation_step(
         if RUBI_CAPTURE_RULE_RHS.with(Cell::get) {
             return None;
         }
-        let source = rule.source_pattern?;
-        let description = rule.description?;
+        let source = rubi_rule_source_pattern(rule)?;
+        let description = rubi_rule_description(rule)?;
         let checkpoint = steps.len();
         let input = rubi_symbols().rubi_int.call((input(), Atom::var(x)));
         steps.push(IntegrationStep {
@@ -1357,10 +1458,7 @@ fn record_explanation_substitution(symbol: Symbol, replacement: &Atom) {
     let Some((rule, integration_variable)) = rubi_replacement_context() else {
         return;
     };
-    if !rule
-        .source_pattern
-        .is_some_and(|source| source.contains("Subst["))
-    {
+    if !rubi_rule_source_pattern(rule).is_some_and(|source| source.contains("Subst[")) {
         return;
     }
 
@@ -1861,10 +1959,16 @@ macro_rules! with_rubi_rule_explanation {
         #[cfg(any(test, feature = "steps"))]
         {
             let mut rule = rule;
-            rule.source_pattern = Some($source);
+            #[cfg(any(test, not(feature = "compressed-step-metadata")))]
+            {
+                rule.source_pattern = Some($source);
+            }
             #[cfg(feature = "steps")]
             {
-                rule.description = Some($description);
+                #[cfg(any(test, not(feature = "compressed-step-metadata")))]
+                {
+                    rule.description = Some($description);
+                }
                 rule.references = &$references;
             }
             rule
@@ -1911,6 +2015,59 @@ macro_rules! rubi_rule_symbol {
     };
 }
 
+/// Builds a generated rule condition, borrowing captures for pure `FreeQ`
+/// guards and retaining owned captures for general condition expressions.
+macro_rules! rubi_condition {
+    ([$($wildcard:ident),*], { freeq!([$($free:ident),+ $(,)?], x_) }) => {
+        (|matches, integration_symbol, rule| {
+            let symbols = rubi_symbols();
+            if wildcard_captures_are_free(
+                matches,
+                rule,
+                &[$(symbols.$free),+],
+                integration_symbol,
+            ) {
+                ConditionResult::True
+            } else {
+                ConditionResult::False
+            }
+        }) as RubiCondition
+    };
+    ([$($wildcard:ident),*], { freeq!($free:ident, x_) }) => {
+        (|matches, integration_symbol, rule| {
+            if wildcard_captures_are_free(
+                matches,
+                rule,
+                &[rubi_symbols().$free],
+                integration_symbol,
+            ) {
+                ConditionResult::True
+            } else {
+                ConditionResult::False
+            }
+        }) as RubiCondition
+    };
+    ([$($wildcard:ident),*], $when:block) => {
+        (|matches, integration_symbol, rule| {
+            let [$($wildcard),*] =
+                match required_wildcard_atoms_for_rule(matches, rule) {
+                    Some(values) => values,
+                    None => return ConditionResult::False,
+                };
+            $(let _ = &$wildcard;)*
+            if !rubi_with_integration_symbol!(
+                integration_symbol;
+                [$($wildcard),*];
+                $when
+            ) {
+                return ConditionResult::False;
+            }
+
+            ConditionResult::True
+        }) as RubiCondition
+    };
+}
+
 /// Builds a translated Rubi integration rule and its guarded action.
 macro_rules! rubi_rule {
     (
@@ -1924,7 +2081,7 @@ macro_rules! rubi_rule {
         x_free: [$($x_free:ident),* $(,)?],
         zero: [$($zero:ident),* $(,)?],
         scaled: [$(($scaled_left:ident, $scale:literal, $scaled_right:ident)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -1961,7 +2118,7 @@ macro_rules! rubi_rule {
         x_free: [$($x_free:ident),* $(,)?],
         integer: [$($integer:ident),* $(,)?],
         scaled: [$(($scaled_left:ident, $scale:literal, $scaled_right:ident)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -1998,7 +2155,7 @@ macro_rules! rubi_rule {
         x_free: [$($x_free:ident),* $(,)?],
         integer_gt: [$(($integer_gt:ident, $integer_gt_bound:literal)),* $(,)?],
         scaled: [$(($scaled_left:ident, $scale:literal, $scaled_right:ident)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2035,7 +2192,7 @@ macro_rules! rubi_rule {
         x_free: [$($x_free:ident),* $(,)?],
         integer_lt: [$(($integer_lt:ident, $integer_lt_bound:literal)),* $(,)?],
         scaled: [$(($scaled_left:ident, $scale:literal, $scaled_right:ident)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2071,7 +2228,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         scaled: [$(($scaled_left:ident, $scale:literal, $scaled_right:ident)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2106,7 +2263,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         integer: [$($integer:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2140,7 +2297,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         integer_gt: [$(($integer_gt:ident, $integer_gt_bound:literal)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2174,7 +2331,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         integer_lt: [$(($integer_lt:ident, $integer_lt_bound:literal)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2208,7 +2365,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         derivative_pair: [$(($polynomial:ident, $derivative:ident)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2242,7 +2399,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         proportional_common: [$(($a:ident, $b:ident, $c:ident, $d:ident)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2278,7 +2435,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         proportional: [$(($a:ident, $b:ident, $c:ident, $d:ident)),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2314,7 +2471,7 @@ macro_rules! rubi_rule {
         x_dep: [$($x_dependent:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         x_linear: [$($x_linear:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2346,7 +2503,7 @@ macro_rules! rubi_rule {
         x_dep: [$($x_dependent:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         x_linear: [$($x_linear:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2378,7 +2535,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         zero: [$($zero:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2407,7 +2564,7 @@ macro_rules! rubi_rule {
         pattern: $pattern:expr,
         with: [$($wildcard:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_rule!(
@@ -2432,7 +2589,7 @@ macro_rules! rubi_rule {
         with: [$($wildcard:ident),* $(,)?],
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2459,7 +2616,7 @@ macro_rules! rubi_rule {
         pattern: $pattern:expr,
         with: [$($wildcard:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_rule!(
@@ -2482,7 +2639,7 @@ macro_rules! rubi_rule {
         with: [$($wildcard:ident),* $(,)?],
         optional: [$($optional:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2510,7 +2667,7 @@ macro_rules! rubi_rule {
         with: [$($wildcard:ident),* $(,)?],
         x_dep: [$($x_dependent:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_rule!(
@@ -2537,7 +2694,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_dep: [$($x_dependent:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2566,7 +2723,7 @@ macro_rules! rubi_rule {
         with: [$($wildcard:ident),* $(,)?],
         x_dep: [$($x_dependent:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_rule!(
@@ -2591,7 +2748,7 @@ macro_rules! rubi_rule {
         optional: [$($optional:ident),* $(,)?],
         x_dep: [$($x_dependent:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2618,7 +2775,7 @@ macro_rules! rubi_rule {
         refs: $refs:expr,
         pattern: $pattern:expr,
         with: [$($wildcard:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_rule!(
@@ -2642,7 +2799,7 @@ macro_rules! rubi_rule {
         with: [$($wildcard:ident),* $(,)?],
         optional: [$($optional:ident),* $(,)?],
         noninteger_power_factors: $noninteger_power_factors:literal,
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_rule!(
@@ -2666,7 +2823,7 @@ macro_rules! rubi_rule {
         pattern: $pattern:expr,
         with: [$($wildcard:ident),* $(,)?],
         optional: [$($optional:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         with_rubi_rule_explanation!(build_rubi_rule(
@@ -2675,23 +2832,7 @@ macro_rules! rubi_rule {
             $pattern,
             &[$(rubi_rule_symbol!($wildcard)),*],
             &[$(rubi_rule_symbol!($optional)),*],
-            (|matches, integration_symbol, rule| {
-                let [$($wildcard),*] =
-                    match required_wildcard_atoms_for_rule(matches, rule) {
-                        Some(values) => values,
-                        None => return ConditionResult::False,
-                    };
-                $(let _ = &$wildcard;)*
-                if !rubi_with_integration_symbol!(
-                    integration_symbol;
-                    [$($wildcard),*];
-                    $when
-                ) {
-                    return ConditionResult::False;
-                }
-
-                ConditionResult::True
-            }) as RubiCondition,
+            rubi_condition!([$($wildcard),*], $when),
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
                     required_wildcard_atoms_for_rule(matches, rule)?;
@@ -2715,7 +2856,7 @@ macro_rules! rubi_rule {
         refs: $refs:expr,
         pattern: $pattern:expr,
         with: [$($wildcard:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_rule!(
@@ -2736,7 +2877,7 @@ macro_rules! rubi_rule {
         pattern: $pattern:expr,
         with: [$($wildcard:ident),* $(,)?],
         optional: [$($optional:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         with_rubi_rule_explanation!(build_rubi_rule(
@@ -2745,23 +2886,7 @@ macro_rules! rubi_rule {
             $pattern,
             &[$(rubi_rule_symbol!($wildcard)),*],
             &[$(rubi_rule_symbol!($optional)),*],
-            (|matches, integration_symbol, rule| {
-                let [$($wildcard),*] =
-                    match required_wildcard_atoms_for_rule(matches, rule) {
-                        Some(values) => values,
-                        None => return ConditionResult::False,
-                    };
-                $(let _ = &$wildcard;)*
-                if !rubi_with_integration_symbol!(
-                    integration_symbol;
-                    [$($wildcard),*];
-                    $when
-                ) {
-                    return ConditionResult::False;
-                }
-
-                ConditionResult::True
-            }) as RubiCondition,
+            rubi_condition!([$($wildcard),*], $when),
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
                     required_wildcard_atoms_for_rule(matches, rule)?;
@@ -2810,7 +2935,7 @@ macro_rules! rubi_helper_row {
         x_dep: [$($x_dependent:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
         noninteger_affine_power_difference: true,
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_helper_row!(
@@ -2835,7 +2960,7 @@ macro_rules! rubi_helper_row {
         optional: [$($optional:ident),* $(,)?],
         x_dep: [$($x_dependent:ident),* $(,)?],
         x_free: [$($x_free:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         {
@@ -2861,7 +2986,7 @@ macro_rules! rubi_helper_row {
         pattern: $pattern:expr,
         head: $head:expr,
         with: [$($wildcard:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         rubi_helper_row!(
@@ -2882,7 +3007,7 @@ macro_rules! rubi_helper_row {
         head: $head:expr,
         with: [$($wildcard:ident),* $(,)?],
         optional: [$($optional:ident),* $(,)?],
-        when: $when:block,
+        when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
         with_rubi_rule_source!(build_rubi_helper_rule(
@@ -2892,23 +3017,7 @@ macro_rules! rubi_helper_row {
             $head,
             &[$(rubi_rule_symbol!($wildcard)),*],
             &[$(rubi_rule_symbol!($optional)),*],
-            (|matches, integration_symbol, rule| {
-                let [$($wildcard),*] =
-                    match required_wildcard_atoms_for_rule(matches, rule) {
-                        Some(values) => values,
-                        None => return ConditionResult::False,
-                    };
-                $(let _ = &$wildcard;)*
-                if !rubi_with_integration_symbol!(
-                    integration_symbol;
-                    [$($wildcard),*];
-                    $when
-                ) {
-                    return ConditionResult::False;
-                }
-
-                ConditionResult::True
-            }) as RubiCondition,
+            rubi_condition!([$($wildcard),*], $when),
             (|matches, integration_symbol, rule| {
                 let [$($wildcard),*] =
                     required_wildcard_atoms_for_rule(matches, rule)?;
@@ -22989,6 +23098,42 @@ fn required_wildcard_atoms_for_rule<const N: usize>(
     wildcard_atoms_for_rule(matches, wildcards, rule)
 }
 
+fn wildcard_view_for_rule<'a>(
+    matches: &symbolica::id::MatchStack<'a>,
+    wildcard: Symbol,
+    rule: &RubiRule,
+) -> Option<AtomOrView<'a>> {
+    #[cfg(feature = "bake-integration-variable")]
+    if wildcard == rubi_symbols().x_
+        && let Some((context_rule, x)) = rubi_replacement_context()
+        && std::ptr::eq(context_rule, rule)
+    {
+        return Some(x.into());
+    }
+    #[cfg(not(feature = "bake-integration-variable"))]
+    let _ = rule;
+    matches
+        .get_atom(wildcard)
+        .map(AtomOrView::View)
+        .or_else(|| {
+            matches
+                .get(wildcard)
+                .map(|matched| matched.to_atom().into())
+        })
+}
+
+fn wildcard_captures_are_free(
+    matches: &symbolica::id::MatchStack<'_>,
+    rule: &RubiRule,
+    wildcards: &[Symbol],
+    integration_symbol: Symbol,
+) -> bool {
+    wildcards.iter().all(|wildcard| {
+        wildcard_view_for_rule(matches, *wildcard, rule)
+            .is_some_and(|value| is_free_of(value.as_atom_view(), integration_symbol))
+    })
+}
+
 #[cfg(feature = "trace")]
 fn current_rule_id() -> Option<&'static str> {
     CURRENT_RUBI_RULE.with(|current| {
@@ -24983,6 +25128,28 @@ mod tests {
             format!("{}", exponent.printer(PrintOptions::typst())),
             "2^(integral 1+x^2 dif x)"
         );
+    }
+
+    #[cfg(all(feature = "steps", feature = "compressed-step-metadata"))]
+    #[test]
+    fn compressed_rule_text_catalog_matches_generated_literals() {
+        let _ = symbol!("x");
+        let mut catalog_rules = 0;
+        for rule in rubi_rules() {
+            let order = rule
+                .downvalue_order
+                .expect("every main rule should have a DownValue order");
+            let (source, description) =
+                rubi_rule_text(order).expect("every main rule should have catalog text");
+            assert_eq!(Some(source), rule.source_pattern, "source for rule {order}");
+            assert_eq!(
+                Some(description),
+                rule.description,
+                "description for rule {order}"
+            );
+            catalog_rules += 1;
+        }
+        assert_eq!(catalog_rules, RUBI_RULE_TEXT_RULE_COUNT);
     }
 
     #[cfg(feature = "steps")]
