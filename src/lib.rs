@@ -822,16 +822,17 @@ fn rubi_symbolica_rational_polynomial_rename_temporary(
     z: Symbol,
 ) -> RationalPolynomial<IntegerRing, u8> {
     let mut polynomial = polynomial.to_owned();
-    let mut variables = polynomial.get_variables().as_ref().to_owned();
-    for variable in &mut variables {
-        if matches!(variable, PolyVariable::Temporary(_)) {
-            *variable = z.into();
-        }
+    let temporary_variables = polynomial
+        .get_variables()
+        .iter()
+        .filter(|variable| matches!(variable, PolyVariable::Temporary(_)))
+        .cloned()
+        .collect::<Vec<_>>();
+    let z = z.into();
+    for variable in temporary_variables {
+        polynomial.numerator.rename_variable(&variable, &z);
+        polynomial.denominator.rename_variable(&variable, &z);
     }
-
-    let variables = Arc::new(variables);
-    polynomial.numerator.variables = variables.to_owned();
-    polynomial.denominator.variables = variables;
     polynomial
 }
 
@@ -10390,13 +10391,13 @@ fn rubi_poly_gcd(left: &Atom, right: &Atom, x: Symbol) -> Option<Atom> {
     // operands use exactly the same multivariate ring.
     let initial_left = left.try_to_polynomial::<_, u32>(&Q, None).ok()?;
     let right_polynomial = right
-        .try_to_polynomial::<_, u32>(&Q, Some(initial_left.variables.to_owned()))
+        .try_to_polynomial::<_, u32>(&Q, Some(initial_left.variables().to_owned()))
         .ok()?;
     let left_polynomial = left
-        .try_to_polynomial::<_, u32>(&Q, Some(right_polynomial.variables.to_owned()))
+        .try_to_polynomial::<_, u32>(&Q, Some(right_polynomial.variables().to_owned()))
         .ok()?;
     if left_polynomial
-        .variables
+        .variables()
         .iter()
         .any(|variable| !matches!(variable, PolyVariable::Symbol(_)))
     {
