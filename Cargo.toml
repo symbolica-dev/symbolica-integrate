@@ -44,7 +44,7 @@ compressed-step-metadata = ["steps", "dep:brotli", "dep:proc-macro2", "dep:syn"]
 
 [dependencies]
 brotli = { version = "8", optional = true }
-symbolica = { version = "2.2" }
+symbolica = "3"
 
 [build-dependencies]
 brotli = { version = "8", optional = true }
