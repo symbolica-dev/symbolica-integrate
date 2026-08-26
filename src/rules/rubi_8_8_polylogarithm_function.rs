@@ -29,6 +29,43 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
     push_rules_rule_7163(rules);
     push_rules_rule_7164(rules);
     push_rules_rule_7165(rules);
+    push_rules_rational_dilogarithm(rules);
+}
+
+fn push_rules_rational_dilogarithm(rules: &mut Vec<RubiRule>) {
+    rubi_symb!(u__);
+    rules.push(rubi_rule!(
+        source: "Int[PolyLog[2,u_],x_Symbol] :=
+          With[{v=SimplifyIntegrand[x*D[u,x]*Log[1-u]/u,x]},
+            x*PolyLog[2,u] + Int[v,x]] /;
+        With[{w=Together[u]}, RationalFunctionQ[w,x] && Not[FreeQ[w,x]] &&
+          0<=Expon[Numerator[w],x]<=2 && 0<=Expon[Denominator[w],x]<=2]",
+        desc: "Integrate by parts and reduce a quadratic-or-lower rational dilogarithm argument to logarithmic integrals.",
+        refs: [],
+        pattern: Atom::var(u__).polylog(2),
+        with: [u__, x_],
+        when: {
+            !freeq!(u__, x_)
+                && matches!(
+                    rubi_rational_function_exponents(&u__, x_),
+                    Some((0..=2, 1..=2) | (1..=2, 0..=2)) // this range avoids rootsums
+                )
+        },
+        rhs: {
+            let dilogarithm = u__.polylog(2);
+            let v = rubi_simplify_integrand(
+                &(x_ * rubi_d(&u__, x_) * (Atom::num(1) - &u__).log() / &u__),
+                x_,
+            );
+            let integral = rubi_rhs_int(&v, x_);
+            if rubi_finished_primitive_q(&integral) {
+                rubi_simp(&(x_ * dilogarithm + integral), x_)
+            } else {
+                rubi_unintegrable(dilogarithm, x_)
+            }
+        },
+    )
+    .dispatch_before(7166));
 }
 
 fn push_rules_rule_7140(rules: &mut Vec<RubiRule>) {
