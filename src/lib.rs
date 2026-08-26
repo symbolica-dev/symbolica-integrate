@@ -953,6 +953,7 @@ struct RubiRule {
     #[cfg(any(test, feature = "trace"))]
     block: Option<u16>,
     downvalue_order: Option<u16>,
+    dispatch_order: Option<u32>,
     #[cfg(any(test, feature = "steps"))]
     source_pattern: Option<&'static str>,
     #[cfg(feature = "steps")]
@@ -1797,6 +1798,7 @@ fn build_rubi_rule(
         action,
     );
     rule.downvalue_order = downvalue_order;
+    rule.dispatch_order = downvalue_order.map(rubi_dispatch_order);
     rule
 }
 
@@ -1814,7 +1816,24 @@ fn build_rubi_helper_rule(
     let mut rule =
         rubi_rule_with_optional_action(id, pattern, required, head, optional, condition, action);
     rule.downvalue_order = Some(downvalue_order);
+    rule.dispatch_order = Some(rubi_dispatch_order(downvalue_order));
     rule
+}
+
+fn rubi_dispatch_order(order: u16) -> u32 {
+    u32::from(order) * 3 + 1
+}
+
+fn required_rubi_dispatch_order(rule: &RubiRule) -> u32 {
+    rule.dispatch_order.unwrap_or_else(|| {
+        #[cfg(any(test, feature = "trace"))]
+        panic!(
+            "Rubi integration rule has neither an upstream order nor an explicit dispatch anchor: {}",
+            rule.id.lines().next().unwrap_or_default()
+        );
+        #[cfg(not(any(test, feature = "trace")))]
+        panic!("Rubi integration rule has neither an upstream order nor an explicit dispatch anchor");
+    })
 }
 
 #[cfg(test)]
@@ -1956,20 +1975,27 @@ macro_rules! rubi_with_integration_symbol {
 /// Attaches feature-gated explanation metadata to a translated integration rule.
 macro_rules! with_rubi_rule_explanation {
     ($rule:expr, $source:expr, $description:expr, $references:expr) => {{
+        #[cfg(any(test, not(feature = "compressed-step-metadata")))]
+        {
+            with_rubi_rule_explanation!(@inline $rule, $source, $description, $references)
+        }
+        #[cfg(all(not(test), feature = "compressed-step-metadata"))]
+        {
+            let mut rule = $rule;
+            rule.references = &$references;
+            rule
+        }
+    }};
+    // Rules without an upstream order cannot use the compressed catalog.
+    (@inline $rule:expr, $source:expr, $description:expr, $references:expr) => {{
         let rule = $rule;
         #[cfg(any(test, feature = "steps"))]
         {
             let mut rule = rule;
-            #[cfg(any(test, not(feature = "compressed-step-metadata")))]
-            {
-                rule.source_pattern = Some($source);
-            }
+            rule.source_pattern = Some($source);
             #[cfg(feature = "steps")]
             {
-                #[cfg(any(test, not(feature = "compressed-step-metadata")))]
-                {
-                    rule.description = Some($description);
-                }
+                rule.description = Some($description);
                 rule.references = &$references;
             }
             rule
@@ -2881,7 +2907,7 @@ macro_rules! rubi_rule {
         when: $when:tt,
         rhs: $rhs:block $(,)?
     ) => {
-        with_rubi_rule_explanation!(build_rubi_rule(
+        with_rubi_rule_explanation!(@inline build_rubi_rule(
             rubi_rule_id!(),
             None,
             $pattern,
@@ -4328,9 +4354,13 @@ fn rubi_rules() -> &'static [RubiRule] {
     static RULES: LazyLock<Vec<RubiRule>> = LazyLock::new(|| {
         let mut rules = Vec::new();
         rules::push_rules(&mut rules);
-        if rules.iter().all(|rule| rule.downvalue_order.is_some()) {
-            rules.sort_by_key(|rule| rule.downvalue_order);
+        // Sorting must never silently fall back to module insertion order.
+        // Extensions without an upstream DownValue number must explicitly
+        // anchor themselves with `dispatch_before`.
+        for rule in &rules {
+            required_rubi_dispatch_order(rule);
         }
+        rules.sort_by_key(required_rubi_dispatch_order);
         rules
     });
     RULES.as_slice()
@@ -4462,6 +4492,7 @@ fn rubi_rule_with_optional_action(
         #[cfg(any(test, feature = "trace"))]
         block: None,
         downvalue_order: None,
+        dispatch_order: None,
         #[cfg(any(test, feature = "steps"))]
         source_pattern: None,
         #[cfg(feature = "steps")]
@@ -5051,6 +5082,11 @@ fn rubi_replacement_condition(matches: &symbolica::id::MatchStack<'_>) -> Condit
 }
 
 impl RubiRule {
+    fn dispatch_before(mut self, order: u16) -> Self {
+        self.dispatch_order = Some(rubi_dispatch_order(order) - 1);
+        self
+    }
+
     fn wildcard_known_x_free(&self, wildcard: Symbol) -> bool {
         let mut known = self.early_x_free.to_owned();
         known.extend(
@@ -25137,9 +25173,10 @@ mod tests {
         let _ = symbol!("x");
         let mut catalog_rules = 0;
         for rule in rubi_rules() {
-            let order = rule
-                .downvalue_order
-                .expect("every main rule should have a DownValue order");
+            let Some(order) = rule.downvalue_order else {
+                // Extension rules retain inline text instead of catalog entries.
+                continue;
+            };
             let (source, description) =
                 rubi_rule_text(order).expect("every main rule should have catalog text");
             assert_eq!(Some(source), rule.source_pattern, "source for rule {order}");
@@ -25621,18 +25658,22 @@ mod tests {
     }
 
     #[test]
-    fn executable_rubi_rules_are_registered_in_downvalue_order() {
+    fn executable_rubi_rules_are_registered_in_dispatch_order() {
         let _ = symbol!("x");
-        let orders = rubi_rules()
+        let rules = rubi_rules();
+        let dispatch_orders = rules
             .iter()
-            .map(|rule| {
-                rule.downvalue_order
-                    .unwrap_or_else(|| panic!("{} has no DownValue order", rule.id))
-            })
+            .map(required_rubi_dispatch_order)
             .collect::<Vec<_>>();
-        assert!(orders.windows(2).all(|pair| pair[0] <= pair[1]));
-        assert_eq!(orders.first(), Some(&1));
-        assert_eq!(orders.last(), Some(&7299));
+        assert!(dispatch_orders.windows(2).all(|pair| pair[0] <= pair[1]));
+
+        let upstream_orders = rules
+            .iter()
+            .filter_map(|rule| rule.downvalue_order)
+            .collect::<Vec<_>>();
+        assert!(upstream_orders.windows(2).all(|pair| pair[0] <= pair[1]));
+        assert_eq!(upstream_orders.first(), Some(&1));
+        assert_eq!(upstream_orders.last(), Some(&7299));
     }
 
     #[test]
@@ -30783,6 +30824,20 @@ mod tests {
         assert_derivative_round_trip(parse!("polylog(2, 1 + 3*x)"));
         assert_derivative_round_trip(parse!("polylog(3, 5*(1 + 3*x))"));
         assert_derivative_round_trip(parse!("polylog(3, 1 + 3*x)"));
+        assert_derivative_round_trip(parse!("polylog(1, 1/(x+y))"));
+        assert_derivative_round_trip(parse!("polylog(2, 1/(x+y))"));
+        assert_derivative_round_trip(parse!("polylog(3, 1/(x+y))"));
+        assert_derivative_round_trip(parse!("polylog(4, 5/(2+3*x))"));
+        assert_derivative_round_trip(parse!("polylog(4, (a+b*x)^3)"));
+    }
+
+    #[test]
+    fn integrates_low_degree_rational_dilogarithms() {
+        assert_derivative_round_trip(parse!("polylog(2, (1+x)/(2+x))"));
+        assert_derivative_round_trip(parse!("polylog(2, 1/(1+x+x^2))"));
+        assert_derivative_round_trip(parse!("polylog(2, 1+x+x^2)"));
+        assert_derivative_round_trip(parse!("polylog(2, x*(1+x)/(2+x)^2)"));
+        assert_derivative_round_trip(parse!("polylog(2, x/(x+y)^2)"));
     }
 
     #[test]
