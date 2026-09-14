@@ -4476,7 +4476,7 @@ fn rubi_rule_with_optional_action(
     let replacement = pattern
         .replace_with(Atom::num(0).to_pattern())
         .partial(false)
-        .level_range((0, Some(0)))
+        .max_level(0)
         .when(Condition::match_stack(rubi_replacement_condition));
 
     RubiRule {
