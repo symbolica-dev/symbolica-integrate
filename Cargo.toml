@@ -1,6 +1,6 @@
 [package]
 name = "symbolica-integrate"
-version = "1.0.0"
+version = "2.0.0"
 authors = ["Ben Ruijl <ben@symbolica.io>"]
 edition = "2024"
 rust-version = "1.89"
