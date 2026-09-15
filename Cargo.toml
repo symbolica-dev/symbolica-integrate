@@ -1,6 +1,6 @@
 [package]
 name = "symbolica-integrate"
-version = "2.0.0"
+version = "2.0.1"
 authors = ["Ben Ruijl <ben@symbolica.io>"]
 edition = "2024"
 rust-version = "1.89"
@@ -36,7 +36,7 @@ path = "examples/steps_with_substitution.rs"
 required-features = ["steps"]
 
 [features]
-default = []
+default = ["symbolica/default"]
 trace = []
 bake-integration-variable = []
 steps = []
@@ -44,7 +44,7 @@ compressed-step-metadata = ["steps", "dep:brotli", "dep:proc-macro2", "dep:syn"]
 
 [dependencies]
 brotli = { version = "8", optional = true }
-symbolica = "3"
+symbolica = { version = "3", default-features = false }
 
 [build-dependencies]
 brotli = { version = "8", optional = true }
