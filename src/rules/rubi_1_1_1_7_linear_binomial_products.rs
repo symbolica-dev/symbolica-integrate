@@ -69,7 +69,7 @@ fn push_rules_rule_2017(rules: &mut Vec<RubiRule>) {
                                 .pow(Atom::var(rubi_symbols().q_)),
                             &[rubi_symbols().qx__, rubi_symbols().d__],
                             |matches| {
-                                    rubi_symb!(qx__, c__, d__, m_, q_);
+                                    rubi_runtime_symb!(qx__, c__, d__, m_, q_);
                                     let Some(qx) = wildcard_atom(matches, qx__) else {
                                         return false;
                                     };

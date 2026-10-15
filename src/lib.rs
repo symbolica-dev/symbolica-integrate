@@ -587,11 +587,19 @@ impl RubiSymbolAtomOps for Symbol {
 /// Converts values accepted by translated Rubi rules into Symbolica atoms.
 trait RubiAtomArgument {
     fn rubi_atom(&self) -> Atom;
+
+    fn rubi_atom_or_view(&self) -> AtomOrView<'_> {
+        self.rubi_atom().into()
+    }
 }
 
 impl RubiAtomArgument for Atom {
     fn rubi_atom(&self) -> Atom {
         self.to_owned()
+    }
+
+    fn rubi_atom_or_view(&self) -> AtomOrView<'_> {
+        AtomOrView::View(self.as_view())
     }
 }
 
@@ -599,11 +607,19 @@ impl RubiAtomArgument for Symbol {
     fn rubi_atom(&self) -> Atom {
         Atom::var(*self)
     }
+
+    fn rubi_atom_or_view(&self) -> AtomOrView<'_> {
+        (*self).into()
+    }
 }
 
 impl<T: RubiAtomArgument + ?Sized> RubiAtomArgument for &T {
     fn rubi_atom(&self) -> Atom {
         (*self).rubi_atom()
+    }
+
+    fn rubi_atom_or_view(&self) -> AtomOrView<'_> {
+        (*self).rubi_atom_or_view()
     }
 }
 
@@ -1778,6 +1794,9 @@ impl<T, E: std::fmt::Debug> RubiRhsInvariant<T> for Result<T, E> {
     }
 }
 
+// These wrappers run only while registering rules. Keep the shared
+// construction and order assignment out of each generated constructor.
+#[inline(never)]
 fn build_rubi_rule(
     #[cfg(any(test, feature = "trace"))] id: &'static str,
     #[cfg(not(any(test, feature = "trace")))] id: (),
@@ -1802,6 +1821,7 @@ fn build_rubi_rule(
     rule
 }
 
+#[inline(never)]
 fn build_rubi_helper_rule(
     #[cfg(any(test, feature = "trace"))] id: &'static str,
     #[cfg(not(any(test, feature = "trace")))] id: (),
@@ -1913,26 +1933,32 @@ fn rubi_inert_trig_call(symbol: Symbol, argument: impl symbolica::atom::Function
         .call((argument,))
 }
 
+#[inline(never)]
 fn i_sin(argument: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().inert_sin.call((argument,))
 }
 
+#[inline(never)]
 fn i_cos(argument: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().inert_cos.call((argument,))
 }
 
+#[inline(never)]
 fn i_tan(argument: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().inert_tan.call((argument,))
 }
 
+#[inline(never)]
 fn i_cot(argument: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().inert_cot.call((argument,))
 }
 
+#[inline(never)]
 fn i_sec(argument: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().inert_sec.call((argument,))
 }
 
+#[inline(never)]
 fn i_csc(argument: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().inert_csc.call((argument,))
 }
@@ -2026,7 +2052,7 @@ macro_rules! rubi_rule_id {
 #[cfg(not(test))]
 macro_rules! rubi_rule_symbol {
     (x_) => {
-        rubi_symbols().x_
+        rubi_registration_symbols().x_
     };
     ($symbol:ident) => {
         $symbol
@@ -2125,12 +2151,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_scaled_equal(
-                symbols.$scaled_left,
-                $scale,
-                symbols.$scaled_right,
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_scaled_equal,
+                &[$((symbols.$scaled_left, $scale, symbols.$scaled_right)),*],
+            );
             rule
         }
     };
@@ -2162,12 +2187,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_scaled_equal(
-                symbols.$scaled_left,
-                $scale,
-                symbols.$scaled_right,
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_scaled_equal,
+                &[$((symbols.$scaled_left, $scale, symbols.$scaled_right)),*],
+            );
             rule
         }
     };
@@ -2199,12 +2223,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_scaled_equal(
-                symbols.$scaled_left,
-                $scale,
-                symbols.$scaled_right,
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_scaled_equal,
+                &[$((symbols.$scaled_left, $scale, symbols.$scaled_right)),*],
+            );
             rule
         }
     };
@@ -2236,12 +2259,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_scaled_equal(
-                symbols.$scaled_left,
-                $scale,
-                symbols.$scaled_right,
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_scaled_equal,
+                &[$((symbols.$scaled_left, $scale, symbols.$scaled_right)),*],
+            );
             rule
         }
     };
@@ -2271,12 +2293,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_scaled_equal(
-                symbols.$scaled_left,
-                $scale,
-                symbols.$scaled_right,
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_scaled_equal,
+                &[$((symbols.$scaled_left, $scale, symbols.$scaled_right)),*],
+            );
             rule
         }
     };
@@ -2306,11 +2327,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_numeric_bound(
-                symbols.$integer,
-                RubiEarlyNumericBound::Integer,
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_numeric_bounds,
+                &[$((symbols.$integer, RubiEarlyNumericBound::Integer)),*],
+            );
             rule
         }
     };
@@ -2340,11 +2361,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_numeric_bound(
-                symbols.$integer_gt,
-                RubiEarlyNumericBound::IntegerGreaterThan($integer_gt_bound),
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_numeric_bounds,
+                &[$((symbols.$integer_gt, RubiEarlyNumericBound::IntegerGreaterThan($integer_gt_bound))),*],
+            );
             rule
         }
     };
@@ -2374,11 +2395,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_numeric_bound(
-                symbols.$integer_lt,
-                RubiEarlyNumericBound::IntegerLessThan($integer_lt_bound),
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_numeric_bounds,
+                &[$((symbols.$integer_lt, RubiEarlyNumericBound::IntegerLessThan($integer_lt_bound))),*],
+            );
             rule
         }
     };
@@ -2408,11 +2429,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_polynomial_derivative_pair(
-                symbols.$polynomial,
-                symbols.$derivative,
-            );)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_polynomial_derivative_pairs,
+                &[$((symbols.$polynomial, symbols.$derivative)),*],
+            );
             rule
         }
     };
@@ -2442,7 +2463,7 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
+            let symbols = rubi_registration_symbols();
             $(rule = rule.with_early_proportional_common_expression([
                 symbols.$a,
                 symbols.$b,
@@ -2478,7 +2499,7 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
+            let symbols = rubi_registration_symbols();
             $(rule = rule.with_early_proportional_affine([
                 symbols.$a,
                 symbols.$b,
@@ -2514,8 +2535,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_x_linear(symbols.$x_linear);)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_linear,
+                &[$(symbols.$x_linear),*],
+            );
             rule
         }
     };
@@ -2547,8 +2571,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_x_linear(symbols.$x_linear);)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_linear,
+                &[$(symbols.$x_linear),*],
+            );
             rule
         }
     };
@@ -2578,8 +2605,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_zero(symbols.$zero);)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_zero,
+                &[$(symbols.$zero),*],
+            );
             rule
         }
     };
@@ -2631,8 +2661,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_x_free(symbols.$x_free);)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_free,
+                &[$(symbols.$x_free),*],
+            );
             rule
         }
     };
@@ -2680,8 +2713,11 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_x_free(symbols.$x_free);)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_free,
+                &[$(symbols.$x_free),*],
+            );
             rule
         }
     };
@@ -2736,9 +2772,15 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_x_dependent(symbols.$x_dependent);)*
-            $(rule = rule.with_early_x_free(symbols.$x_free);)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_dependent,
+                &[$(symbols.$x_dependent),*],
+            );
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_free,
+                &[$(symbols.$x_free),*],
+            );
             rule
         }
     };
@@ -2789,9 +2831,15 @@ macro_rules! rubi_rule {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_x_dependent(symbols.$x_dependent);)*
-            $(rule = rule.with_early_x_free(symbols.$x_free);)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_dependent,
+                &[$(symbols.$x_dependent),*],
+            );
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_free,
+                &[$(symbols.$x_free),*],
+            );
             rule
         }
     };
@@ -3001,9 +3049,15 @@ macro_rules! rubi_helper_row {
                 when: $when,
                 rhs: $rhs,
             );
-            let symbols = rubi_symbols();
-            $(rule = rule.with_early_x_dependent(symbols.$x_dependent);)*
-            $(rule = rule.with_early_x_free(symbols.$x_free);)*
+            let symbols = rubi_registration_symbols();
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_dependent,
+                &[$(symbols.$x_dependent),*],
+            );
+            extend_rubi_rule_metadata(
+                &mut rule.early_x_free,
+                &[$(symbols.$x_free),*],
+            );
             rule
         }
     };
@@ -3077,10 +3131,18 @@ macro_rules! freeq {
 /// Evaluates Rubi's algebraic `EqQ` predicate.
 macro_rules! eqq {
     ($left:expr, $right:expr) => {
-        rubi_algebraic_zero_q(
-            &(RubiAtomArgument::rubi_atom(&($left)) - RubiAtomArgument::rubi_atom(&($right))),
+        rubi_algebraic_eq_q(
+            RubiAtomArgument::rubi_atom_or_view(&($left)),
+            RubiAtomArgument::rubi_atom_or_view(&($right)),
         )
     };
+}
+
+// Borrow captures instead of cloning them for a read-only comparison, and
+// share subtraction and temporary cleanup across the generated EqQ/NeQ guards.
+#[inline(never)]
+fn rubi_algebraic_eq_q(left: AtomOrView<'_>, right: AtomOrView<'_>) -> bool {
+    rubi_algebraic_zero_q(&(left.as_view() - right.as_view()))
 }
 
 /// Evaluates Rubi's `NeQ` predicate, including its unevaluated unary form.
@@ -3272,9 +3334,18 @@ macro_rules! int_linearq {
 /// Introduces local bindings for symbols from the shared Rubi symbol table.
 macro_rules! rubi_symb {
     ($symbols:ident; $($name:ident),+ $(,)?) => {
-        let $symbols = rubi_symbols();
+        let $symbols = rubi_registration_symbols();
         $(#[allow(unused_variables)] let $name = $symbols.$name;)+
     };
+    ($($name:ident),+ $(,)?) => {
+        let symbols = rubi_registration_symbols();
+        $(let $name = symbols.$name;)+
+    };
+}
+
+// Nested guard matchers bind symbols while evaluating a rule, so keep their
+// access on the existing hot path rather than the registration helper.
+macro_rules! rubi_runtime_symb {
     ($($name:ident),+ $(,)?) => {
         let symbols = rubi_symbols();
         $(let $name = symbols.$name;)+
@@ -3434,6 +3505,13 @@ struct RubiSymbols {
     rubi_expand_integrand: Symbol,
     rubi_fix_inert_trig_function: Symbol,
     rubi_unify_inert_trig_function: Symbol,
+}
+
+// Rule constructors are called once. Share the lazy-initialization check here
+// without adding a function call to symbol accesses during integration.
+#[inline(never)]
+fn rubi_registration_symbols() -> &'static RubiSymbols {
+    rubi_symbols()
 }
 
 fn rubi_symbols() -> &'static RubiSymbols {
@@ -4411,6 +4489,7 @@ fn rubi_unify_inert_trig_function_rules() -> &'static [RubiRule] {
 }
 
 #[allow(non_snake_case)]
+#[inline(never)]
 fn push_deactivate_trig_rules(rules: &mut Vec<RubiRule>) {
     let symbols = rubi_symbols();
     let a__ = symbols.a__;
@@ -5081,6 +5160,17 @@ fn rubi_replacement_condition(matches: &symbolica::id::MatchStack<'_>) -> Condit
     rule.check(matches, x)
 }
 
+// Rule metadata is populated once during registration. Keep allocation and
+// growth out of the thousands of generated rule constructors; borrowing the
+// destination also avoids moving the large RubiRule through an outlined setter.
+#[cold]
+#[inline(never)]
+fn extend_rubi_rule_metadata<T: Copy>(destination: &mut Vec<T>, values: &[T]) {
+    if !values.is_empty() {
+        destination.extend_from_slice(values);
+    }
+}
+
 impl RubiRule {
     fn dispatch_before(mut self, order: u16) -> Self {
         self.dispatch_order = Some(rubi_dispatch_order(order) - 1);
@@ -5115,16 +5205,6 @@ impl RubiRule {
         self
     }
 
-    fn with_early_x_free(mut self, wildcard: Symbol) -> Self {
-        self.early_x_free.push(wildcard);
-        self
-    }
-
-    fn with_early_x_linear(mut self, wildcard: Symbol) -> Self {
-        self.early_x_linear.push(wildcard);
-        self
-    }
-
     fn with_early_not_integration_variable(mut self, wildcard: Symbol) -> Self {
         self.early_not_integration_variable.push(wildcard);
         self
@@ -5150,11 +5230,6 @@ impl RubiRule {
         self
     }
 
-    fn with_early_scaled_equal(mut self, left: Symbol, scale: i64, right: Symbol) -> Self {
-        self.early_scaled_equal.push((left, scale, right));
-        self
-    }
-
     fn with_early_proportional_affine(mut self, coefficients: [Symbol; 4]) -> Self {
         self.early_proportional_affine.push(coefficients);
         self.require_proportional_affine_factor_pair = true;
@@ -5169,21 +5244,6 @@ impl RubiRule {
 
     fn with_proportional_affine_factor_pair(mut self) -> Self {
         self.require_proportional_affine_factor_pair = true;
-        self
-    }
-
-    fn with_early_polynomial_derivative_pair(
-        mut self,
-        polynomial: Symbol,
-        derivative: Symbol,
-    ) -> Self {
-        self.early_polynomial_derivative_pairs
-            .push((polynomial, derivative));
-        self
-    }
-
-    fn with_early_zero(mut self, wildcard: Symbol) -> Self {
-        self.early_zero.push(wildcard);
         self
     }
 
@@ -23120,13 +23180,18 @@ fn wildcard_atoms_for_rule<const N: usize>(
     wildcards: [Symbol; N],
     rule: &RubiRule,
 ) -> Option<[Atom; N]> {
-    let mut atoms = Vec::with_capacity(N);
-    for wildcard in wildcards {
-        atoms.push(wildcard_atom_for_rule(matches, wildcard, rule)?);
+    // Zero owns no allocation; a failed capture drops the initialized prefix.
+    // This avoids a heap allocation and the Vec-to-array copy for every match.
+    let mut atoms = [const { Atom::Zero }; N];
+    for (atom, wildcard) in atoms.iter_mut().zip(wildcards) {
+        *atom = wildcard_atom_for_rule(matches, wildcard, rule)?;
     }
-    atoms.try_into().ok()
+    Some(atoms)
 }
 
+// Specialize once per capture count instead of duplicating extraction and
+// failure cleanup in each generated condition and action.
+#[inline(never)]
 fn required_wildcard_atoms_for_rule<const N: usize>(
     matches: &symbolica::id::MatchStack<'_>,
     rule: &RubiRule,
@@ -31449,6 +31514,34 @@ mod tests {
     }
 
     #[test]
+    fn algebraic_equality_accepts_borrowed_captures_and_rule_literals() {
+        let x = symbol!("x");
+        let left = parse!("(x+1)^2");
+        let right = parse!("x^2+2*x+1");
+        let left_before = left.to_owned();
+        let right_before = right.to_owned();
+        let mut evaluated = Vec::new();
+
+        assert!(eqq!(
+            {
+                evaluated.push("left");
+                &left
+            },
+            {
+                evaluated.push("right");
+                &right
+            }
+        ));
+        assert_eq!(evaluated, ["left", "right"]);
+        assert_eq!(left, left_before);
+        assert_eq!(right, right_before);
+        assert!(eqq!(x, Atom::var(x)));
+        assert!(eqq!((1, 2), parse!("1/2")));
+        assert!(eqq!(parse!("1+x-x"), 1));
+        assert!(neq!(&left, parse!("x^2+1")));
+    }
+
+    #[test]
     fn numeric_inequalities_apply_mathematica_together() {
         let normalized_one = parse!("a/(a+b)+b/(a+b)");
 
@@ -33880,6 +33973,58 @@ mod tests {
             rubi_equivalent_q(&primitive, &expected),
             "expected {expected}, got {primitive}"
         );
+    }
+
+    #[test]
+    fn required_wildcard_captures_preserve_order_and_reject_incomplete_rows() {
+        use symbolica::atom::SliceType;
+        use symbolica::id::{Match, MatchStack};
+
+        let symbols = rubi_symbols();
+        let row = rubi_rule!(
+            source: "Int[a+b*x,x_Symbol]",
+            desc: "Capture extraction contract.",
+            refs: [],
+            pattern: symbols.a__ + symbols.b__ * symbols.x_,
+            with: [b__, a__, x_],
+            when: { true },
+            rhs: { Atom::Zero },
+        );
+        let a = parse!("2+y");
+        let coefficient = Atom::num(3);
+        let factor = parse!("z");
+        let x = parse!("x");
+        // Stack insertion order differs from the row's required capture order.
+        // The product capture also exercises conversion of a multi-atom match.
+        let matches = MatchStack::from(vec![
+            (symbols.a__, Match::Single(a.as_view())),
+            (symbols.x_, Match::Single(x.as_view())),
+            (
+                symbols.b__,
+                Match::Multiple(
+                    SliceType::Mul,
+                    vec![coefficient.as_view(), factor.as_view()],
+                ),
+            ),
+        ]);
+        assert_eq!(
+            required_wildcard_atoms_for_rule::<3>(&matches, &row),
+            Some([parse!("3*z"), a.to_owned(), x.to_owned()])
+        );
+        assert!(required_wildcard_atoms_for_rule::<2>(&matches, &row).is_none());
+        assert!(required_wildcard_atoms_for_rule::<4>(&matches, &row).is_none());
+
+        let incomplete = MatchStack::from(vec![(
+            symbols.b__,
+            Match::Multiple(
+                SliceType::Mul,
+                vec![coefficient.as_view(), factor.as_view()],
+            ),
+        )]);
+        // A heap-owning capture is initialized before the missing capture fails.
+        assert!(required_wildcard_atoms_for_rule::<3>(&incomplete, &row).is_none());
+        assert!(required_wildcard_atoms_for_rule::<3>(&MatchStack::new(), &row).is_none());
+        assert_eq!(wildcard_atoms_for_rule(&matches, [], &row), Some([]));
     }
 
     #[test]
