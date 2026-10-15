@@ -215,7 +215,7 @@ fn push_rules_rule_1944(rules: &mut Vec<RubiRule>) {
                 && neq!(&b__ * &c__ - &a__ * &d__, 0)
                 && gtq!(n_, 0)
                 && (ltq!(&m_ + &j_ * &p_, -1)
-                    || integers_q(&[shifted_m.expand(), shifted_p.expand()])
+                    || integers_q(&[&shifted_m.expand(), &shifted_p.expand()])
                         && ltq!(p_, 0)
                         && ltq!(m_, lower_m_bound))
                 && (gtq!(e__, 0) || integerq!(j_) && integerq!(n_))

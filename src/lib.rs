@@ -588,6 +588,13 @@ impl RubiSymbolAtomOps for Symbol {
 trait RubiAtomArgument {
     fn rubi_atom(&self) -> Atom;
 
+    fn into_rubi_atom(self) -> Atom
+    where
+        Self: Sized,
+    {
+        self.rubi_atom()
+    }
+
     fn rubi_atom_or_view(&self) -> AtomOrView<'_> {
         self.rubi_atom().into()
     }
@@ -598,8 +605,22 @@ impl RubiAtomArgument for Atom {
         self.to_owned()
     }
 
+    fn into_rubi_atom(self) -> Atom {
+        self
+    }
+
     fn rubi_atom_or_view(&self) -> AtomOrView<'_> {
         AtomOrView::View(self.as_view())
+    }
+}
+
+impl RubiAtomArgument for AtomView<'_> {
+    fn rubi_atom(&self) -> Atom {
+        self.to_owned()
+    }
+
+    fn rubi_atom_or_view(&self) -> AtomOrView<'_> {
+        AtomOrView::View(*self)
     }
 }
 
@@ -653,7 +674,8 @@ fn integrate_internal(expr: AtomView<'_>, x: Symbol) -> Option<Atom> {
         return None;
     }
 
-    if active_integral_stack_empty() {
+    let is_root = active_integral_stack_empty();
+    if is_root {
         clear_integral_cache();
     } else if let Some(cached) = cached_integral(expr, x) {
         return cached;
@@ -692,7 +714,11 @@ fn integrate_internal(expr: AtomView<'_>, x: Symbol) -> Option<Atom> {
     if rubi_abort_requested() {
         return None;
     }
-    cache_integral(expr, x, result.to_owned());
+    // A root result cannot be reused: the next root clears this cache.
+    // Keep recursive entries, but avoid cloning the root key and primitive.
+    if !is_root {
+        cache_integral(expr, x, result.to_owned());
+    }
     result
 }
 
@@ -3253,7 +3279,7 @@ macro_rules! integerq {
 /// Evaluates Rubi's integer predicate for a list of expressions.
 macro_rules! integersq {
     ([$($expr:expr),+ $(,)?]) => {
-        integers_q(&[$($expr.to_owned()),+])
+        integers_q(&[$(AsRef::<Atom>::as_ref(&($expr))),+])
     };
 }
 
@@ -4207,7 +4233,7 @@ fn rubi_erfi(z: impl symbolica::atom::FunctionArgument) -> Atom {
 }
 
 fn rubi_erf(z: impl RubiAtomArgument) -> Atom {
-    z.rubi_atom().erf()
+    z.into_rubi_atom().erf()
 }
 
 fn rubi_erfc(z: impl symbolica::atom::FunctionArgument) -> Atom {
@@ -4261,7 +4287,7 @@ fn rubi_cosh_integral(z: impl symbolica::atom::FunctionArgument) -> Atom {
 }
 
 fn rubi_product_log(z: impl RubiAtomArgument) -> Atom {
-    rubi_symbols().product_log.call((z.rubi_atom(),))
+    rubi_symbols().product_log.call((z.into_rubi_atom(),))
 }
 
 fn rubi_gamma(
@@ -5014,7 +5040,7 @@ fn matcher_rule_with_target_inner(
         return None;
     }
     if rule.require_x_dependent_exponent_for_x_dependent_candidate
-        && expr.to_owned().contains_symbol(x)
+        && expr.contains_symbol(x)
         && !candidate_bounds.has_x_dependent_exponent
     {
         return None;
@@ -5112,7 +5138,7 @@ fn matcher_helper_rule(
         .load(AtomicOrdering::Relaxed);
     #[cfg(feature = "trace")]
     let trace_start = trace_match_timings.then(std::time::Instant::now);
-    let target = head.call((expr.to_owned(), Atom::var(x)));
+    let target = head.call((expr, x));
     let candidate_bounds = RubiCandidateBounds::new(expr.as_view(), x);
     let result =
         matcher_rule_with_target_inner(expr.as_view(), x, rule, &target, &candidate_bounds);
@@ -5685,7 +5711,7 @@ fn is_free_of(expr: impl FreeOf, x: Symbol) -> bool {
 }
 
 fn rubi_evaluated_free_q(expr: impl RubiAtomArgument, x: Symbol) -> bool {
-    is_free_of(&expr.rubi_atom().expand(), x)
+    is_free_of(&expr.rubi_atom_or_view().as_view().expand(), x)
 }
 
 fn atom_view_has_symbol(expr: AtomView<'_>, x: Symbol) -> bool {
@@ -6138,7 +6164,7 @@ fn rubi_subst_for_power(expr: &Atom, x: Symbol, power: &Atom, sub: Symbol) -> Op
 }
 
 fn rubi_subst_for(expr: &Atom, base: impl RubiAtomArgument, sub: Symbol) -> Atom {
-    let base = base.rubi_atom();
+    let base = base.into_rubi_atom();
     if !rubi_inert_trig_free_q(expr) {
         return rubi_subst_for(&rubi_activate_trig(expr), &base, sub);
     }
@@ -6548,7 +6574,7 @@ fn rubi_pure_function_of_trig_family_recur(
     }
 
     if let Some((symbol, argument)) = rubi_active_trig_function(expr)
-        && eqq!(argument, v.to_owned())
+        && eqq!(argument, v)
     {
         return rubi_trig_symbol_family(symbol)
             .is_some_and(|family| allowed_families.contains(&family));
@@ -6575,7 +6601,7 @@ fn rubi_pure_function_of_hyperbolic_family_recur(
     }
 
     if let Some((symbol, argument)) = rubi_hyperbolic_function(expr)
-        && eqq!(argument, v.to_owned())
+        && eqq!(argument, v)
     {
         return symbol
             .get_stripped_ascii_name()
@@ -6912,7 +6938,7 @@ fn rubi_trig_factor_matches(
     if !families.contains(&family) || rubi_integer_quotient(&argument, v).is_none() {
         return None;
     }
-    if !allow_same_argument && eqq!(argument, v.to_owned()) {
+    if !allow_same_argument && eqq!(argument, v) {
         return None;
     }
 
@@ -6958,7 +6984,7 @@ fn rubi_hyperbolic_factor_matches(
     if !families.contains(&family) || rubi_integer_quotient(&argument, v).is_none() {
         return None;
     }
-    if !allow_same_argument && eqq!(argument, v.to_owned()) {
+    if !allow_same_argument && eqq!(argument, v) {
         return None;
     }
 
@@ -7372,7 +7398,7 @@ fn rubi_function_of_expn_q(expr: &Atom, base: &Atom, x: Symbol) -> Option<Atom> 
             let expr_base = power.get_base().to_owned();
             let expr_exponent = power.get_exp().to_owned();
             if is_free_of(&expr_exponent, x) {
-                if eqq!(expr_base.to_owned(), base.to_owned()) {
+                if eqq!(expr_base, base) {
                     return if integerq!(expr_exponent.to_owned()) {
                         Some(expr_exponent)
                     } else {
@@ -7380,7 +7406,7 @@ fn rubi_function_of_expn_q(expr: &Atom, base: &Atom, x: Symbol) -> Option<Atom> 
                     };
                 }
                 if let Some((base_base, base_exponent)) = rubi_power_with_rational_exponent(base) {
-                    if eqq!(expr_base.to_owned(), base_base.to_owned()) {
+                    if eqq!(expr_base, base_base) {
                         let quotient =
                             (expr_exponent.to_owned() / base_exponent.to_owned()).cancel();
                         if let Some((base_num, base_den)) = rational_number(&base_exponent) {
@@ -7841,7 +7867,7 @@ fn rubi_function_of_exponential_test_aux(
     let constant = rubi_coefficient(exponent, x, 0).unwrap_or_else(|| Atom::num(0));
     let basis_constant = rubi_coefficient(basis_exponent, x, 0).unwrap_or_else(|| Atom::num(0));
     let preserves_constant_ratio =
-        !eqq!(basis_constant, 0) && eqq!(ratio.to_owned(), (&constant / &basis_constant).cancel());
+        !eqq!(basis_constant, 0) && eqq!(ratio, (&constant / &basis_constant).cancel());
 
     let mut updated_exponent = if preserves_constant_ratio {
         (&*basis_exponent / Atom::num(ratio_denominator)).cancel()
@@ -7877,7 +7903,7 @@ fn rubi_exponential_base_log_ratio(
 fn rubi_natural_exponential_base(base: &RubiExponentialBase) -> bool {
     match base {
         RubiExponentialBase::Exp => true,
-        RubiExponentialBase::Power(base) => eqq!(base.to_owned(), Atom::var(Symbol::E)),
+        RubiExponentialBase::Power(base) => eqq!(base, Atom::var(Symbol::E)),
     }
 }
 
@@ -7950,7 +7976,7 @@ fn rubi_exponential_base_eq(left: &RubiExponentialBase, right: &RubiExponentialB
     match (left, right) {
         (RubiExponentialBase::Exp, RubiExponentialBase::Exp) => true,
         (RubiExponentialBase::Power(left), RubiExponentialBase::Power(right)) => {
-            eqq!(left.to_owned(), right.to_owned())
+            eqq!(left, right)
         }
         _ => false,
     }
@@ -8325,10 +8351,7 @@ fn rubi_power_variable_symbolic_degree(
             let (base, exponent_view) = power.get_base_exp();
             let exponent = exponent_view.to_owned();
             if let Some(base_scale) = rubi_scaled_variable_factor(base, x) {
-                if eqq!(shift.to_owned(), 0)
-                    || (eqq!(shift.to_owned(), exponent.to_owned())
-                        && eqq!(scale.to_owned(), base_scale.to_owned()))
-                {
+                if eqq!(shift, 0) || (eqq!(shift, exponent) && eqq!(scale, base_scale)) {
                     return Some((exponent, base_scale));
                 }
                 return None;
@@ -8566,7 +8589,7 @@ fn rubi_subst_for_fractional_power_aux_q(expr: &Atom, base: &Atom) -> bool {
     }
     if let AtomView::Pow(power) = expr.as_view()
         && rubi_fractional_power_q(expr)
-        && eqq!(power.get_base().to_owned(), base.to_owned())
+        && eqq!(power.get_base(), base)
     {
         return true;
     }
@@ -10174,8 +10197,8 @@ fn polynomial_quotient_remainder_linear(
     slope: impl RubiAtomArgument,
     x: Symbol,
 ) -> Option<(Atom, Atom)> {
-    let constant = constant.rubi_atom();
-    let slope = slope.rubi_atom();
+    let constant = constant.into_rubi_atom();
+    let slope = slope.into_rubi_atom();
     if slope.is_zero() || !is_free_of((&constant, &slope), x) {
         return None;
     }
@@ -10333,8 +10356,8 @@ fn rubi_polynomial_quotient(
     denominator: impl RubiAtomArgument,
     x: Symbol,
 ) -> Option<Atom> {
-    let numerator = numerator.rubi_atom();
-    let denominator = denominator.rubi_atom();
+    let numerator = numerator.into_rubi_atom();
+    let denominator = denominator.into_rubi_atom();
     let (quotient, _remainder) =
         polynomial_quotient_remainder_mathematica(&numerator, &denominator, x)?;
     Some(quotient)
@@ -10345,8 +10368,8 @@ fn rubi_polynomial_remainder(
     denominator: impl RubiAtomArgument,
     x: Symbol,
 ) -> Option<Atom> {
-    let numerator = numerator.rubi_atom();
-    let denominator = denominator.rubi_atom();
+    let numerator = numerator.into_rubi_atom();
+    let denominator = denominator.into_rubi_atom();
     let (_quotient, remainder) =
         polynomial_quotient_remainder_mathematica(&numerator, &denominator, x)?;
     Some(remainder)
@@ -10420,8 +10443,8 @@ fn rubi_polynomial_divide(
     denominator: impl RubiAtomArgument,
     x: Symbol,
 ) -> Option<Atom> {
-    let numerator = numerator.rubi_atom();
-    let denominator = denominator.rubi_atom();
+    let numerator = numerator.into_rubi_atom();
+    let denominator = denominator.into_rubi_atom();
     let (quotient, remainder) = polynomial_quotient_remainder(&numerator, &denominator, x)?;
     let x_atom = Atom::var(x);
 
@@ -10460,7 +10483,7 @@ fn rubi_polynomial_divide(
     let denominator = if rubi_binomial_q(denominator.as_view(), x) {
         rubi_expand_to_sum(&denominator, x)
     } else {
-        denominator.to_owned()
+        denominator
     };
 
     Some(quotient + free * monomial * normalized_remainder / denominator)
@@ -10749,8 +10772,8 @@ fn rubi_minimum_monomial_exponent(expr: &Atom, x: Symbol) -> Option<i64> {
 }
 
 fn rubi_star(multiplier: impl RubiAtomArgument, expr: impl RubiAtomArgument) -> Atom {
-    let multiplier = multiplier.rubi_atom();
-    let expr = expr.rubi_atom();
+    let multiplier = multiplier.into_rubi_atom();
+    let expr = expr.into_rubi_atom();
     if multiplier.is_one() {
         return expr;
     }
@@ -10831,7 +10854,7 @@ fn rubi_finished_primitive_q(expr: &Atom) -> bool {
 
 fn rubi_rule_deferred_primitive_q(expr: &Atom, integrand: &Atom, x: Symbol) -> bool {
     (rubi_contains_unintegrable(expr) || !rubi_integral_free_q(expr))
-        && !eqq!(expr.to_owned(), rubi_deferred_integral(integrand, x))
+        && !eqq!(expr, rubi_deferred_integral(integrand, x))
 }
 
 fn polynomial_inverse_mod(poly: &Atom, modulus: &Atom, x: Symbol) -> Option<Atom> {
@@ -11124,7 +11147,7 @@ fn polynomial_quotient_remainder_rational_dividend(
     polynomial_divisor: &Atom,
     x: Symbol,
 ) -> Option<(Atom, Atom)> {
-    let numerator = numerator.rubi_atom();
+    let numerator = numerator.into_rubi_atom();
     let inverse = polynomial_inverse_mod(rational_denominator, polynomial_divisor, x)?;
     let (_quotient, remainder) =
         polynomial_quotient_remainder(&(&numerator * inverse).expand(), polynomial_divisor, x)?;
@@ -13243,7 +13266,7 @@ fn rubi_match_optional_multiplier_affine_integer_power(expr: &Atom, affine: &Ato
 }
 
 fn rubi_match_optional_scaled_trig_power_same_angle_q(u: &Atom, angle: &Atom, x: Symbol) -> bool {
-    if eqq!(u.to_owned(), 1) {
+    if eqq!(u, 1) {
         return true;
     }
 
@@ -14312,47 +14335,50 @@ fn rubi_activate_trig(expr: &Atom) -> Atom {
 }
 
 fn rubi_reduce_builtin_trig_pi_shifts(expr: &Atom) -> Atom {
-    match expr.as_view() {
+    rubi_reduce_builtin_trig_pi_shifts_view(expr.as_view())
+}
+
+fn rubi_reduce_builtin_trig_pi_shifts_view(expr: AtomView<'_>) -> Atom {
+    match expr {
         AtomView::Fun(function)
             if function.get_nargs() == 1 && rubi_builtin_trig_symbol_q(function.get_symbol()) =>
         {
-            let argument = rubi_reduce_builtin_trig_pi_shifts(&function.get(0).to_owned());
+            let argument = rubi_reduce_builtin_trig_pi_shifts_view(function.get(0));
             let Some(inert_symbol) = rubi_inert_symbol_for_builtin_trig(function.get_symbol())
             else {
                 return rubi_builtin_trig_call(function.get_symbol(), argument);
             };
             let reduced = rubi_reduce_inert_trig(inert_symbol, argument.to_owned());
-            let original = inert_symbol.call((argument.to_owned(),));
+            let original = inert_symbol.call((&argument,));
             if reduced == original {
                 rubi_mathematica_evaluate_active_trig_call(function.get_symbol(), argument)
             } else {
-                rubi_reduce_builtin_trig_pi_shifts(&rubi_activate_trig(&reduced))
+                rubi_reduce_builtin_trig_pi_shifts_view(rubi_activate_trig(&reduced).as_view())
             }
         }
         AtomView::Fun(function) => {
             let args: Vec<_> = function
                 .into_iter()
-                .map(|argument| rubi_reduce_builtin_trig_pi_shifts(&argument.to_owned()))
+                .map(rubi_reduce_builtin_trig_pi_shifts_view)
                 .collect();
             function.get_symbol().call_args(args)
         }
         AtomView::Add(add) => add
             .into_iter()
-            .map(|term| rubi_reduce_builtin_trig_pi_shifts(&term.to_owned()))
+            .map(rubi_reduce_builtin_trig_pi_shifts_view)
             .fold(Atom::num(0), |sum, term| sum + term),
         AtomView::Mul(mul) => {
             let reduced = mul
                 .into_iter()
-                .map(|factor| rubi_reduce_builtin_trig_pi_shifts(&factor.to_owned()))
+                .map(rubi_reduce_builtin_trig_pi_shifts_view)
                 .fold(Atom::num(1), |product, factor| product * factor);
             rubi_mathematica_trig_quotient(&reduced)
                 .or_else(|| rubi_mathematica_hyperbolic_quotient(&reduced))
                 .unwrap_or(reduced)
         }
         AtomView::Pow(power) => {
-            let reduced = rubi_reduce_builtin_trig_pi_shifts(&power.get_base().to_owned()).pow(
-                rubi_reduce_builtin_trig_pi_shifts(&power.get_exp().to_owned()),
-            );
+            let reduced = rubi_reduce_builtin_trig_pi_shifts_view(power.get_base())
+                .pow(rubi_reduce_builtin_trig_pi_shifts_view(power.get_exp()));
             rubi_mathematica_trig_quotient(&reduced)
                 .or_else(|| rubi_mathematica_hyperbolic_quotient(&reduced))
                 .unwrap_or(reduced)
@@ -14627,7 +14653,7 @@ fn rubi_inert_or_builtin_trig_q(function_head: &Atom) -> bool {
 }
 
 fn rubi_function_head_member_q(function_head: impl RubiAtomArgument, symbols: &[Symbol]) -> bool {
-    rubi_function_head_symbol(&function_head.rubi_atom())
+    rubi_function_head_symbol(function_head.rubi_atom_or_view().as_view())
         .is_some_and(|symbol| symbols.contains(&symbol))
 }
 
@@ -14883,7 +14909,7 @@ fn rubi_trig_square_factor(factor: &Atom) -> Option<(Symbol, Atom)> {
     let AtomView::Pow(power) = factor.as_view() else {
         return None;
     };
-    if !eqq!(power.get_exp().to_owned(), 2) {
+    if !eqq!(power.get_exp(), 2) {
         return None;
     }
     let AtomView::Fun(function) = power.get_base() else {
@@ -15630,9 +15656,9 @@ fn rubi_derivative(
     function_head: impl RubiAtomArgument,
     argument: impl RubiAtomArgument,
 ) -> Atom {
-    let order = order.rubi_atom();
-    let function_head = function_head.rubi_atom();
-    let argument = argument.rubi_atom();
+    let order = order.into_rubi_atom();
+    let function_head = function_head.into_rubi_atom();
+    let argument = argument.into_rubi_atom();
     if order.is_zero() {
         let AtomView::Var(function_head) = function_head.as_view() else {
             panic!("Rubi derivative function head must be a symbol");
@@ -16111,7 +16137,7 @@ fn rubi_expand_trig(expr: &Atom, x: Symbol) -> Atom {
 }
 
 fn rubi_expand_trig_product(u: impl RubiAtomArgument, v: &Atom, x: Symbol) -> Atom {
-    let z = rubi_activate_trig(&u.rubi_atom());
+    let z = rubi_activate_trig(&u.into_rubi_atom());
     let w = rubi_expand_trig(v, x);
     match w.as_view() {
         AtomView::Add(add) => {
@@ -16126,7 +16152,7 @@ fn rubi_expand_trig_product(u: impl RubiAtomArgument, v: &Atom, x: Symbol) -> At
 }
 
 fn rubi_expand_trig_reduce(u: impl RubiAtomArgument, v: &Atom, x: Symbol) -> Atom {
-    let u = u.rubi_atom();
+    let u = u.into_rubi_atom();
     let w = rubi_expand_trig_reduce_one(v, x);
     match w.as_view() {
         AtomView::Add(add) => add
@@ -16945,7 +16971,7 @@ fn rubi_binomial_parts(expr: AtomView<'_>, x: Symbol) -> Option<RubiBinomialPart
 
             let left = rubi_binomial_parts(first.as_view(), x)?;
             let right = rubi_binomial_parts(rest.as_view(), x)?;
-            if !eqq!(left.n.to_owned(), right.n.to_owned()) {
+            if !eqq!(left.n, right.n) {
                 return None;
             }
             Some(RubiBinomialParts {
@@ -17004,7 +17030,7 @@ fn rubi_multiply_binomial_parts(
                 n: exponent_sum,
             });
         }
-        if eqq!(exponent_sum.to_owned(), 0) {
+        if eqq!(exponent_sum, 0) {
             return Some(RubiBinomialParts {
                 a: &left.b * &right.b,
                 b: left.b * right.a,
@@ -17023,9 +17049,7 @@ fn rubi_multiply_binomial_parts(
         }
         return None;
     }
-    if eqq!(left.n.to_owned(), right.n.to_owned())
-        && eqq!(&left.a * &right.b + &left.b * &right.a, 0)
-    {
+    if eqq!(left.n, right.n) && eqq!(&left.a * &right.b + &left.b * &right.a, 0) {
         return Some(RubiBinomialParts {
             a: left.a * right.a,
             b: left.b * right.b,
@@ -17847,8 +17871,8 @@ fn rubi_expand_linear_product(
     b: &Atom,
     x: Symbol,
 ) -> Option<Atom> {
-    let v = v.rubi_atom();
-    let u = u.rubi_atom();
+    let v = v.into_rubi_atom();
+    let u = u.into_rubi_atom();
     if !is_free_of((a, b), x) || b.is_zero() || !poly_q(&u, x) {
         return None;
     }
@@ -18319,7 +18343,7 @@ fn rubi_contains_noninteger_power(expr: AtomView<'_>) -> bool {
     }
 }
 
-fn rubi_monomial_exponents(term: &Atom) -> Option<BTreeMap<String, i64>> {
+fn rubi_monomial_exponents(term: AtomView<'_>) -> Option<BTreeMap<String, i64>> {
     fn add_factor(factor: AtomView<'_>, exponents: &mut BTreeMap<String, i64>) -> Option<()> {
         match factor {
             AtomView::Num(_) => Some(()),
@@ -18353,11 +18377,11 @@ fn rubi_monomial_exponents(term: &Atom) -> Option<BTreeMap<String, i64>> {
     }
 
     let mut exponents = BTreeMap::new();
-    add_factor(term.as_view(), &mut exponents)?;
+    add_factor(term, &mut exponents)?;
     Some(exponents)
 }
 
-fn rubi_mathematica_monomial_cmp(left: &Atom, right: &Atom) -> Ordering {
+fn rubi_mathematica_monomial_cmp(left: AtomView<'_>, right: AtomView<'_>) -> Ordering {
     match (
         rubi_monomial_exponents(left),
         rubi_monomial_exponents(right),
@@ -18380,7 +18404,7 @@ fn rubi_mathematica_monomial_cmp(left: &Atom, right: &Atom) -> Ordering {
         }
         (Some(_), None) => Ordering::Less,
         (None, Some(_)) => Ordering::Greater,
-        (None, None) => right.cmp(left),
+        (None, None) => right.cmp(&left),
     }
 }
 
@@ -18388,23 +18412,21 @@ fn rubi_mathematica_first_sum_term(expr: &Atom) -> Option<Atom> {
     let AtomView::Add(add) = expr.as_view() else {
         return None;
     };
-    let terms = add
-        .into_iter()
-        .map(|term| term.to_owned())
-        .collect::<Vec<_>>();
+    let terms = add.into_iter().collect::<Vec<_>>();
 
     terms
         .iter()
-        .find(|term| matches!(term.as_view(), AtomView::Num(_)))
-        .cloned()
+        .copied()
+        .find(|term| matches!(*term, AtomView::Num(_)))
         .or_else(|| {
             terms
                 .iter()
-                .filter(|term| !rubi_contains_noninteger_power(term.as_view()))
-                .min_by(|left, right| rubi_mathematica_monomial_cmp(left, right))
-                .cloned()
+                .copied()
+                .filter(|term| !rubi_contains_noninteger_power(*term))
+                .min_by(|left, right| rubi_mathematica_monomial_cmp(*left, *right))
         })
-        .or_else(|| terms.first().cloned())
+        .or_else(|| terms.first().copied())
+        .map(|term| term.to_owned())
 }
 
 fn rubi_mathematica_first_sum_term_in(expr: &Atom, x: Symbol) -> Option<Atom> {
@@ -18597,7 +18619,6 @@ where
 fn product_atoms(factors: &[Atom]) -> Atom {
     factors
         .iter()
-        .cloned()
         .fold(Atom::num(1), |product, factor| product * factor)
 }
 
@@ -18787,6 +18808,17 @@ fn rubi_leaf_count<T: AtomCore>(expr: T) -> usize {
             1 + rubi_leaf_count(base) + rubi_leaf_count(exponent)
         }
         AtomView::Fun(fun) => 1 + fun.into_iter().map(rubi_leaf_count).sum::<usize>(),
+    }
+}
+
+// Walk read-only descendants without copying each subtree into an owned Atom.
+fn rubi_child_views<'a>(expr: AtomView<'a>) -> impl Iterator<Item = AtomView<'a>> {
+    match expr {
+        AtomView::Add(add) => add.to_slice().iter(),
+        AtomView::Mul(mul) => mul.to_slice().iter(),
+        AtomView::Pow(power) => power.to_slice().iter(),
+        AtomView::Fun(function) => function.to_slice().iter(),
+        AtomView::Num(_) | AtomView::Var(_) => symbolica::atom::ListSlice::empty().iter(),
     }
 }
 
@@ -19214,8 +19246,8 @@ fn rubi_equivalent_q(left: &Atom, right: &Atom) -> bool {
 }
 
 fn rubi_branch_sensitive_ne_q(left: impl RubiAtomArgument, right: impl RubiAtomArgument) -> bool {
-    let left = left.rubi_atom();
-    let right = right.rubi_atom();
+    let left = left.rubi_atom_or_view();
+    let right = right.rubi_atom_or_view();
     if left == right {
         return false;
     }
@@ -19229,7 +19261,7 @@ fn rubi_branch_sensitive_ne_q(left: impl RubiAtomArgument, right: impl RubiAtomA
         return true;
     }
 
-    !rubi_algebraic_zero_q(&(left - right))
+    !rubi_algebraic_zero_q(&(left.as_view() - right.as_view()))
 }
 
 fn rubi_contains_symbolic_fractional_power(expr: AtomView<'_>) -> bool {
@@ -19464,13 +19496,11 @@ fn rubi_inverse_trig_angle_exponential(angle: &Atom) -> Option<Atom> {
     };
     let terms: Vec<_> = add.into_iter().map(|term| term.to_owned()).collect();
     for (index, term) in terms.iter().enumerate() {
-        let shift = if eqq!(term.to_owned(), Atom::var(Symbol::PI) / 2) {
+        let shift = if eqq!(term, Atom::var(Symbol::PI) / 2) {
             Some(rubi_i())
-        } else if eqq!(term.to_owned(), -Atom::var(Symbol::PI) / 2) {
+        } else if eqq!(term, -Atom::var(Symbol::PI) / 2) {
             Some(-rubi_i())
-        } else if eqq!(term.to_owned(), Atom::var(Symbol::PI))
-            || eqq!(term.to_owned(), -Atom::var(Symbol::PI))
-        {
+        } else if eqq!(term, Atom::var(Symbol::PI)) || eqq!(term, -Atom::var(Symbol::PI)) {
             Some(-Atom::num(1))
         } else {
             None
@@ -19539,13 +19569,13 @@ fn rubi_powered_inverse_trig_exponential(
         _ => return None,
     };
 
-    if eqq!(scale.to_owned(), 1) {
+    if eqq!(scale, 1) {
         return Some(base);
     }
-    if eqq!(scale.to_owned(), -1) {
+    if eqq!(scale, -1) {
         return Some(Atom::num(1) / base);
     }
-    if eqq!(scale.to_owned(), 2) {
+    if eqq!(scale, 2) {
         return Some(base.pow(2).expand());
     }
     if eqq!(scale, -2) {
@@ -21450,7 +21480,7 @@ fn rubi_x_dependent_constant_base_power_count(expr: &Atom, x: Symbol) -> usize {
                 factor,
                 AtomView::Pow(power)
                     if is_free_of(power.get_base(), x)
-                        && power.get_exp().to_owned().contains_symbol(x)
+                        && power.get_exp().contains_symbol(x)
             )
         })
         .count()
@@ -22213,10 +22243,7 @@ fn rubi_has_polynomial_derivative_factor_pair(expr: AtomView<'_>, x: Symbol) -> 
     let AtomView::Mul(product) = expr else {
         return true;
     };
-    let factors = product
-        .into_iter()
-        .map(|factor| factor.to_owned())
-        .collect::<Vec<_>>();
+    let factors = product.into_iter().collect::<Vec<_>>();
     if factors.len() < 2 {
         return true;
     }
@@ -22225,9 +22252,7 @@ fn rubi_has_polynomial_derivative_factor_pair(expr: AtomView<'_>, x: Symbol) -> 
         if rubi_polynomial_derivative_pair_q(&candidate.to_owned(), derivative, x) {
             return true;
         }
-        rubi_children(candidate)
-            .into_iter()
-            .any(|child| contains_derivative_pair(child.as_view(), derivative, x))
+        rubi_child_views(candidate).any(|child| contains_derivative_pair(child, derivative, x))
     }
 
     factors.iter().enumerate().any(|(main_index, main)| {
@@ -22235,9 +22260,9 @@ fn rubi_has_polynomial_derivative_factor_pair(expr: AtomView<'_>, x: Symbol) -> 
             .iter()
             .enumerate()
             .filter(|(index, _)| *index != main_index)
-            .map(|(_, factor)| factor.to_owned())
+            .map(|(_, factor)| *factor)
             .fold(Atom::num(1), |product, factor| product * factor);
-        rubi_poly_q(&derivative, x) && contains_derivative_pair(main.as_view(), &derivative, x)
+        rubi_poly_q(&derivative, x) && contains_derivative_pair(*main, &derivative, x)
     })
 }
 
@@ -22654,7 +22679,7 @@ fn rubi_function_heads(expr: AtomView<'_>) -> Vec<Symbol> {
 fn rubi_has_x_dependent_exponent(expr: AtomView<'_>, x: Symbol) -> bool {
     match expr {
         AtomView::Pow(power) => {
-            power.get_exp().to_owned().contains_symbol(x)
+            power.get_exp().contains_symbol(x)
                 || rubi_has_x_dependent_exponent(power.get_base(), x)
                 || rubi_has_x_dependent_exponent(power.get_exp(), x)
         }
@@ -22775,7 +22800,7 @@ fn rubi_has_algebraic_zero_x_free_additive_part(expr: AtomView<'_>, x: Symbol) -
             AtomView::Pow(_) => return false,
             _ => factor,
         };
-        if !base.to_owned().contains_symbol(x) {
+        if !base.contains_symbol(x) {
             return false;
         }
 
@@ -22934,7 +22959,7 @@ fn rubi_max_common_polynomial_base_degree_count(expr: AtomView<'_>, x: Symbol) -
     };
     let degrees = factors
         .into_iter()
-        .filter(|factor| factor.to_owned().contains_symbol(x))
+        .filter(|factor| factor.contains_symbol(x))
         .map(|factor| {
             let base = match factor {
                 AtomView::Pow(power) if is_free_of(power.get_exp(), x) => {
@@ -23090,9 +23115,9 @@ fn rubi_top_level_x_factor_count(expr: AtomView<'_>, x: Symbol) -> usize {
     match expr {
         AtomView::Mul(product) => product
             .into_iter()
-            .filter(|factor| factor.to_owned().contains_symbol(x))
+            .filter(|factor| factor.contains_symbol(x))
             .count(),
-        _ => usize::from(expr.to_owned().contains_symbol(x)),
+        _ => usize::from(expr.contains_symbol(x)),
     }
 }
 
@@ -23133,15 +23158,17 @@ fn rubi_top_level_unpowered_affine_factor_count(expr: AtomView<'_>, x: Symbol) -
 }
 
 fn rubi_has_repeated_proper_x_dependent_subexpression(expr: AtomView<'_>, x: Symbol) -> bool {
-    fn visit(expr: AtomView<'_>, x: Symbol, seen: &mut Vec<Atom>) -> bool {
-        for child in rubi_children(expr) {
-            if child != Atom::var(x) && child.contains_symbol(x) {
-                if seen.iter().any(|candidate| candidate == &child) {
+    fn visit<'a>(expr: AtomView<'a>, x: Symbol, seen: &mut Vec<AtomView<'a>>) -> bool {
+        for child in rubi_child_views(expr) {
+            if !matches!(child, AtomView::Var(variable) if variable.get_symbol() == x)
+                && child.contains_symbol(x)
+            {
+                if seen.contains(&child) {
                     return true;
                 }
-                seen.push(child.to_owned());
+                seen.push(child);
             }
-            if visit(child.as_view(), x, seen) {
+            if visit(child, x, seen) {
                 return true;
             }
         }
@@ -23264,7 +23291,7 @@ fn trace_direct_polynomial_integration(kind: &str, expr: &Atom) {
 
 fn substitute_symbol(expr: &Atom, symbol: Symbol, replacement: impl RubiAtomArgument) -> Atom {
     expr.replace(Atom::var(symbol).to_pattern())
-        .with(replacement.rubi_atom())
+        .with(replacement.into_rubi_atom())
 }
 
 fn rubi_replace_all(expr: &Atom, symbol: Symbol, replacement: impl RubiAtomArgument) -> Atom {
@@ -23272,7 +23299,7 @@ fn rubi_replace_all(expr: &Atom, symbol: Symbol, replacement: impl RubiAtomArgum
 }
 
 fn rubi_subst(expr: &Atom, symbol: Symbol, replacement: impl RubiAtomArgument) -> Atom {
-    let replacement = replacement.rubi_atom();
+    let replacement = replacement.into_rubi_atom();
     #[cfg(feature = "steps")]
     record_explanation_substitution(symbol, &replacement);
     let substituted = rubi_subst_aux(expr, symbol, &replacement);
@@ -23499,7 +23526,7 @@ fn rubi_log_shift_power_subst(
 
 fn rubi_subst_expression(expr: &Atom, target: &Atom, replacement: impl RubiAtomArgument) -> Atom {
     expr.replace(target.to_pattern())
-        .with(replacement.rubi_atom())
+        .with(replacement.into_rubi_atom())
 }
 
 // IntegrationUtilityFunctions.m: Subst[u_,(a_.*x_)^n_,v_].
@@ -23702,8 +23729,8 @@ fn rubi_defer_unintegrable_calls(expr: AtomView<'_>) -> Atom {
 fn rubi_rhs_int(expr: impl RubiAtomArgument, x: Symbol) -> Atom {
     // Mathematica evaluates active trig calls in an Int RHS before dispatching
     // the recursive Rubi rules, e.g. Csc[z+Pi/2] becomes Sec[z].
-    let expr = expr.rubi_atom();
-    let evaluated = rubi_reduce_builtin_trig_pi_shifts(&expr);
+    let expr = expr.rubi_atom_or_view();
+    let evaluated = rubi_reduce_builtin_trig_pi_shifts_view(expr.as_view());
     #[cfg(feature = "steps")]
     if RUBI_CAPTURE_RULE_RHS.with(Cell::get) {
         return rubi_symbols().rubi_int.call((evaluated, Atom::var(x)));
@@ -24552,7 +24579,7 @@ fn rubi_function_of_linear_common_slope_factor(left: &Atom, right: &Atom) -> Ato
         return Atom::num((numerator_gcd, denominator_lcm));
     }
 
-    if eqq!(left.to_owned(), right.to_owned()) || eqq!(left.to_owned(), -right) {
+    if eqq!(left, right) || eqq!(left, -right) {
         return left.to_owned();
     }
 
@@ -24772,8 +24799,8 @@ fn rubi_int_binomial_q(
     int_binomial_q(n, m, p)
 }
 
-fn integers_q(exprs: &[Atom]) -> bool {
-    exprs.iter().all(integer_q)
+fn integers_q(exprs: &[&Atom]) -> bool {
+    exprs.iter().all(|expr| integer_q(expr))
 }
 
 fn int_binomial_pair_q(
@@ -24785,24 +24812,21 @@ fn int_binomial_pair_q(
     p: &Atom,
     q: &Atom,
 ) -> bool {
-    integers_q(&[p.to_owned(), q.to_owned()])
+    integers_q(&[p, q])
         || igtq!(p, 0)
         || igtq!(q, 0)
         || (n == &Atom::num(2) || n == &Atom::num(4))
-            && (integers_q(&[p.to_owned(), Atom::num(4) * q])
-                || integers_q(&[Atom::num(4) * p, q.to_owned()]))
+            && (integers_q(&[p, &(Atom::num(4) * q)]) || integers_q(&[&(Atom::num(4) * p), q]))
         || n == &Atom::num(2)
-            && (integers_q(&[Atom::num(2) * p, Atom::num(2) * q])
-                || integers_q(&[Atom::num(3) * p, q.to_owned()])
-                    && eqq!(b * c + Atom::num(3) * a * d, 0)
-                || integers_q(&[p.to_owned(), Atom::num(3) * q])
-                    && eqq!(Atom::num(3) * b * c + a * d, 0))
+            && (integers_q(&[&(Atom::num(2) * p), &(Atom::num(2) * q)])
+                || integers_q(&[&(Atom::num(3) * p), q]) && eqq!(b * c + Atom::num(3) * a * d, 0)
+                || integers_q(&[p, &(Atom::num(3) * q)]) && eqq!(Atom::num(3) * b * c + a * d, 0))
         || n == &Atom::num(3)
-            && (integers_q(&[p + Atom::num(1) / Atom::num(3), q.to_owned()])
-                || integers_q(&[q + Atom::num(1) / Atom::num(3), p.to_owned()]))
+            && (integers_q(&[&(p + Atom::num(1) / Atom::num(3)), q])
+                || integers_q(&[&(q + Atom::num(1) / Atom::num(3)), p]))
         || n == &Atom::num(3)
-            && (integers_q(&[p + Atom::num(2) / Atom::num(3), q.to_owned()])
-                || integers_q(&[q + Atom::num(2) / Atom::num(3), p.to_owned()]))
+            && (integers_q(&[&(p + Atom::num(2) / Atom::num(3)), q])
+                || integers_q(&[&(q + Atom::num(2) / Atom::num(3)), p]))
             && eqq!(b * c + a * d, 0)
 }
 
@@ -24831,35 +24855,27 @@ fn int_binomial_scaled_q(
     p: &Atom,
     q: &Atom,
 ) -> bool {
-    integers_q(&[p.to_owned(), q.to_owned()])
+    integers_q(&[p, q])
         || igtq!(p, 0)
         || igtq!(q, 0)
         || n == &Atom::num(2)
-            && (integers_q(&[m.to_owned(), Atom::num(2) * p, Atom::num(2) * q])
-                || integers_q(&[Atom::num(2) * m, p.to_owned(), Atom::num(2) * q])
-                || integers_q(&[Atom::num(2) * m, Atom::num(2) * p, q.to_owned()]))
+            && (integers_q(&[m, &(Atom::num(2) * p), &(Atom::num(2) * q)])
+                || integers_q(&[&(Atom::num(2) * m), p, &(Atom::num(2) * q)])
+                || integers_q(&[&(Atom::num(2) * m), &(Atom::num(2) * p), q]))
         || n == &Atom::num(4)
-            && (integers_q(&[m.to_owned(), p.to_owned(), Atom::num(2) * q])
-                || integers_q(&[m.to_owned(), Atom::num(2) * p, q.to_owned()]))
+            && (integers_q(&[m, p, &(Atom::num(2) * q)])
+                || integers_q(&[m, &(Atom::num(2) * p), q]))
         || n == &Atom::num(2)
-            && integers_q(&[
-                m / Atom::num(2),
-                p + Atom::num(1) / Atom::num(3),
-                q.to_owned(),
-            ])
+            && integers_q(&[&(m / Atom::num(2)), &(p + Atom::num(1) / Atom::num(3)), q])
             && (eqq!(b * c + Atom::num(3) * a * d, 0) || eqq!(b * c - Atom::num(9) * a * d, 0))
         || n == &Atom::num(2)
-            && integers_q(&[
-                m / Atom::num(2),
-                q + Atom::num(1) / Atom::num(3),
-                p.to_owned(),
-            ])
+            && integers_q(&[&(m / Atom::num(2)), &(q + Atom::num(1) / Atom::num(3)), p])
             && (eqq!(a * d + Atom::num(3) * b * c, 0) || eqq!(a * d - Atom::num(9) * b * c, 0))
         || n == &Atom::num(3)
             && integers_q(&[
-                (m - Atom::num(1)) / Atom::num(3),
-                q.to_owned(),
-                p - Atom::num(1) / Atom::num(2),
+                &((m - Atom::num(1)) / Atom::num(3)),
+                q,
+                &(p - Atom::num(1) / Atom::num(2)),
             ])
             && (eqq!(b * c - Atom::num(4) * a * d, 0)
                 || eqq!(b * c + Atom::num(8) * a * d, 0)
@@ -24871,9 +24887,9 @@ fn int_binomial_scaled_q(
                 ))
         || n == &Atom::num(3)
             && integers_q(&[
-                (m - Atom::num(1)) / Atom::num(3),
-                p.to_owned(),
-                q - Atom::num(1) / Atom::num(2),
+                &((m - Atom::num(1)) / Atom::num(3)),
+                p,
+                &(q - Atom::num(1) / Atom::num(2)),
             ])
             && (eqq!(Atom::num(4) * b * c - a * d, 0)
                 || eqq!(Atom::num(8) * b * c + a * d, 0)
@@ -24883,29 +24899,22 @@ fn int_binomial_scaled_q(
                     0
                 ))
         || n == &Atom::num(3)
-            && (integers_q(&[m.to_owned(), q.to_owned(), Atom::num(3) * p])
-                || integers_q(&[m.to_owned(), p.to_owned(), Atom::num(3) * q]))
+            && (integers_q(&[m, q, &(Atom::num(3) * p)])
+                || integers_q(&[m, p, &(Atom::num(3) * q)]))
             && eqq!(b * c + a * d, 0)
         || n == &Atom::num(3)
             && (integers_q(&[
-                (m + Atom::num(2)) / Atom::num(3),
-                p + Atom::num(2) / Atom::num(3),
-                q.to_owned(),
+                &((m + Atom::num(2)) / Atom::num(3)),
+                &(p + Atom::num(2) / Atom::num(3)),
+                q,
             ]) || integers_q(&[
-                (m + Atom::num(2)) / Atom::num(3),
-                q + Atom::num(2) / Atom::num(3),
-                p.to_owned(),
+                &((m + Atom::num(2)) / Atom::num(3)),
+                &(q + Atom::num(2) / Atom::num(3)),
+                p,
             ]))
         || n == &Atom::num(3)
-            && (integers_q(&[
-                m / Atom::num(3),
-                p + Atom::num(1) / Atom::num(3),
-                q.to_owned(),
-            ]) || integers_q(&[
-                m / Atom::num(3),
-                q + Atom::num(1) / Atom::num(3),
-                p.to_owned(),
-            ]))
+            && (integers_q(&[&(m / Atom::num(3)), &(p + Atom::num(1) / Atom::num(3)), q])
+                || integers_q(&[&(m / Atom::num(3)), &(q + Atom::num(1) / Atom::num(3)), p]))
 }
 
 fn rubi_int_binomial_scaled_q(
@@ -31535,10 +31544,31 @@ mod tests {
         assert_eq!(evaluated, ["left", "right"]);
         assert_eq!(left, left_before);
         assert_eq!(right, right_before);
+        assert!(eqq!(left.as_view(), right.as_view()));
+        assert!(eqq!(parse!("(x+1)^2").as_view(), &right));
         assert!(eqq!(x, Atom::var(x)));
         assert!(eqq!((1, 2), parse!("1/2")));
         assert!(eqq!(parse!("1+x-x"), 1));
         assert!(neq!(&left, parse!("x^2+1")));
+    }
+
+    #[test]
+    fn integer_list_guards_borrow_operands_and_evaluate_each_once() {
+        let fractional = parse!("1/2");
+        let mut evaluated = Vec::new();
+        assert!(!integersq!([
+            {
+                evaluated.push("first");
+                &fractional
+            },
+            {
+                evaluated.push("second");
+                Atom::num(2)
+            },
+        ]));
+        assert_eq!(evaluated, ["first", "second"]);
+        assert_eq!(fractional, parse!("1/2"));
+        assert!(integersq!([Atom::num(2), &Atom::num(4), parse!("1+2")]));
     }
 
     #[test]
@@ -33287,6 +33317,23 @@ mod tests {
         );
 
         assert_eq!(rubi_simp(&input, x), input);
+    }
+
+    #[test]
+    fn star_identity_reuses_owned_input_and_preserves_borrowed_input() {
+        let owned = parse!("f(x)+g(y)+h(z)");
+        let original_allocation = owned.as_view().get_data().as_ptr();
+        let identity = rubi_star(Atom::num(1), owned);
+        assert_eq!(identity, parse!("f(x)+g(y)+h(z)"));
+        assert_eq!(original_allocation, identity.as_view().get_data().as_ptr());
+
+        let borrowed = parse!("f(x)+g(y)+h(z)");
+        let independent = rubi_star(Atom::num(1), &borrowed);
+        assert_eq!(independent, borrowed);
+        assert_ne!(
+            borrowed.as_view().get_data().as_ptr(),
+            independent.as_view().get_data().as_ptr()
+        );
     }
 
     #[test]
