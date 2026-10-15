@@ -11,7 +11,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2341(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2341,
         source: "Int[Pq_*(a_+b_.*x_^2)^p_.,x_Symbol] :=
           Int[ExpandIntegrand[Pq*(a+b*x^2)^p,x],x] /;
@@ -35,7 +35,7 @@ fn push_rules_rule_2341(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2342(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2342,
         source: "Int[Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           Int[x*PolynomialQuotient[Pq,x,x]*(a+b*x^2)^p,x] /;
@@ -62,7 +62,7 @@ fn push_rules_rule_2342(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2343(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, p_, px__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2343,
         source: "Int[Px_*(a_+b_.*x_^2)^p_.,x_Symbol] :=
           Int[PolynomialQuotient[Px,a+b*x^2,x]*(a+b*x^2)^(p+1),x] /;
@@ -91,7 +91,7 @@ fn push_rules_rule_2343(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2344(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2344,
         source: "Int[Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{A=Coeff[Pq,x,0],Q=PolynomialQuotient[Pq-Coeff[Pq,x,0],x^2,x]},
@@ -133,7 +133,7 @@ fn push_rules_rule_2344(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2345(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2345,
         source: "Int[Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{Q=PolynomialQuotient[Pq,a+b*x^2,x],
@@ -183,7 +183,7 @@ fn push_rules_rule_2345(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2346(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2346,
         source: "Int[Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{q=Expon[Pq,x],e=Coeff[Pq,x,Expon[Pq,x]]},

@@ -49,7 +49,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5997(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5997,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_],x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*Sinh[d+e*x]/(e^2-b^2*c^2*Log[F]^2) +
@@ -77,7 +77,7 @@ fn push_rules_rule_5997(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5998(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5998,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Cosh[d_.+e_.*x_],x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*Cosh[d+e*x]/(e^2-b^2*c^2*Log[F]^2) +
@@ -105,7 +105,7 @@ fn push_rules_rule_5998(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5999(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5999,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^n_,x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*Sinh[d+e*x]^n/(e^2*n^2-b^2*c^2*Log[F]^2) +
@@ -137,7 +137,7 @@ fn push_rules_rule_5999(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6000(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6000,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Cosh[d_.+e_.*x_]^n_,x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*Cosh[d+e*x]^n/(e^2*n^2-b^2*c^2*Log[F]^2) +
@@ -169,7 +169,7 @@ fn push_rules_rule_6000(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6001(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6001,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^n_,x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*Sinh[d+e*x]^(n+2)/(e^2*(n+1)*(n+2)) +
@@ -199,7 +199,7 @@ fn push_rules_rule_6001(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6002(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6002,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Cosh[d_.+e_.*x_]^n_,x_Symbol] :=
           b*c*Log[F]*F^(c*(a+b*x))*Cosh[d+e*x]^(n+2)/(e^2*(n+1)*(n+2)) -
@@ -229,7 +229,7 @@ fn push_rules_rule_6002(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6003(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6003,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^n_,x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*Sinh[d+e*x]^(n+2)/(e^2*(n+1)*(n+2)) +
@@ -263,7 +263,7 @@ fn push_rules_rule_6003(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6004(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6004,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Cosh[d_.+e_.*x_]^n_,x_Symbol] :=
           b*c*Log[F]*F^(c*(a+b*x))*Cosh[d+e*x]^(n+2)/(e^2*(n+1)*(n+2)) -
@@ -297,7 +297,7 @@ fn push_rules_rule_6004(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6005(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6005,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^n_,x_Symbol] :=
           E^(n*(d+e*x))*Sinh[d+e*x]^n/(-1+E^(2*(d+e*x)))^n \\[Star] Int[F^(c*(a+b*x))*(-1+E^(2*(d+e*x)))^n/E^(n*(d+e*x)),x] /;
@@ -330,7 +330,7 @@ fn push_rules_rule_6005(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6006(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6006,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Cosh[d_.+e_.*x_]^n_,x_Symbol] :=
           E^(n*(d+e*x))*Cosh[d+e*x]^n/(1+E^(2*(d+e*x)))^n \\[Star] Int[F^(c*(a+b*x))*(1+E^(2*(d+e*x)))^n/E^(n*(d+e*x)),x] /;
@@ -363,7 +363,7 @@ fn push_rules_rule_6006(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6007(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6007,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Tanh[d_.+e_.*x_]^n_.,x_Symbol] :=
           Int[ExpandIntegrand[F^(c*(a+b*x))*(-1+E^(2*(d+e*x)))^n/(1+E^(2*(d+e*x)))^n,x],x] /;
@@ -392,7 +392,7 @@ fn push_rules_rule_6007(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6008(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6008,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Coth[d_.+e_.*x_]^n_.,x_Symbol] :=
           Int[ExpandIntegrand[F^(c*(a+b*x))*(1+E^(2*(d+e*x)))^n/(-1+E^(2*(d+e*x)))^n,x],x] /;
@@ -421,7 +421,7 @@ fn push_rules_rule_6008(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6009(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6009,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sech[d_.+e_.*x_]^n_,x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*(Sech[d+e*x]^n/(e^2*n^2-b^2*c^2*Log[F]^2)) -
@@ -453,7 +453,7 @@ fn push_rules_rule_6009(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6010(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6010,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Csch[d_.+e_.*x_]^n_,x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*(Csch[d+e*x]^n/(e^2*n^2-b^2*c^2*Log[F]^2)) -
@@ -485,7 +485,7 @@ fn push_rules_rule_6010(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6011(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6011,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sech[d_.+e_.*x_]^n_,x_Symbol] :=
           b*c*Log[F]*F^(c*(a+b*x))*Sech[d+e*x]^(n-2)/(e^2*(n-1)*(n-2)) +
@@ -515,7 +515,7 @@ fn push_rules_rule_6011(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6012(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6012,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Csch[d_.+e_.*x_]^n_,x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*Csch[d+e*x]^(n-2)/(e^2*(n-1)*(n-2)) -
@@ -545,7 +545,7 @@ fn push_rules_rule_6012(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6013(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6013,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sech[d_.+e_.*x_]^n_,x_Symbol] :=
           b*c*Log[F]*F^(c*(a+b*x))*Sech[d+e*x]^(n-2)/(e^2*(n-1)*(n-2)) +
@@ -579,7 +579,7 @@ fn push_rules_rule_6013(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6014(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6014,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Csch[d_.+e_.*x_]^n_,x_Symbol] :=
           -b*c*Log[F]*F^(c*(a+b*x))*Csch[d+e*x]^(n-2)/(e^2*(n-1)*(n-2)) -
@@ -613,7 +613,7 @@ fn push_rules_rule_6014(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6015(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6015,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sech[d_.+e_.*x_]^n_.,x_Symbol] :=
           2^n*E^(n*(d+e*x))*F^(c*(a+b*x))/(e*n+b*c*Log[F])*Hypergeometric2F1[n,n/2+b*c*Log[F]/(2*e),1+n/2+b*c*Log[F]/(2*e),-E^(2*(d+e*x))] /;
@@ -649,7 +649,7 @@ fn push_rules_rule_6015(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6016(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6016,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Csch[d_.+e_.*x_]^n_.,x_Symbol] :=
           (-2)^n*E^(n*(d+e*x))*F^(c*(a+b*x))/(e*n+b*c*Log[F])*Hypergeometric2F1[n,n/2+b*c*Log[F]/(2*e),1+n/2+b*c*Log[F]/(2*e),E^(2*(d+e*x))] /;
@@ -685,7 +685,7 @@ fn push_rules_rule_6016(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6017(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6017,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sech[d_.+e_.*x_]^n_.,x_Symbol] :=
           (1+E^(2*(d+e*x)))^n*Sech[d+e*x]^n/E^(n*(d+e*x)) \\[Star] Int[SimplifyIntegrand[F^(c*(a+b*x))*E^(n*(d+e*x))/(1+E^(2*(d+e*x)))^n,x],x] /;
@@ -720,7 +720,7 @@ fn push_rules_rule_6017(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6018(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6018,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Csch[d_.+e_.*x_]^n_.,x_Symbol] :=
           (1-E^(-2*(d+e*x)))^n*Csch[d+e*x]^n/E^(-n*(d+e*x)) \\[Star] Int[SimplifyIntegrand[F^(c*(a+b*x))*E^(-n*(d+e*x))/(1-E^(-2*(d+e*x)))^n,x],x] /;
@@ -756,7 +756,7 @@ fn push_rules_rule_6018(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6019(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, f__, g__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6019,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*(f_+g_.*Sinh[d_.+e_.*x_])^n_.,x_Symbol] :=
           2^n*f^n \\[Star] Int[F^(c*(a+b*x))*Cosh[d/2-f*Pi/(4*g)+e*x/2]^(2*n),x] /;
@@ -787,7 +787,7 @@ fn push_rules_rule_6019(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6020(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, f__, g__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6020,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*(f_+g_.*Cosh[d_.+e_.*x_])^n_.,x_Symbol] :=
           2^n*g^n \\[Star] Int[F^(c*(a+b*x))*Cosh[d/2+e*x/2]^(2*n),x] /;
@@ -817,7 +817,7 @@ fn push_rules_rule_6020(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6021(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, f__, g__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6021,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*(f_+g_.*Cosh[d_.+e_.*x_])^n_.,x_Symbol] :=
           2^n*g^n \\[Star] Int[F^(c*(a+b*x))*Sinh[d/2+e*x/2]^(2*n),x] /;
@@ -847,7 +847,7 @@ fn push_rules_rule_6021(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6022(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, f__, g__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6022,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*(f_+g_.*Sinh[d_.+e_.*x_])^n_.,x_Symbol] :=
           (f+g*Sinh[d+e*x])^n/Cosh[d/2-f*Pi/(4*g)+e*x/2]^(2*n) \\[Star] Int[F^(c*(a+b*x))*Cosh[d/2-f*Pi/(4*g)+e*x/2]^(2*n),x] /;
@@ -879,7 +879,7 @@ fn push_rules_rule_6022(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6023(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, f__, g__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6023,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*(f_+g_.*Cosh[d_.+e_.*x_])^n_.,x_Symbol] :=
           (f+g*Cosh[d+e*x])^n/Cosh[d/2+e*x/2]^(2*n) \\[Star] Int[F^(c*(a+b*x))*Cosh[d/2+e*x/2]^(2*n),x] /;
@@ -910,7 +910,7 @@ fn push_rules_rule_6023(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6024(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, f__, g__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6024,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*(f_+g_.*Cosh[d_.+e_.*x_])^n_.,x_Symbol] :=
           (f+g*Cosh[d+e*x])^n/Sinh[d/2+e*x/2]^(2*n) \\[Star] Int[F^(c*(a+b*x))*Sinh[d/2+e*x/2]^(2*n),x] /;
@@ -941,7 +941,7 @@ fn push_rules_rule_6024(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6025(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, g__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6025,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Cosh[d_.+e_.*x_]^m_.*(f_+g_.*Sinh[d_.+e_.*x_])^n_.,x_Symbol] :=
           g^n \\[Star] Int[F^(c*(a+b*x))*Tanh[d/2+e*x/2-f*Pi/(4*g)]^m,x] /;
@@ -973,7 +973,7 @@ fn push_rules_rule_6025(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6026(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, f__, g__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6026,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^m_.*(f_+g_.*Cosh[d_.+e_.*x_])^n_.,x_Symbol] :=
           g^n \\[Star] Int[F^(c*(a+b*x))*Tanh[d/2+e*x/2]^m,x] /;
@@ -1002,7 +1002,7 @@ fn push_rules_rule_6026(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6027(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; capital_f_, a__, b__, c__, d__, e__, f__, g__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6027,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^m_.*(f_+g_.*Cosh[d_.+e_.*x_])^n_.,x_Symbol] :=
           g^n \\[Star] Int[F^(c*(a+b*x))*Coth[d/2+e*x/2]^m,x] /;
@@ -1031,7 +1031,7 @@ fn push_rules_rule_6027(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6028(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, g__, h__, i__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6028,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*(h_+i_.*Cosh[d_.+e_.*x_])/(f_+g_.*Sinh[d_.+e_.*x_]),x_Symbol] :=
           2*i \\[Star] Int[F^(c*(a+b*x))*(Cosh[d+e*x]/(f+g*Sinh[d+e*x])),x] +
@@ -1065,7 +1065,7 @@ fn push_rules_rule_6028(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6029(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, g__, h__, i__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6029,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*(h_+i_.*Sinh[d_.+e_.*x_])/(f_+g_.*Cosh[d_.+e_.*x_]),x_Symbol] :=
           2*i \\[Star] Int[F^(c*(a+b*x))*(Sinh[d+e*x]/(f+g*Cosh[d+e*x])),x] +
@@ -1099,7 +1099,7 @@ fn push_rules_rule_6029(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6030(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, c__, capital_g_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6030,
         source: "Int[F_^(c_.*u_)*G_[v_]^n_.,x_Symbol] :=
           Int[F^(c*ExpandToSum[u,x])*G[ExpandToSum[v,x]]^n,x] /;
@@ -1129,7 +1129,7 @@ fn push_rules_rule_6030(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6031(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6031,
         source: "Int[(f_.*x_)^m_.*F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^n_.,x_Symbol] :=
           Module[{u=IntHide[F^(c*(a+b*x))*Sinh[d+e*x]^n,x]},
@@ -1162,7 +1162,7 @@ fn push_rules_rule_6031(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6032(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6032,
         source: "Int[(f_.*x_)^m_.*F_^(c_.*(a_.+b_.*x_))*Cosh[d_.+e_.*x_]^n_.,x_Symbol] :=
           Module[{u=IntHide[F^(c*(a+b*x))*Cosh[d+e*x]^n,x]},
@@ -1195,7 +1195,7 @@ fn push_rules_rule_6032(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6033(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6033,
         source: "Int[(f_.*x_)^m_*F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_],x_Symbol] :=
           (f*x)^(m+1)/(f*(m+1))*F^(c*(a+b*x))*Sinh[d+e*x] -
@@ -1231,7 +1231,7 @@ fn push_rules_rule_6033(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6034(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6034,
         source: "Int[(f_.*x_)^m_*F_^(c_.*(a_.+b_.*x_))*Cosh[d_.+e_.*x_],x_Symbol] :=
           (f*x)^(m+1)/(f*(m+1))*F^(c*(a+b*x))*Cosh[d+e*x] -
@@ -1267,7 +1267,7 @@ fn push_rules_rule_6034(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6035(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, g__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6035,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^m_.*Cosh[f_.+g_.*x_]^n_.,x_Symbol] :=
           Int[ExpandTrigReduce[F^(c*(a+b*x)),Sinh[d+e*x]^m*Cosh[f+g*x]^n,x],x] /;
@@ -1299,7 +1299,7 @@ fn push_rules_rule_6036(rules: &mut Vec<RubiRule>) {
     rubi_symb!(
         capital_f_, a__, b__, c__, d__, e__, f__, g__, m_, n_, p_, x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6036,
         source: "Int[x_^p_.*F_^(c_.*(a_.+b_.*x_))*Sinh[d_.+e_.*x_]^m_.*Cosh[f_.+g_.*x_]^n_.,x_Symbol] :=
           Int[ExpandTrigReduce[x^p*F^(c*(a+b*x)),Sinh[d+e*x]^m*Cosh[f+g*x]^n,x],x] /;
@@ -1333,7 +1333,7 @@ fn push_rules_rule_6037(rules: &mut Vec<RubiRule>) {
     rubi_symb!(
         capital_f_, a__, b__, c__, d__, e__, capital_g_, capital_h_, m_, n_, x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6037,
         source: "Int[F_^(c_.*(a_.+b_.*x_))*G_[d_.+e_.*x_]^m_.*H_[d_.+e_.*x_]^n_.,x_Symbol] :=
           Int[ExpandTrigToExp[F^(c*(a+b*x)),G[d+e*x]^m*H[d+e*x]^n,x],x] /;
@@ -1366,7 +1366,7 @@ fn push_rules_rule_6037(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6038(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6038,
         source: "Int[F_^u_*Sinh[v_]^n_.,x_Symbol] :=
           Int[ExpandTrigToExp[F^u,Sinh[v]^n,x],x] /;
@@ -1394,7 +1394,7 @@ fn push_rules_rule_6038(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6039(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6039,
         source: "Int[F_^u_*Cosh[v_]^n_.,x_Symbol] :=
           Int[ExpandTrigToExp[F^u,Cosh[v]^n,x],x] /;
@@ -1422,7 +1422,7 @@ fn push_rules_rule_6039(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6040(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6040,
         source: "Int[F_^u_*Sinh[v_]^m_.*Cosh[v_]^n_.,x_Symbol] :=
           Int[ExpandTrigToExp[F^u,Sinh[v]^m*Cosh[v]^n,x],x] /;

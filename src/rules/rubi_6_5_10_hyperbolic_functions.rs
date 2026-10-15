@@ -7,7 +7,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5949(rules: &mut Vec<RubiRule>) {
     rubi_symb!(m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5949,
         source: "Int[u_^m_.*Sech[v_]^n_.,x_Symbol] :=
           Int[ExpandToSum[u,x]^m*Sech[ExpandToSum[v,x]]^n,x] /;
@@ -35,7 +35,7 @@ fn push_rules_rule_5949(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5950(rules: &mut Vec<RubiRule>) {
     rubi_symb!(m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5950,
         source: "Int[u_^m_.*Csch[v_]^n_.,x_Symbol] :=
           Int[ExpandToSum[u,x]^m*Csch[ExpandToSum[v,x]]^n,x] /;

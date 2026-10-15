@@ -120,7 +120,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1463(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1463,
         source: "Int[(d_+e_.*x_^2)/(b_.*x_^2+c_.*x_^4)^(3/4),x_Symbol] :=
           -2*(c*d-b*e)*(b*x^2+c*x^4)^(1/4)/(b*c*x) + e/c \\[Star] Int[(b*x^2+c*x^4)^(1/4)/x^2,x] /;
@@ -148,7 +148,7 @@ fn push_rules_rule_1463(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1464(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1464,
         source: "Int[(d_+e_.*x_^2)*(b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           e*(b*x^2+c*x^4)^(p+1)/(c*(4*p+3)*x) /;
@@ -179,7 +179,7 @@ fn push_rules_rule_1464(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1465(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1465,
         source: "Int[(d_+e_.*x_^2)*(b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           e*(b*x^2+c*x^4)^(p+1)/(c*(4*p+3)*x) - ((b*e*(2*p+1)-c*d*(4*p+3))/(c*(4*p+3))) \\[Star] Int[(b*x^2+c*x^4)^p,x] /;
@@ -213,7 +213,7 @@ fn push_rules_rule_1465(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1466(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1466,
         source: "Int[(d_+e_.*x_^2)^q_.*(b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           (b*x^2+c*x^4)^FracPart[p]/(x^(2*FracPart[p])*(b+c*x^2)^FracPart[p]) \\[Star] Int[x^(2*p)*(d+e*x^2)^q*(b+c*x^2)^p,x] /;
@@ -243,7 +243,7 @@ fn push_rules_rule_1466(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1467(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1467,
         source: "Int[(d_+e_.*x_^2)^q_.*(a_+b_.*x_^2+c_.*x_^4)^p_.,x_Symbol] :=
           Int[ExpandIntegrand[(d+e*x^2)^q*(a+b*x^2+c*x^4)^p,x],x] /;
@@ -273,7 +273,7 @@ fn push_rules_rule_1467(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1468(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1468,
         source: "Int[(d_+e_.*x_^2)^q_.*(a_+c_.*x_^4)^p_.,x_Symbol] :=
           Int[ExpandIntegrand[(d+e*x^2)^q*(a+c*x^4)^p,x],x] /;
@@ -302,7 +302,7 @@ fn push_rules_rule_1468(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1469(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1469,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+b_.*x_^2+c_.*x_^4)^p_.,x_Symbol] :=
           a^p*x*(d+e*x^2)^(q+1)/d +
@@ -342,7 +342,7 @@ fn push_rules_rule_1469(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1470(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1470,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+c_.*x_^4)^p_.,x_Symbol] :=
           a^p*x*(d+e*x^2)^(q+1)/d +
@@ -381,7 +381,7 @@ fn push_rules_rule_1470(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1471(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1471,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+b_.*x_^2+c_.*x_^4)^p_.,x_Symbol] :=
           With[{Qx=PolynomialQuotient[(a+b*x^2+c*x^4)^p,d+e*x^2,x],
@@ -425,7 +425,7 @@ fn push_rules_rule_1471(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1472(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1472,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+c_.*x_^4)^p_.,x_Symbol] :=
           With[{Qx=PolynomialQuotient[(a+c*x^4)^p,d+e*x^2,x],
@@ -468,7 +468,7 @@ fn push_rules_rule_1472(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1473(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1473,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+b_.*x_^2+c_.*x_^4)^p_.,x_Symbol] :=
           c^p*x^(4*p-1)*(d+e*x^2)^(q+1)/(e*(4*p+2*q+1)) +
@@ -518,7 +518,7 @@ fn push_rules_rule_1473(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1474(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1474,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+c_.*x_^4)^p_.,x_Symbol] :=
           c^p*x^(4*p-1)*(d+e*x^2)^(q+1)/(e*(4*p+2*q+1)) +
@@ -567,7 +567,7 @@ fn push_rules_rule_1474(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1475(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1475,
         source: "Int[(d_+e_.*x_^2)/(a_+b_.*x_^2+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[2*d/e-b/c,2]},
@@ -603,7 +603,7 @@ fn push_rules_rule_1475(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1476(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1476,
         source: "Int[(d_+e_.*x_^2)/(a_+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[2*d/e,2]},
@@ -632,7 +632,7 @@ fn push_rules_rule_1476(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1477(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1477,
         source: "Int[(d_+e_.*x_^2)/(a_+b_.*x_^2+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -665,7 +665,7 @@ fn push_rules_rule_1477(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1478(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1478,
         source: "Int[(d_+e_.*x_^2)/(a_+b_.*x_^2+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[-2*d/e-b/c,2]},
@@ -695,7 +695,7 @@ fn push_rules_rule_1478(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1479(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1479,
         source: "Int[(d_+e_.*x_^2)/(a_+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[-2*d/e,2]},
@@ -724,7 +724,7 @@ fn push_rules_rule_1479(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1480(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1480,
         source: "Int[(d_+e_.*x_^2)/(a_+b_.*x_^2+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -757,7 +757,7 @@ fn push_rules_rule_1480(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1481(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1481,
         source: "Int[(d_+e_.*x_^2)/(a_+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[-a*c,2]},
@@ -787,7 +787,7 @@ fn push_rules_rule_1481(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1482(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1482,
         source: "Int[(d_+e_.*x_^2)/(a_+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[a*c,2]},
@@ -818,7 +818,7 @@ fn push_rules_rule_1482(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1483(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1483,
         source: "Int[(d_+e_.*x_^2)/(a_+b_.*x_^2+c_.*x_^4),x_Symbol] :=
           With[{q=Rt[a/c,2]},
@@ -854,7 +854,7 @@ fn push_rules_rule_1483(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1484(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1484,
         source: "Int[(d_+e_.*x_^2)^q_/(a_+b_.*x_^2+c_.*x_^4),x_Symbol] :=
           Int[ExpandIntegrand[(d+e*x^2)^q/(a+b*x^2+c*x^4),x],x] /;
@@ -883,7 +883,7 @@ fn push_rules_rule_1484(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1485(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1485,
         source: "Int[(d_+e_.*x_^2)^q_/(a_+c_.*x_^4),x_Symbol] :=
           Int[ExpandIntegrand[(d+e*x^2)^q/(a+c*x^4),x],x] /;
@@ -910,7 +910,7 @@ fn push_rules_rule_1485(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1486(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1486,
         source: "Int[(d_+e_.*x_^2)^q_/(a_+b_.*x_^2+c_.*x_^4),x_Symbol] :=
           e^2/(c*d^2-b*d*e+a*e^2) \\[Star] Int[(d+e*x^2)^q,x] +
@@ -942,7 +942,7 @@ fn push_rules_rule_1486(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1487(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1487,
         source: "Int[(d_+e_.*x_^2)^q_/(a_+c_.*x_^4),x_Symbol] :=
           e^2/(c*d^2+a*e^2) \\[Star] Int[(d+e*x^2)^q,x] +
@@ -972,7 +972,7 @@ fn push_rules_rule_1487(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1488(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1488,
         source: "Int[(d_+e_.*x_^2)^q_/(a_+b_.*x_^2+c_.*x_^4),x_Symbol] :=
           With[{r=Rt[b^2-4*a*c,2]},
@@ -1004,7 +1004,7 @@ fn push_rules_rule_1488(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1489(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1489,
         source: "Int[(d_+e_.*x_^2)^q_/(a_+c_.*x_^4),x_Symbol] :=
           With[{r=Rt[-a*c,2]},
@@ -1034,7 +1034,7 @@ fn push_rules_rule_1489(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1490(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1490,
         source: "Int[(d_+e_.*x_^2)*(a_+b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           x*(2*b*e*p+c*d*(4*p+3)+c*e*(4*p+1)*x^2)*(a+b*x^2+c*x^4)^p/(c*(4*p+1)*(4*p+3)) +
@@ -1082,7 +1082,7 @@ fn push_rules_rule_1490(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1491(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1491,
         source: "Int[(d_+e_.*x_^2)*(a_+c_.*x_^4)^p_,x_Symbol] :=
           x*(d*(4*p+3)+e*(4*p+1)*x^2)*(a+c*x^4)^p/((4*p+1)*(4*p+3)) +
@@ -1123,7 +1123,7 @@ fn push_rules_rule_1491(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1492(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1492,
         source: "Int[(d_+e_.*x_^2)*(a_+b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           x*(a*b*e-d*(b^2-2*a*c)-c*(b*d-2*a*e)*x^2)*(a+b*x^2+c*x^4)^(p+1)/(2*a*(p+1)*(b^2-4*a*c)) +
@@ -1174,7 +1174,7 @@ fn push_rules_rule_1492(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1493(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1493,
         source: "Int[(d_+e_.*x_^2)*(a_+c_.*x_^4)^p_,x_Symbol] :=
           -x*(d+e*x^2)*(a+c*x^4)^(p+1)/(4*a*(p+1)) +
@@ -1213,7 +1213,7 @@ fn push_rules_rule_1493(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1494(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1494,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -1242,7 +1242,7 @@ fn push_rules_rule_1494(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1495(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1495,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[-a*c,2]},
@@ -1270,7 +1270,7 @@ fn push_rules_rule_1495(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1496(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1496,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[c/a,4]},
@@ -1318,7 +1318,7 @@ fn push_rules_rule_1496(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1497(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1497,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[c/a,2]},
@@ -1352,7 +1352,7 @@ fn push_rules_rule_1497(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1498(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1498,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -1405,7 +1405,7 @@ fn push_rules_rule_1498(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1499(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1499,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[-a*c,2]},
@@ -1454,7 +1454,7 @@ fn push_rules_rule_1499(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1500(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1500,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[-a*c,2]},
@@ -1502,7 +1502,7 @@ fn push_rules_rule_1500(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1501(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1501,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -1538,7 +1538,7 @@ fn push_rules_rule_1501(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1502(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1502,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[-a*c,2]},
@@ -1571,7 +1571,7 @@ fn push_rules_rule_1502(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1503(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1503,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -1603,7 +1603,7 @@ fn push_rules_rule_1503(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1504(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1504,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           d \\[Star] Int[1/Sqrt[a+c*x^4],x] + e \\[Star] Int[x^2/Sqrt[a+c*x^4],x] /;
@@ -1628,7 +1628,7 @@ fn push_rules_rule_1504(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1505(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1505,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -1674,7 +1674,7 @@ fn push_rules_rule_1505(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1506(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1506,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -1713,7 +1713,7 @@ fn push_rules_rule_1506(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1507(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1507,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -1755,7 +1755,7 @@ fn push_rules_rule_1507(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1508(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1508,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -1790,7 +1790,7 @@ fn push_rules_rule_1508(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1509(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1509,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[c/a,4]},
@@ -1837,7 +1837,7 @@ fn push_rules_rule_1509(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1510(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1510,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[c/a,4]},
@@ -1880,7 +1880,7 @@ fn push_rules_rule_1510(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1511(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1511,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[c/a,2]},
@@ -1913,7 +1913,7 @@ fn push_rules_rule_1511(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1512(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1512,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[c/a,2]},
@@ -1945,7 +1945,7 @@ fn push_rules_rule_1512(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1389(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1389,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           d/Sqrt[a] \\[Star] Int[Sqrt[1+e*x^2/d]/Sqrt[1-e*x^2/d],x] /;
@@ -1973,7 +1973,7 @@ fn push_rules_rule_1389(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1390(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1390,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           Sqrt[1+c*x^4/a]/Sqrt[a+c*x^4] \\[Star] Int[(d+e*x^2)/Sqrt[1+c*x^4/a],x] /;
@@ -2004,7 +2004,7 @@ fn push_rules_rule_1390(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1391(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1391,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           x/(d*Sqrt[a+c*x^4]) -
@@ -2042,7 +2042,7 @@ fn push_rules_rule_1391(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1392(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1392,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           x/(d*Sqrt[a+c*x^4]) -
@@ -2078,7 +2078,7 @@ fn push_rules_rule_1392(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1393(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1393,
         source: "Int[x_^2/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           -x/(e*Sqrt[a+c*x^4]) +
@@ -2115,7 +2115,7 @@ fn push_rules_rule_1393(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1394(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1394,
         source: "Int[x_^2/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           -x/(e*Sqrt[a+c*x^4]) +
@@ -2153,7 +2153,7 @@ fn push_rules_rule_1394(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1513(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1513,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[-c/a,2]},
@@ -2183,7 +2183,7 @@ fn push_rules_rule_1513(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1514(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1514,
         source: "Int[(d_+e_.*x_^2)/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -2219,7 +2219,7 @@ fn push_rules_rule_1514(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1515(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1515,
         source: "Int[(d_+e_.*x_^2)*(a_+b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           Int[ExpandIntegrand[(d+e*x^2)*(a+b*x^2+c*x^4)^p,x],x] /;
@@ -2247,7 +2247,7 @@ fn push_rules_rule_1515(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1516(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1516,
         source: "Int[(d_+e_.*x_^2)*(a_+c_.*x_^4)^p_,x_Symbol] :=
           Int[ExpandIntegrand[(d+e*x^2)*(a+c*x^4)^p,x],x] /;
@@ -2273,7 +2273,7 @@ fn push_rules_rule_1516(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1517(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1517,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           With[{f=Coeff[PolynomialRemainder[(d+e*x^2)^q,a+b*x^2+c*x^4,x],x,0],
@@ -2337,7 +2337,7 @@ fn push_rules_rule_1517(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1518(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1518,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           e^q*x^(2*q-3)*(a+b*x^2+c*x^4)^(p+1)/(c*(4*p+2*q+1)) +
@@ -2383,7 +2383,7 @@ fn push_rules_rule_1518(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1519(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1519,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+c_.*x_^4)^p_,x_Symbol] :=
           e^q*x^(2*q-3)*(a+c*x^4)^(p+1)/(c*(4*p+2*q+1)) +
@@ -2427,7 +2427,7 @@ fn push_rules_rule_1519(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1520(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1520,
         source: "Int[Sqrt[a_+b_.*x_^2+c_.*x_^4]/(d_+e_.*x_^2),x_Symbol] :=
           -c/e^2 \\[Star] Int[(d-e*x^2)/Sqrt[a+b*x^2+c*x^4],x] + Int[(2*a+b*x^2)/((d+e*x^2)*Sqrt[a+b*x^2+c*x^4]),x] /;
@@ -2458,7 +2458,7 @@ fn push_rules_rule_1520(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1521(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1521,
         source: "Int[Sqrt[a_+c_.*x_^4]/(d_+e_.*x_^2),x_Symbol] :=
           -c/e^2 \\[Star] Int[(d-e*x^2)/Sqrt[a+c*x^4],x] + 2*a \\[Star] Int[1/((d+e*x^2)*Sqrt[a+c*x^4]),x] /;
@@ -2487,7 +2487,7 @@ fn push_rules_rule_1521(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1522(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1522,
         source: "Int[Sqrt[a_+b_.*x_^2+c_.*x_^4]/(d_+e_.*x_^2),x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -2529,7 +2529,7 @@ fn push_rules_rule_1522(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1523(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1523,
         source: "Int[Sqrt[a_+b_.*x_^2+c_.*x_^4]/(d_+e_.*x_^2),x_Symbol] :=
           With[{q=Rt[c/a,2]},
@@ -2568,7 +2568,7 @@ fn push_rules_rule_1523(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1524(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1524,
         source: "Int[Sqrt[a_+c_.*x_^4]/(d_+e_.*x_^2),x_Symbol] :=
           With[{q=Rt[c/a,2]},
@@ -2606,7 +2606,7 @@ fn push_rules_rule_1524(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1525(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1525,
         source: "Int[Sqrt[a_+b_.*x_^2+c_.*x_^4]/(d_+e_.*x_^2),x_Symbol] :=
           (c*d^2-b*d*e+a*e^2)/e^2 \\[Star] Int[1/((d+e*x^2)*Sqrt[a+b*x^2+c*x^4]),x] -
@@ -2641,7 +2641,7 @@ fn push_rules_rule_1525(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1526(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1526,
         source: "Int[Sqrt[a_+c_.*x_^4]/(d_+e_.*x_^2),x_Symbol] :=
           (c*d^2+a*e^2)/e^2 \\[Star] Int[1/((d+e*x^2)*Sqrt[a+c*x^4]),x] -
@@ -2674,7 +2674,7 @@ fn push_rules_rule_1526(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1527(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1527,
         source: "Int[(a_+b_.*x_^2+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           -1/e^2 \\[Star] Int[(c*d-b*e-c*e*x^2)*(a+b*x^2+c*x^4)^(p-1),x] +
@@ -2708,7 +2708,7 @@ fn push_rules_rule_1527(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1528(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1528,
         source: "Int[(a_+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           -1/e^2 \\[Star] Int[(c*d-c*e*x^2)*(a+c*x^4)^(p-1),x] +
@@ -2740,7 +2740,7 @@ fn push_rules_rule_1528(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1529(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1529,
         source: "Int[(a_+b_.*x_^2+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -2795,7 +2795,7 @@ fn push_rules_rule_1529(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1530(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1530,
         source: "Int[(a_+b_.*x_^2+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           -(c*d^2-b*d*e+a*e^2)^(p+1/2)/(e^(2*p)*(c*d^2-a*e^2)) \\[Star]
@@ -2848,7 +2848,7 @@ fn push_rules_rule_1530(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1531(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1531,
         source: "Int[(a_+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           -(c*d^2+a*e^2)^(p+1/2)/(e^(2*p)*(c*d^2-a*e^2)) \\[Star]
@@ -2900,7 +2900,7 @@ fn push_rules_rule_1531(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1532(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1532,
         source: "Int[(a_+b_.*x_^2+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           (c*d^2-b*d*e+a*e^2)^(p+1/2)/e^(2*p+1) \\[Star] Int[1/((d+e*x^2)*Sqrt[a+b*x^2+c*x^4]),x] +
@@ -2942,7 +2942,7 @@ fn push_rules_rule_1532(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1533(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1533,
         source: "Int[(a_+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           (c*d^2+a*e^2)^(p+1/2)/e^(2*p+1) \\[Star] Int[1/((d+e*x^2)*Sqrt[a+c*x^4]),x] +
@@ -2983,7 +2983,7 @@ fn push_rules_rule_1533(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1534(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1534,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+b_.*x_^2+c_.*x_^4]),x_Symbol] :=
           1/(2*d) \\[Star] Int[1/Sqrt[a+b*x^2+c*x^4],x] + 1/(2*d) \\[Star] Int[(d-e*x^2)/((d+e*x^2)*Sqrt[a+b*x^2+c*x^4]),x] /;
@@ -3012,7 +3012,7 @@ fn push_rules_rule_1534(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1535(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1535,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           1/(2*d) \\[Star] Int[1/Sqrt[a+c*x^4],x] + 1/(2*d) \\[Star] Int[(d-e*x^2)/((d+e*x^2)*Sqrt[a+c*x^4]),x] /;
@@ -3040,7 +3040,7 @@ fn push_rules_rule_1535(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1536(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1536,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+b_.*x_^2+c_.*x_^4]),x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -3071,7 +3071,7 @@ fn push_rules_rule_1536(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1537(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1537,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           With[{q=Rt[-a*c,2]},
@@ -3102,7 +3102,7 @@ fn push_rules_rule_1537(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1538(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1538,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+b_.*x_^2+c_.*x_^4]),x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -3135,7 +3135,7 @@ fn push_rules_rule_1538(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1539(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1539,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           With[{q=Rt[-a*c,2]},
@@ -3167,7 +3167,7 @@ fn push_rules_rule_1539(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1540(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1540,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+b_.*x_^2+c_.*x_^4]),x_Symbol] :=
           With[{q=Rt[c/a,2]},
@@ -3202,7 +3202,7 @@ fn push_rules_rule_1540(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1541(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1541,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           With[{q=Rt[c/a,2]},
@@ -3236,7 +3236,7 @@ fn push_rules_rule_1541(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1542(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1542,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           With[{q=Rt[-c/a,4]},
@@ -3260,7 +3260,7 @@ fn push_rules_rule_1542(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1543(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1543,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           Sqrt[1+c*x^4/a]/Sqrt[a+c*x^4] \\[Star] Int[1/((d+e*x^2)*Sqrt[1+c*x^4/a]),x] /;
@@ -3285,7 +3285,7 @@ fn push_rules_rule_1543(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1544(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1544,
         source: "Int[1/((d_+e_.*x_^2)*Sqrt[a_+b_.*x_^2+c_.*x_^4]),x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -3322,7 +3322,7 @@ fn push_rules_rule_1544(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1545(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1545,
         source: "Int[(a_+b_.*x_^2+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           1/(c*d^2-b*d*e+a*e^2) \\[Star] Int[(c*d-b*e-c*e*x^2)*(a+b*x^2+c*x^4)^p,x] +
@@ -3357,7 +3357,7 @@ fn push_rules_rule_1545(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1546(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1546,
         source: "Int[(a_+c_.*x_^4)^p_/(d_+e_.*x_^2),x_Symbol] :=
           1/(c*d^2+a*e^2) \\[Star] Int[(c*d-c*e*x^2)*(a+c*x^4)^p,x] +
@@ -3391,7 +3391,7 @@ fn push_rules_rule_1546(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1547(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1547,
         source: "Int[(a_+b_.*x_^2+c_.*x_^4)^p_/(d_.+e_.*x_^2),x_Symbol] :=
           -(c*d^2-b*d*e+a*e^2)^(p+1/2)/(e^(2*p)*(Rt[c/a,2]*d-e)) \\[Star]
@@ -3440,7 +3440,7 @@ fn push_rules_rule_1547(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1548(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1548,
         source: "Int[(a_+c_.*x_^4)^p_/(d_.+e_.*x_^2),x_Symbol] :=
           -(c*d^2+a*e^2)^(p+1/2)/(e^(2*p)*(Rt[c/a,2]*d-e)) \\[Star]
@@ -3488,7 +3488,7 @@ fn push_rules_rule_1548(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1549(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1549,
         source: "Int[(a_+b_.*x_^2+c_.*x_^4)^p_/(d_.+e_.*x_^2),x_Symbol] :=
           (c*d^2-b*d*e+a*e^2)^(p+1/2)/e^(2*p+1) \\[Star]
@@ -3534,7 +3534,7 @@ fn push_rules_rule_1549(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1550(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1550,
         source: "Int[(a_+c_.*x_^4)^p_/(d_.+e_.*x_^2),x_Symbol] :=
           (c*d^2+a*e^2)^(p+1/2)/e^(2*p+1) \\[Star]
@@ -3579,7 +3579,7 @@ fn push_rules_rule_1550(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1551(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1551,
         source: "Int[(d_+e_.*x_^2)^q_/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           -e^2*x*(d+e*x^2)^(q+1)*Sqrt[a+b*x^2+c*x^4]/(2*d*(q+1)*(c*d^2-b*d*e+a*e^2)) +
@@ -3628,7 +3628,7 @@ fn push_rules_rule_1551(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1552(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1552,
         source: "Int[(d_+e_.*x_^2)^q_/Sqrt[a_+c_.*x_^4],x_Symbol] :=
           -e^2*x*(d+e*x^2)^(q+1)*Sqrt[a+c*x^4]/(2*d*(q+1)*(c*d^2+a*e^2)) +
@@ -3673,7 +3673,7 @@ fn push_rules_rule_1552(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1553(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1553,
         source: "Int[Sqrt[a_+b_.*x_^2+c_.*x_^4]/(d_+e_.*x_^2)^2,x_Symbol] :=
           With[{q=Rt[e/d,2]},
@@ -3713,7 +3713,7 @@ fn push_rules_rule_1553(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1554(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1554,
         source: "Int[(d_+e_.*x_^2)^q_*Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           -x*(d+e*x^2)^(q+1)*Sqrt[a+b*x^2+c*x^4]/(2*d*(q+1)) +
@@ -3752,7 +3752,7 @@ fn push_rules_rule_1554(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1555(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, c__, d__, e__, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1555,
         source: "Int[(d_+e_.*x_^2)^q_*Sqrt[a_+c_.*x_^4],x_Symbol] :=
           -x*(d+e*x^2)^(q+1)*Sqrt[a+c*x^4]/(2*d*(q+1)) +
@@ -3788,7 +3788,7 @@ fn push_rules_rule_1555(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1556(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1556,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           Module[{aa,bb,cc},
@@ -3835,7 +3835,7 @@ fn push_rules_rule_1556(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1557(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1557,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+c_.*x_^4)^p_,x_Symbol] :=
           Module[{aa,cc},
@@ -3874,7 +3874,7 @@ fn push_rules_rule_1557(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1558(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1558,
         source: "Int[Sqrt[d_+e_.*x_^2]/Sqrt[a_+b_.*x_^2+c_.*x_^4],x_Symbol] :=
           With[{q=Rt[b^2-4*a*c,2]},
@@ -3909,7 +3909,7 @@ fn push_rules_rule_1558(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1559(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1559,
         source: "Int[1/(Sqrt[d_+e_.*x_^2]*Sqrt[a_+b_.*x_^2+c_.*x_^4]),x_Symbol] :=
           1/(2*Sqrt[a]*Sqrt[d]*Rt[-e/d,2])*EllipticF[2*ArcSin[Rt[-e/d,2]*x],b*d/(4*a*e)] /;
@@ -3939,7 +3939,7 @@ fn push_rules_rule_1559(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1560(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1560,
         source: "Int[1/(Sqrt[d_+e_.*x_^2]*Sqrt[a_+b_.*x_^2+c_.*x_^4]),x_Symbol] :=
           Sqrt[(d+e*x^2)/d]*Sqrt[(a+b*x^2+c*x^4)/a]/(Sqrt[d+e*x^2]*Sqrt[a+b*x^2+c*x^4]) \\[Star]
@@ -3972,7 +3972,7 @@ fn push_rules_rule_1560(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1561(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1561,
         source: "Int[1/(Sqrt[d_+e_.*x_^2]*Sqrt[a_+b_.*x_^2+c_.*x_^4]),x_Symbol] :=
           x^3*Sqrt[e+d/x^2]*Sqrt[c+b/x^2+a/x^4]/(Sqrt[d+e*x^2]*Sqrt[a+b*x^2+c*x^4]) \\[Star]
@@ -4004,7 +4004,7 @@ fn push_rules_rule_1561(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1562(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1562,
         source: "Int[1/(Sqrt[d_+e_.*x_^2]*Sqrt[a_+c_.*x_^4]),x_Symbol] :=
           x^3*Sqrt[e+d/x^2]*Sqrt[c+a/x^4]/(Sqrt[d+e*x^2]*Sqrt[a+c*x^4]) \\[Star]
@@ -4032,7 +4032,7 @@ fn push_rules_rule_1562(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1563(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1563,
         source: "Int[Sqrt[a_+b_.*x_^2+c_.*x_^4]/Sqrt[d_+e_.*x_^2],x_Symbol] :=
           Sqrt[a]/(2*Sqrt[d]*Rt[-e/d,2])*EllipticE[2*ArcSin[Rt[-e/d,2]*x],b*d/(4*a*e)] /;
@@ -4062,7 +4062,7 @@ fn push_rules_rule_1563(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1564(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1564,
         source: "Int[Sqrt[a_+b_.*x_^2+c_.*x_^4]/Sqrt[d_+e_.*x_^2],x_Symbol] :=
           Sqrt[a+b*x^2+c*x^4]*Sqrt[(d+e*x^2)/d]/(Sqrt[d+e*x^2]*Sqrt[(a+b*x^2+c*x^4)/a]) \\[Star]
@@ -4093,7 +4093,7 @@ fn push_rules_rule_1564(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1565(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1565,
         source: "Int[Sqrt[a_+b_.*x_^2+c_.*x_^4]/Sqrt[d_+e_.*x_^2],x_Symbol] :=
           Sqrt[e+d/x^2]*Sqrt[a+b*x^2+c*x^4]/(x*Sqrt[d+e*x^2]*Sqrt[c+b/x^2+a/x^4]) \\[Star]
@@ -4125,7 +4125,7 @@ fn push_rules_rule_1565(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1566(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1566,
         source: "Int[Sqrt[a_+c_.*x_^4]/Sqrt[d_+e_.*x_^2],x_Symbol] :=
           Sqrt[e+d/x^2]*Sqrt[a+c*x^4]/(x*Sqrt[d+e*x^2]*Sqrt[c+a/x^4]) \\[Star]
@@ -4153,7 +4153,7 @@ fn push_rules_rule_1566(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1567(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1567,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+b_.*x_^2+c_.*x_^4)^p_,x_Symbol] :=
           Int[ExpandIntegrand[(d+e*x^2)^q*(a+b*x^2+c*x^4)^p,x],x] /;
@@ -4181,7 +4181,7 @@ fn push_rules_rule_1567(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1568(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1568,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+c_.*x_^4)^p_,x_Symbol] :=
           Int[ExpandIntegrand[(d+e*x^2)^q*(a+c*x^4)^p,x],x] /;
@@ -4207,7 +4207,7 @@ fn push_rules_rule_1568(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1569(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1569,
         source: "Int[(d_+e_.*x_^2)^q_*(a_+c_.*x_^4)^p_,x_Symbol] :=
           Int[ExpandIntegrand[(a+c*x^4)^p,(d/(d^2-e^2*x^4)-e*x^2/(d^2-e^2*x^4))^(-q),x],x] /;
@@ -4237,7 +4237,7 @@ fn push_rules_rule_1569(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1570(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1570,
         source: "Int[(d_+e_.*x_^2)^q_.*(a_+b_.*x_^2+c_.*x_^4)^p_.,x_Symbol] :=
           Unintegrable[(d+e*x^2)^q*(a+b*x^2+c*x^4)^p,x] /;
@@ -4259,7 +4259,7 @@ fn push_rules_rule_1570(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_1571(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d__, e__, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 1571,
         source: "Int[(d_+e_.*x_^2)^q_.*(a_+c_.*x_^4)^p_.,x_Symbol] :=
           Unintegrable[(d+e*x^2)^q*(a+c*x^4)^p,x] /;

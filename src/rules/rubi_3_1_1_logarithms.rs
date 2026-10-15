@@ -11,7 +11,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2732(rules: &mut Vec<RubiRule>) {
     rubi_symb!(c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2732,
         source: "Int[Log[c_.*x_^n_.],x_Symbol] :=
           x*Log[c*x^n] - n*x /;
@@ -31,7 +31,7 @@ fn push_rules_rule_2732(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2733(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2733,
         source: "Int[(a_.+b_.*Log[c_.*x_^n_.])^p_.,x_Symbol] :=
           x*(a+b*Log[c*x^n])^p - b*n*p \\[Star] Int[(a+b*Log[c*x^n])^(p-1),x] /;
@@ -59,7 +59,7 @@ fn push_rules_rule_2733(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2734(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2734,
         source: "Int[(a_.+b_.*Log[c_.*x_^n_.])^p_,x_Symbol] :=
           x*(a+b*Log[c*x^n])^(p+1)/(b*n*(p+1)) - 1/(b*n*(p+1)) \\[Star] Int[(a+b*Log[c*x^n])^(p+1),x] /;
@@ -91,7 +91,7 @@ fn push_rules_rule_2734(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2735(rules: &mut Vec<RubiRule>) {
     rubi_symb!(c__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2735,
         source: "Int[1/Log[c_.*x_],x_Symbol] :=
           LogIntegral[c*x]/c /;
@@ -113,7 +113,7 @@ fn push_rules_rule_2735(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2736(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2736,
         source: "Int[(a_.+b_.*Log[c_.*x_^n_.])^p_,x_Symbol] :=
           1/(n*c^(1/n)) \\[Star] Subst[Int[E^(x/n)*(a+b*x)^p,x],x,Log[c*x^n]] /;
@@ -145,7 +145,7 @@ fn push_rules_rule_2736(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2737(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2737,
         source: "Int[(a_.+b_.*Log[c_.*x_^n_.])^p_,x_Symbol] :=
           x/(n*(c*x^n)^(1/n)) \\[Star] Subst[Int[E^(x/n)*(a+b*x)^p,x],x,Log[c*x^n]] /;

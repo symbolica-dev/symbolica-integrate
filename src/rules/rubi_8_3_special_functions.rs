@@ -33,7 +33,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7027(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7027,
         source: "Int[ExpIntegralE[n_,a_.+b_.*x_],x_Symbol] :=
           -ExpIntegralE[n+1,a+b*x]/b /;
@@ -50,7 +50,7 @@ fn push_rules_rule_7027(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7028(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7028,
         source: "Int[x_^m_.*ExpIntegralE[n_,b_.*x_],x_Symbol] :=
           -x^m*ExpIntegralE[n+1,b*x]/b +
@@ -71,7 +71,7 @@ fn push_rules_rule_7028(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7029(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7029,
         source: "Int[ExpIntegralE[1,b_.*x_]/x_,x_Symbol] :=
           b*x*HypergeometricPFQ[{1,1,1},{2,2,2},-b*x] - EulerGamma*Log[x] - 1/2*Log[b*x]^2 /;
@@ -105,7 +105,7 @@ fn push_rules_rule_7029(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7030(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7030,
         source: "Int[x_^m_*ExpIntegralE[n_,b_.*x_],x_Symbol] :=
           x^(m+1)*ExpIntegralE[n,b*x]/(m+1) +
@@ -126,7 +126,7 @@ fn push_rules_rule_7030(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7031(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7031,
         source: "Int[(d_.*x_)^m_*ExpIntegralE[n_,b_.*x_],x_Symbol] :=
           (d*x)^m*Gamma[m+1]*Log[x]/(b*(b*x)^m) - (d*x)^(m+1)*HypergeometricPFQ[{m+1,m+1},{m+2,m+2},-b*x]/(d*(m+1)^2) /;
@@ -150,7 +150,7 @@ fn push_rules_rule_7031(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7032(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7032,
         source: "Int[(d_.*x_)^m_.*ExpIntegralE[n_,b_.*x_],x_Symbol] :=
           (d*x)^(m+1)*ExpIntegralE[n,b*x]/(d*(m+n)) - (d*x)^(m+1)*ExpIntegralE[-m,b*x]/(d*(m+n)) /;
@@ -172,7 +172,7 @@ fn push_rules_rule_7032(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7033(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7033,
         source: "Int[(c_.+d_.*x_)^m_.*ExpIntegralE[n_,a_+b_.*x_],x_Symbol] :=
           -(c+d*x)^m*ExpIntegralE[n+1,a+b*x]/b +
@@ -198,7 +198,7 @@ fn push_rules_rule_7033(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7034(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7034,
         source: "Int[(c_.+d_.*x_)^m_.*ExpIntegralE[n_,a_+b_.*x_],x_Symbol] :=
           (c+d*x)^(m+1)*ExpIntegralE[n,a+b*x]/(d*(m+1)) +
@@ -225,7 +225,7 @@ fn push_rules_rule_7034(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7035(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7035,
         source: "Int[(c_.+d_.*x_)^m_.*ExpIntegralE[n_,a_+b_.*x_],x_Symbol] :=
           Unintegrable[(c+d*x)^m*ExpIntegralE[n,a+b*x],x] /;
@@ -246,7 +246,7 @@ fn push_rules_rule_7035(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7036(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7036,
         source: "Int[ExpIntegralEi[a_.+b_.*x_],x_Symbol] :=
           (a+b*x)*ExpIntegralEi[a+b*x]/b - E^(a+b*x)/b /;
@@ -266,7 +266,7 @@ fn push_rules_rule_7036(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7037(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7037,
         source: "Int[ExpIntegralEi[b_.*x_]/x_,x_Symbol] :=
           Log[x]*(ExpIntegralEi[b*x]+ExpIntegralE[1,-b*x]) - Int[ExpIntegralE[1,-b*x]/x,x] /;
@@ -287,7 +287,7 @@ fn push_rules_rule_7037(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7038(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7038,
         source: "Int[ExpIntegralEi[a_.+b_.*x_]/(c_.+d_.*x_),x_Symbol] :=
           Unintegrable[ExpIntegralEi[a+b*x]/(c+d*x),x] /;
@@ -308,7 +308,7 @@ fn push_rules_rule_7038(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7039(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7039,
         source: "Int[(c_.+d_.*x_)^m_.*ExpIntegralEi[a_.+b_.*x_],x_Symbol] :=
           (c+d*x)^(m+1)*ExpIntegralEi[a+b*x]/(d*(m+1)) -
@@ -331,7 +331,7 @@ fn push_rules_rule_7039(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7040(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7040,
         source: "Int[ExpIntegralEi[a_.+b_.*x_]^2,x_Symbol] :=
           (a+b*x)*ExpIntegralEi[a+b*x]^2/b -
@@ -353,7 +353,7 @@ fn push_rules_rule_7040(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7041(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7041,
         source: "Int[x_^m_.*ExpIntegralEi[b_.*x_]^2,x_Symbol] :=
           x^(m+1)*ExpIntegralEi[b*x]^2/(m+1) -
@@ -375,7 +375,7 @@ fn push_rules_rule_7041(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7042(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7042,
         source: "Int[x_^m_.*ExpIntegralEi[a_+b_.*x_]^2,x_Symbol] :=
           x^(m+1)*ExpIntegralEi[a+b*x]^2/(m+1) +
@@ -402,7 +402,7 @@ fn push_rules_rule_7042(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7043(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7043,
         source: "Int[E^(a_.+b_.*x_)*ExpIntegralEi[c_.+d_.*x_],x_Symbol] :=
           E^(a+b*x)*ExpIntegralEi[c+d*x]/b -
@@ -426,7 +426,7 @@ fn push_rules_rule_7043(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7044(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7044,
         source: "Int[x_^m_.*E^(a_.+b_.*x_)*ExpIntegralEi[c_.+d_.*x_],x_Symbol] :=
           x^m*E^(a+b*x)*ExpIntegralEi[c+d*x]/b -
@@ -452,7 +452,7 @@ fn push_rules_rule_7044(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7045(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7045,
         source: "Int[x_^m_*E^(a_.+b_.*x_)*ExpIntegralEi[c_.+d_.*x_],x_Symbol] :=
           x^(m+1)*E^(a+b*x)*ExpIntegralEi[c+d*x]/(m+1) -
@@ -478,7 +478,7 @@ fn push_rules_rule_7045(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7046(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7046,
         source: "Int[ExpIntegralEi[d_.*(a_.+b_.*Log[c_.*x_^n_.])],x_Symbol] :=
           x*ExpIntegralEi[d*(a+b*Log[c*x^n])] - b*n*E^(a*d) \\[Star] Int[(c*x^n)^(b*d)/(a+b*Log[c*x^n]),x] /;
@@ -501,7 +501,7 @@ fn push_rules_rule_7046(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7047(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7047,
         source: "Int[ExpIntegralEi[d_.*(a_.+b_.*Log[c_.*x_^n_.])]/x_,x_Symbol] :=
           1/n \\[Star] Subst[ExpIntegralEi[d*(a+b*x)],x,Log[c*x^n]] /;
@@ -524,7 +524,7 @@ fn push_rules_rule_7047(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7048(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7048,
         source: "Int[(e_.*x_)^m_.*ExpIntegralEi[d_.*(a_.+b_.*Log[c_.*x_^n_.])],x_Symbol] :=
           (e*x)^(m+1)*ExpIntegralEi[d*(a+b*Log[c*x^n])]/(e*(m+1)) -
@@ -551,7 +551,7 @@ fn push_rules_rule_7048(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7049(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7049,
         source: "Int[LogIntegral[a_.+b_.*x_],x_Symbol] :=
           (a+b*x)*LogIntegral[a+b*x]/b - ExpIntegralEi[2*Log[a+b*x]]/b /;
@@ -571,7 +571,7 @@ fn push_rules_rule_7049(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7050(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7050,
         source: "Int[LogIntegral[b_.*x_]/x_,x_Symbol] :=
           -b*x + Log[b*x]*LogIntegral[b*x] /;
@@ -591,7 +591,7 @@ fn push_rules_rule_7050(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7051(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7051,
         source: "Int[LogIntegral[a_.+b_.*x_]/(c_.+d_.*x_),x_Symbol] :=
           Unintegrable[LogIntegral[a+b*x]/(c+d*x),x] /;
@@ -612,7 +612,7 @@ fn push_rules_rule_7051(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7052(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7052,
         source: "Int[(c_.+d_.*x_)^m_.*LogIntegral[a_.+b_.*x_],x_Symbol] :=
           (c+d*x)^(m+1)*LogIntegral[a+b*x]/(d*(m+1)) - b/(d*(m+1)) \\[Star] Int[(c+d*x)^(m+1)/Log[a+b*x],x] /;

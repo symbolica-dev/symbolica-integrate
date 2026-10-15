@@ -16,7 +16,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_207(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 207,
         source: "Int[(b_.*x_^2)^p_,x_Symbol] :=
           b^IntPart[p]*(b*x^2)^FracPart[p]/x^(2*FracPart[p]) \\[Star] Int[x^(2*p),x] /;
@@ -41,7 +41,7 @@ fn push_rules_rule_207(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_208(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 208,
         source: "Int[1/(a_+b_.*x_^2)^(3/2),x_Symbol] :=
           x/(a*Sqrt[a+b*x^2]) /;
@@ -62,7 +62,7 @@ fn push_rules_rule_208(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_209(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 209,
         source: "Int[(a_+b_.*x_^2)^p_,x_Symbol] :=
           -x*(a+b*x^2)^(p+1)/(2*a*(p+1)) +
@@ -88,7 +88,7 @@ fn push_rules_rule_209(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_210(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 210,
         source: "Int[(a_+b_.*x_^2)^p_,x_Symbol] :=
           Int[ExpandIntegrand[(a+b*x^2)^p,x],x] /;
@@ -110,7 +110,7 @@ fn push_rules_rule_210(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_211(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 211,
         source: "Int[(a_+b_.*x_^2)^p_,x_Symbol] :=
           x*(a+b*x^2)^p/(2*p+1) +
@@ -140,7 +140,7 @@ fn push_rules_rule_211(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_233(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 233,
         source: "Int[1/(a_+b_.*x_^2)^(1/3),x_Symbol] :=
           3*Sqrt[b*x^2]/(2*b*x) \\[Star] Subst[Int[x/Sqrt[-a+x^3],x],x,(a+b*x^2)^(1/3)] /;
@@ -170,7 +170,7 @@ fn push_rules_rule_233(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_234(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 234,
         source: "Int[1/(a_+b_.*x_^2)^(2/3),x_Symbol] :=
           3*Sqrt[b*x^2]/(2*b*x) \\[Star] Subst[Int[1/Sqrt[-a+x^3],x],x,(a+b*x^2)^(1/3)] /;
@@ -197,7 +197,7 @@ fn push_rules_rule_234(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_235(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 235,
         source: "Int[1/(a_+b_.*x_^2)^(1/6),x_Symbol] :=
           3*x/(2*(a+b*x^2)^(1/6)) - a/2 \\[Star] Int[1/(a+b*x^2)^(7/6),x] /;
@@ -220,7 +220,7 @@ fn push_rules_rule_235(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_236(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 236,
         source: "Int[1/(a_+b_.*x_^2)^(5/6),x_Symbol] :=
           1/((a/(a+b*x^2))^(1/3)*(a+b*x^2)^(1/3)) \\[Star] Subst[Int[1/(1-b*x^2)^(2/3),x],x,x/Sqrt[a+b*x^2]] /;
@@ -250,7 +250,7 @@ fn push_rules_rule_236(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_237(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 237,
         source: "Int[(a_+b_.*x_^2)^p_,x_Symbol] :=
           a^p*x*Hypergeometric2F1[-p,1/2,1/2+1,-b*x^2/a] /;
@@ -281,7 +281,7 @@ fn push_rules_rule_237(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_238(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 238,
         source: "Int[(a_+b_.*x_^2)^p_,x_Symbol] :=
           a^IntPart[p]*(a+b*x^2)^FracPart[p]/(1+b*x^2/a)^FracPart[p] \\[Star] Int[(1+b*x^2/a)^p,x] /;

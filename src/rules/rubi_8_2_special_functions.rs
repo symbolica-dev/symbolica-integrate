@@ -60,7 +60,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6972(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6972,
         source: "Int[FresnelS[a_.+b_.*x_],x_Symbol] :=
           (a+b*x)*FresnelS[a+b*x]/b + Cos[Pi/2*(a+b*x)^2]/(b*Pi) /;
@@ -81,7 +81,7 @@ fn push_rules_rule_6972(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6973(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6973,
         source: "Int[FresnelC[a_.+b_.*x_],x_Symbol] :=
           (a+b*x)*FresnelC[a+b*x]/b - Sin[Pi/2*(a+b*x)^2]/(b*Pi) /;
@@ -102,7 +102,7 @@ fn push_rules_rule_6973(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6974(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6974,
         source: "Int[FresnelS[a_.+b_.*x_]^2,x_Symbol] :=
           (a+b*x)*FresnelS[a+b*x]^2/b -
@@ -125,7 +125,7 @@ fn push_rules_rule_6974(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6975(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6975,
         source: "Int[FresnelC[a_.+b_.*x_]^2,x_Symbol] :=
           (a+b*x)*FresnelC[a+b*x]^2/b -
@@ -148,7 +148,7 @@ fn push_rules_rule_6975(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6976(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6976,
         source: "Int[FresnelS[a_.+b_.*x_]^n_,x_Symbol] :=
           Unintegrable[FresnelS[a+b*x]^n,x] /;
@@ -168,7 +168,7 @@ fn push_rules_rule_6976(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6977(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6977,
         source: "Int[FresnelC[a_.+b_.*x_]^n_,x_Symbol] :=
           Unintegrable[FresnelC[a+b*x]^n,x] /;
@@ -188,7 +188,7 @@ fn push_rules_rule_6977(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6978(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6978,
         source: "Int[FresnelS[b_.*x_]/x_,x_Symbol] :=
           (1+I)/4 \\[Star] Int[Erf[Sqrt[Pi]/2*(1+I)*b*x]/x,x] + (1-I)/4 \\[Star] Int[Erf[Sqrt[Pi]/2*(1-I)*b*x]/x,x] /;
@@ -212,7 +212,7 @@ fn push_rules_rule_6978(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6979(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6979,
         source: "Int[FresnelC[b_.*x_]/x_,x_Symbol] :=
           (1-I)/4 \\[Star] Int[Erf[Sqrt[Pi]/2*(1+I)*b*x]/x,x] + (1+I)/4 \\[Star] Int[Erf[Sqrt[Pi]/2*(1-I)*b*x]/x,x] /;
@@ -236,7 +236,7 @@ fn push_rules_rule_6979(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6980(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6980,
         source: "Int[(d_.*x_)^m_.*FresnelS[b_.*x_],x_Symbol] :=
           (d*x)^(m+1)*FresnelS[b*x]/(d*(m+1)) - b/(d*(m+1)) \\[Star] Int[(d*x)^(m+1)*Sin[Pi/2*b^2*x^2],x] /;
@@ -260,7 +260,7 @@ fn push_rules_rule_6980(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6981(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6981,
         source: "Int[(d_.*x_)^m_.*FresnelC[b_.*x_],x_Symbol] :=
           (d*x)^(m+1)*FresnelC[b*x]/(d*(m+1)) - b/(d*(m+1)) \\[Star] Int[(d*x)^(m+1)*Cos[Pi/2*b^2*x^2],x] /;
@@ -284,7 +284,7 @@ fn push_rules_rule_6981(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6982(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6982,
         source: "Int[(c_.+d_.*x_)^m_.*FresnelS[a_.+b_.*x_],x_Symbol] :=
           (c+d*x)^(m+1)*FresnelS[a+b*x]/(d*(m+1)) -
@@ -309,7 +309,7 @@ fn push_rules_rule_6982(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6983(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6983,
         source: "Int[(c_.+d_.*x_)^m_.*FresnelC[a_.+b_.*x_],x_Symbol] :=
           (c+d*x)^(m+1)*FresnelC[a+b*x]/(d*(m+1)) -
@@ -334,7 +334,7 @@ fn push_rules_rule_6983(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6984(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6984,
         source: "Int[x_^m_.*FresnelS[b_.*x_]^2,x_Symbol] :=
           x^(m+1)*FresnelS[b*x]^2/(m+1) -
@@ -357,7 +357,7 @@ fn push_rules_rule_6984(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6985(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6985,
         source: "Int[x_^m_.*FresnelC[b_.*x_]^2,x_Symbol] :=
           x^(m+1)*FresnelC[b*x]^2/(m+1) -
@@ -380,7 +380,7 @@ fn push_rules_rule_6985(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6986(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a_, b__, c__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6986,
         source: "Int[(c_.+d_.*x_)^m_.*FresnelS[a_+b_.*x_]^2,x_Symbol] :=
           1/b^(m+1) \\[Star] Subst[Int[ExpandIntegrand[FresnelS[x]^2,(b*c-a*d+d*x)^m,x],x],x,a+b*x] /;
@@ -405,7 +405,7 @@ fn push_rules_rule_6986(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6987(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a_, b__, c__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6987,
         source: "Int[(c_.+d_.*x_)^m_.*FresnelC[a_+b_.*x_]^2,x_Symbol] :=
           1/b^(m+1) \\[Star] Subst[Int[ExpandIntegrand[FresnelC[x]^2,(b*c-a*d+d*x)^m,x],x],x,a+b*x] /;
@@ -430,7 +430,7 @@ fn push_rules_rule_6987(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6988(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6988,
         source: "Int[(c_.+d_.*x_)^m_.*FresnelS[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[(c+d*x)^m*FresnelS[a+b*x]^n,x] /;
@@ -451,7 +451,7 @@ fn push_rules_rule_6988(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6989(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6989,
         source: "Int[(c_.+d_.*x_)^m_.*FresnelC[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[(c+d*x)^m*FresnelC[a+b*x]^n,x] /;
@@ -472,7 +472,7 @@ fn push_rules_rule_6989(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6990(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, c__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6990,
         source: "Int[E^(c_.+d_.*x_^2)*FresnelS[b_.*x_],x_Symbol] :=
           (1+I)/4 \\[Star] Int[E^(c+d*x^2)*Erf[Sqrt[Pi]/2*(1+I)*b*x],x] + (1-I)/4 \\[Star] Int[E^(c+d*x^2)*Erf[Sqrt[Pi]/2*(1-I)*b*x],x] /;
@@ -500,7 +500,7 @@ fn push_rules_rule_6990(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6991(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, c__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6991,
         source: "Int[E^(c_.+d_.*x_^2)*FresnelC[b_.*x_],x_Symbol] :=
           (1-I)/4 \\[Star] Int[E^(c+d*x^2)*Erf[Sqrt[Pi]/2*(1+I)*b*x],x] + (1+I)/4 \\[Star] Int[E^(c+d*x^2)*Erf[Sqrt[Pi]/2*(1-I)*b*x],x] /;
@@ -528,7 +528,7 @@ fn push_rules_rule_6991(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6992(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6992,
         source: "Int[E^(c_.+d_.*x_^2)*FresnelS[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[E^(c+d*x^2)*FresnelS[a+b*x]^n,x] /;
@@ -549,7 +549,7 @@ fn push_rules_rule_6992(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6993(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6993,
         source: "Int[E^(c_.+d_.*x_^2)*FresnelC[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[E^(c+d*x^2)*FresnelC[a+b*x]^n,x] /;
@@ -570,7 +570,7 @@ fn push_rules_rule_6993(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6994(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6994,
         source: "Int[Sin[d_.*x_^2]*FresnelS[b_.*x_]^n_.,x_Symbol] :=
           Pi*b/(2*d) \\[Star] Subst[Int[x^n,x],x,FresnelS[b*x]] /;
@@ -597,7 +597,7 @@ fn push_rules_rule_6994(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6995(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6995,
         source: "Int[Cos[d_.*x_^2]*FresnelC[b_.*x_]^n_.,x_Symbol] :=
           Pi*b/(2*d) \\[Star] Subst[Int[x^n,x],x,FresnelC[b*x]] /;
@@ -624,7 +624,7 @@ fn push_rules_rule_6995(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6996(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, c_, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6996,
         source: "Int[Sin[c_+d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           Sin[c] \\[Star] Int[Cos[d*x^2]*FresnelS[b*x],x] + Cos[c] \\[Star] Int[Sin[d*x^2]*FresnelS[b*x],x] /;
@@ -648,7 +648,7 @@ fn push_rules_rule_6996(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6997(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, c_, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6997,
         source: "Int[Cos[c_+d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           Cos[c] \\[Star] Int[Cos[d*x^2]*FresnelC[b*x],x] - Sin[c] \\[Star] Int[Sin[d*x^2]*FresnelC[b*x],x] /;
@@ -672,7 +672,7 @@ fn push_rules_rule_6997(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6998(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6998,
         source: "Int[Sin[c_.+d_.*x_^2]*FresnelS[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[Sin[c+d*x^2]*FresnelS[a+b*x]^n,x] /;
@@ -693,7 +693,7 @@ fn push_rules_rule_6998(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6999(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6999,
         source: "Int[Cos[c_.+d_.*x_^2]*FresnelC[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[Cos[c+d*x^2]*FresnelC[a+b*x]^n,x] /;
@@ -714,7 +714,7 @@ fn push_rules_rule_6999(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7000(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7000,
         source: "Int[Cos[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           FresnelC[b*x]*FresnelS[b*x]/(2*b) -
@@ -756,7 +756,7 @@ fn push_rules_rule_7000(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7001(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7001,
         source: "Int[Sin[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           b*Pi*FresnelC[b*x]*FresnelS[b*x]/(4*d) +
@@ -798,7 +798,7 @@ fn push_rules_rule_7001(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7002(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, c_, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7002,
         source: "Int[Cos[c_+d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           Cos[c] \\[Star] Int[Cos[d*x^2]*FresnelS[b*x],x] - Sin[c] \\[Star] Int[Sin[d*x^2]*FresnelS[b*x],x] /;
@@ -822,7 +822,7 @@ fn push_rules_rule_7002(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7003(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, c_, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7003,
         source: "Int[Sin[c_+d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           Sin[c] \\[Star] Int[Cos[d*x^2]*FresnelC[b*x],x] + Cos[c] \\[Star] Int[Sin[d*x^2]*FresnelC[b*x],x] /;
@@ -846,7 +846,7 @@ fn push_rules_rule_7003(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7004(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7004,
         source: "Int[Cos[c_.+d_.*x_^2]*FresnelS[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[Cos[c+d*x^2]*FresnelS[a+b*x]^n,x] /;
@@ -867,7 +867,7 @@ fn push_rules_rule_7004(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7005(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7005,
         source: "Int[Sin[c_.+d_.*x_^2]*FresnelC[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[Sin[c+d*x^2]*FresnelC[a+b*x]^n,x] /;
@@ -888,7 +888,7 @@ fn push_rules_rule_7005(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7006(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7006,
         source: "Int[x_*Sin[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           -Cos[d*x^2]*FresnelS[b*x]/(2*d) + 1/(2*b*Pi) \\[Star] Int[Sin[2*d*x^2],x] /;
@@ -912,7 +912,7 @@ fn push_rules_rule_7006(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7007(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7007,
         source: "Int[x_*Cos[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           Sin[d*x^2]*FresnelC[b*x]/(2*d) - b/(4*d) \\[Star] Int[Sin[2*d*x^2],x] /;
@@ -936,7 +936,7 @@ fn push_rules_rule_7007(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7008(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7008,
         source: "Int[x_^m_*Sin[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           -x^(m-1)*Cos[d*x^2]*FresnelS[b*x]/(2*d) +
@@ -965,7 +965,7 @@ fn push_rules_rule_7008(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7009(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7009,
         source: "Int[x_^m_*Cos[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           x^(m-1)*Sin[d*x^2]*FresnelC[b*x]/(2*d) -
@@ -995,7 +995,7 @@ fn push_rules_rule_7009(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7010(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7010,
         source: "Int[x_^m_*Sin[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           x^(m+1)*Sin[d*x^2]*FresnelS[b*x]/(m+1) -
@@ -1026,7 +1026,7 @@ fn push_rules_rule_7010(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7011(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7011,
         source: "Int[x_^m_*Cos[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           x^(m+1)*Cos[d*x^2]*FresnelC[b*x]/(m+1) -
@@ -1057,7 +1057,7 @@ fn push_rules_rule_7011(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7012(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7012,
         source: "Int[(e_.*x_)^m_.*Sin[c_.+d_.*x_^2]*FresnelS[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[(e*x)^m*Sin[c+d*x^2]*FresnelS[a+b*x]^n,x] /;
@@ -1079,7 +1079,7 @@ fn push_rules_rule_7012(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7013(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7013,
         source: "Int[(e_.*x_)^m_.*Cos[c_.+d_.*x_^2]*FresnelC[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[(e*x)^m*Cos[c+d*x^2]*FresnelC[a+b*x]^n,x] /;
@@ -1101,7 +1101,7 @@ fn push_rules_rule_7013(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7014(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7014,
         source: "Int[x_*Cos[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           Sin[d*x^2]*FresnelS[b*x]/(2*d) - 1/(Pi*b) \\[Star] Int[Sin[d*x^2]^2,x] /;
@@ -1125,7 +1125,7 @@ fn push_rules_rule_7014(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7015(rules: &mut Vec<RubiRule>) {
     rubi_symb!(b__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7015,
         source: "Int[x_*Sin[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           -Cos[d*x^2]*FresnelC[b*x]/(2*d) + b/(2*d) \\[Star] Int[Cos[d*x^2]^2,x] /;
@@ -1149,7 +1149,7 @@ fn push_rules_rule_7015(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7016(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7016,
         source: "Int[x_^m_*Cos[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           x^(m-1)*Sin[d*x^2]*FresnelS[b*x]/(2*d) -
@@ -1178,7 +1178,7 @@ fn push_rules_rule_7016(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7017(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7017,
         source: "Int[x_^m_*Sin[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           -x^(m-1)*Cos[d*x^2]*FresnelC[b*x]/(2*d) +
@@ -1208,7 +1208,7 @@ fn push_rules_rule_7017(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7018(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7018,
         source: "Int[x_^m_*Cos[d_.*x_^2]*FresnelS[b_.*x_],x_Symbol] :=
           x^(m+1)*Cos[d*x^2]*FresnelS[b*x]/(m+1) -
@@ -1237,7 +1237,7 @@ fn push_rules_rule_7018(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7019(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; b__, d__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7019,
         source: "Int[x_^m_*Sin[d_.*x_^2]*FresnelC[b_.*x_],x_Symbol] :=
           x^(m+1)*Sin[d*x^2]*FresnelC[b*x]/(m+1) -
@@ -1266,7 +1266,7 @@ fn push_rules_rule_7019(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7020(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7020,
         source: "Int[(e_.*x_)^m_.*Cos[c_.+d_.*x_^2]*FresnelS[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[(e*x)^m*Cos[c+d*x^2]*FresnelS[a+b*x]^n,x] /;
@@ -1288,7 +1288,7 @@ fn push_rules_rule_7020(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7021(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7021,
         source: "Int[(e_.*x_)^m_.*Sin[c_.+d_.*x_^2]*FresnelC[a_.+b_.*x_]^n_.,x_Symbol] :=
           Unintegrable[(e*x)^m*Sin[c+d*x^2]*FresnelC[a+b*x]^n,x] /;
@@ -1310,7 +1310,7 @@ fn push_rules_rule_7021(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7022(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7022,
         source: "Int[FresnelS[d_.*(a_.+b_.*Log[c_.*x_^n_.])],x_Symbol] :=
           x*FresnelS[d*(a+b*Log[c*x^n])] - b*d*n \\[Star] Int[Sin[Pi/2*(d*(a+b*Log[c*x^n]))^2],x] /;
@@ -1332,7 +1332,7 @@ fn push_rules_rule_7022(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7023(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7023,
         source: "Int[FresnelC[d_.*(a_.+b_.*Log[c_.*x_^n_.])],x_Symbol] :=
           x*FresnelC[d*(a+b*Log[c*x^n])] - b*d*n \\[Star] Int[Cos[Pi/2*(d*(a+b*Log[c*x^n]))^2],x] /;
@@ -1354,7 +1354,7 @@ fn push_rules_rule_7023(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7024(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7024,
         source: "Int[F_[d_.*(a_.+b_.*Log[c_.*x_^n_.])]/x_,x_Symbol] :=
           1/n \\[Star] Subst[F[d*(a+b*x)],x,Log[c*x^n]] /;
@@ -1385,7 +1385,7 @@ fn push_rules_rule_7024(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7025(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7025,
         source: "Int[(e_.*x_)^m_.*FresnelS[d_.*(a_.+b_.*Log[c_.*x_^n_.])],x_Symbol] :=
           (e*x)^(m+1)*FresnelS[d*(a+b*Log[c*x^n])]/(e*(m+1)) -
@@ -1409,7 +1409,7 @@ fn push_rules_rule_7025(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7026(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7026,
         source: "Int[(e_.*x_)^m_.*FresnelC[d_.*(a_.+b_.*Log[c_.*x_^n_.])],x_Symbol] :=
           (e*x)^(m+1)*FresnelC[d*(a+b*Log[c*x^n])]/(e*(m+1)) -

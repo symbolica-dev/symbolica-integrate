@@ -25,7 +25,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5923(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5923,
         source: "Int[(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           1/n \\[Star] Subst[Int[x^(1/n-1)*(a+b*Tanh[c+d*x])^p,x],x,x^n] /;
@@ -55,7 +55,7 @@ fn push_rules_rule_5923(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5924(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5924,
         source: "Int[(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           1/n \\[Star] Subst[Int[x^(1/n-1)*(a+b*Coth[c+d*x])^p,x],x,x^n] /;
@@ -85,7 +85,7 @@ fn push_rules_rule_5924(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5925(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5925,
         source: "Int[(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           Integral[(a+b*Tanh[c+d*x^n])^p,x] /;
@@ -109,7 +109,7 @@ fn push_rules_rule_5925(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5926(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5926,
         source: "Int[(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           Integral[(a+b*Coth[c+d*x^n])^p,x] /;
@@ -133,7 +133,7 @@ fn push_rules_rule_5926(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5927(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, p_, u_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5927,
         source: "Int[(a_.+b_.*Tanh[c_.+d_.*u_^n_])^p_.,x_Symbol] :=
           1/Coefficient[u,x,1] \\[Star] Subst[Int[(a+b*Tanh[c+d*x^n])^p,x],x,u] /;
@@ -164,7 +164,7 @@ fn push_rules_rule_5927(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5928(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, p_, u_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5928,
         source: "Int[(a_.+b_.*Coth[c_.+d_.*u_^n_])^p_.,x_Symbol] :=
           1/Coefficient[u,x,1] \\[Star] Subst[Int[(a+b*Coth[c+d*x^n])^p,x],x,u] /;
@@ -195,7 +195,7 @@ fn push_rules_rule_5928(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5929(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, p_, u_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5929,
         source: "Int[(a_.+b_.*Tanh[u_])^p_.,x_Symbol] :=
           Int[(a+b*Tanh[ExpandToSum[u,x]])^p,x] /;
@@ -221,7 +221,7 @@ fn push_rules_rule_5929(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5930(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, p_, u_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5930,
         source: "Int[(a_.+b_.*Coth[u_])^p_.,x_Symbol] :=
           Int[(a+b*Coth[ExpandToSum[u,x]])^p,x] /;
@@ -247,7 +247,7 @@ fn push_rules_rule_5930(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5931(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5931,
         source: "Int[x_^m_.*(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           1/n \\[Star] Subst[Int[x^(Simplify[(m+1)/n]-1)*(a+b*Tanh[c+d*x])^p,x],x,x^n] /;
@@ -278,7 +278,7 @@ fn push_rules_rule_5931(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5932(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5932,
         source: "Int[x_^m_.*(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           1/n \\[Star] Subst[Int[x^(Simplify[(m+1)/n]-1)*(a+b*Coth[c+d*x])^p,x],x,x^n] /;
@@ -309,7 +309,7 @@ fn push_rules_rule_5932(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5933(rules: &mut Vec<RubiRule>) {
     rubi_symb!(c__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5933,
         source: "Int[x_^m_.*Tanh[c_.+d_.*x_^n_]^2,x_Symbol] :=
           -x^(m-n+1)*Tanh[c+d*x^n]/(d*n) + Int[x^m,x] + (m-n+1)/(d*n)*Int[x^(m-n)*Tanh[c+d*x^n],x] /;
@@ -334,7 +334,7 @@ fn push_rules_rule_5933(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5934(rules: &mut Vec<RubiRule>) {
     rubi_symb!(c__, d__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5934,
         source: "Int[x_^m_.*Coth[c_.+d_.*x_^n_]^2,x_Symbol] :=
           -x^(m-n+1)*Coth[c+d*x^n]/(d*n) + Int[x^m,x] + (m-n+1)/(d*n)*Int[x^(m-n)*Coth[c+d*x^n],x] /;
@@ -359,7 +359,7 @@ fn push_rules_rule_5934(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5935(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5935,
         source: "Int[x_^m_.*(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           Integral[x^m*(a+b*Tanh[c+d*x^n])^p,x] /;
@@ -384,7 +384,7 @@ fn push_rules_rule_5935(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5936(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5936,
         source: "Int[x_^m_.*(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           Integral[x^m*(a+b*Coth[c+d*x^n])^p,x] /;
@@ -409,7 +409,7 @@ fn push_rules_rule_5936(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5937(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5937,
         source: "Int[(e_*x_)^m_.*(a_.+b_.*Tanh[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           e^IntPart[m]*(e*x)^FracPart[m]/x^FracPart[m] \\[Star] Int[x^m*(a+b*Tanh[c+d*x^n])^p,x] /;
@@ -436,7 +436,7 @@ fn push_rules_rule_5937(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5938(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5938,
         source: "Int[(e_*x_)^m_.*(a_.+b_.*Coth[c_.+d_.*x_^n_])^p_.,x_Symbol] :=
           e^IntPart[m]*(e*x)^FracPart[m]/x^FracPart[m] \\[Star] Int[x^m*(a+b*Coth[c+d*x^n])^p,x] /;
@@ -463,7 +463,7 @@ fn push_rules_rule_5938(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5939(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, e__, m_, p_, u_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5939,
         source: "Int[(e_*x_)^m_.*(a_.+b_.*Tanh[u_])^p_.,x_Symbol] :=
           Int[(e*x)^m*(a+b*Tanh[ExpandToSum[u,x]])^p,x] /;
@@ -490,7 +490,7 @@ fn push_rules_rule_5939(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5940(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, e__, m_, p_, u_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5940,
         source: "Int[(e_*x_)^m_.*(a_.+b_.*Coth[u_])^p_.,x_Symbol] :=
           Int[(e*x)^m*(a+b*Coth[ExpandToSum[u,x]])^p,x] /;
@@ -517,7 +517,7 @@ fn push_rules_rule_5940(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5941(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, m_, n_, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5941,
         source: "Int[x_^m_.*Sech[a_.+b_.*x_^n_.]^p_.*Tanh[a_.+b_.*x_^n_.]^q_.,x_Symbol] :=
           -x^(m-n+1)*Sech[a+b*x^n]^p/(b*n*p) +
@@ -548,7 +548,7 @@ fn push_rules_rule_5941(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5942(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, m_, n_, p_, q_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5942,
         source: "Int[x_^m_.*Csch[a_.+b_.*x_^n_.]^p_.*Coth[a_.+b_.*x_^n_.]^q_.,x_Symbol] :=
           -x^(m-n+1)*Csch[a+b*x^n]^p/(b*n*p) +

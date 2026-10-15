@@ -9,7 +9,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2620(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, a__, b__, c__, d__, e__, f__, g__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2620,
         source: "Int[(c_.+d_.*x_)^m_.*(F_^(g_.*(e_.+f_.*x_)))^n_./(a_+b_.*(F_^(g_.*(e_.+f_.*x_)))^n_.),x_Symbol] :=
           (c+d*x)^m/(b*f*g*n*Log[F])*Log[1+b*(F^(g*(e+f*x)))^n/a] -
@@ -45,7 +45,7 @@ fn push_rules_rule_2621(rules: &mut Vec<RubiRule>) {
         capital_f_, a__, b__, c__, d__, e__, f__, g__, m_, n_, p_, x_
     );
     let exponential = capital_f_.pow(g__ * (e__ + f__ * x_)).pow(n_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2621,
         source: "Int[(c_.+d_.*x_)^m_.*(F_^(g_.*(e_.+f_.*x_)))^n_.*(a_.+b_.*(F_^(g_.*(e_.+f_.*x_)))^n_.)^p_.,x_Symbol] :=
           (c+d*x)^m*(a+b*(F^(g*(e+f*x)))^n)^(p+1)/(b*f*g*n*(p+1)*Log[F]) -
@@ -82,7 +82,7 @@ fn push_rules_rule_2622(rules: &mut Vec<RubiRule>) {
         capital_f_, a__, b__, c__, d__, e__, f__, g__, m_, n_, p_, x_
     );
     let exponential = capital_f_.pow(g__ * (e__ + f__ * x_)).pow(n_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2622,
         source: "Int[(c_.+d_.*x_)^m_.*(F_^(g_.*(e_.+f_.*x_)))^n_.*(a_.+b_.*(F_^(g_.*(e_.+f_.*x_)))^n_.)^p_.,x_Symbol] :=
           Unintegrable[(c+d*x)^m*(F^(g*(e+f*x)))^n*(a+b*(F^(g*(e+f*x)))^n)^p,x] /;
@@ -112,7 +112,7 @@ fn push_rules_rule_2623(rules: &mut Vec<RubiRule>) {
         capital_f_, capital_g_, a__, b__, c__, d__, m_, n_, p_, q_, x_, e__, f__, g__, h__, i__,
         j__, k__
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2623,
         source: "Int[(c_.+d_.*x_)^m_.*(k_.*G_^(j_.*(h_.+i_.*x_)))^q_.*(a_.+b_.*(F_^(g_.*(e_.+f_.*x_)))^n_.)^p_.,x_Symbol] :=
           (k*G^(j*(h+i*x)))^q/(F^(g*(e+f*x)))^n \\[Star] Int[(c+d*x)^m*(F^(g*(e+f*x)))^n*(a+b*(F^(g*(e+f*x)))^n)^p,x] /;

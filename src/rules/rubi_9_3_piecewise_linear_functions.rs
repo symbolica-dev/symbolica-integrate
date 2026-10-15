@@ -26,7 +26,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2588(rules: &mut Vec<RubiRule>) {
     rubi_symb!(m_, u_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2588,
         source: "Int[u_^m_.,x_Symbol] :=
           With[{c=Simplify[D[u,x]]},
@@ -51,7 +51,7 @@ fn push_rules_rule_2588(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2589(rules: &mut Vec<RubiRule>) {
     rubi_symb!(u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2589,
         source: "Int[v_/u_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -79,7 +79,7 @@ fn push_rules_rule_2589(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2590(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2590,
         source: "Int[v_^n_/u_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -110,7 +110,7 @@ fn push_rules_rule_2590(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2591(rules: &mut Vec<RubiRule>) {
     rubi_symb!(u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2591,
         source: "Int[1/(u_*v_),x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -139,7 +139,7 @@ fn push_rules_rule_2591(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2592(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2592,
         source: "Int[1/(u_*Sqrt[v_]),x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -169,7 +169,7 @@ fn push_rules_rule_2592(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2593(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2593,
         source: "Int[1/(u_*Sqrt[v_]),x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -199,7 +199,7 @@ fn push_rules_rule_2593(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2594(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2594,
         source: "Int[v_^n_/u_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -231,7 +231,7 @@ fn push_rules_rule_2594(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2595(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2595,
         source: "Int[v_^n_/u_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -268,7 +268,7 @@ fn push_rules_rule_2595(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2596(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2596,
         source: "Int[1/(Sqrt[u_]*Sqrt[v_]),x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -298,7 +298,7 @@ fn push_rules_rule_2596(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2597(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2597,
         source: "Int[1/(Sqrt[u_]*Sqrt[v_]),x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -328,7 +328,7 @@ fn push_rules_rule_2597(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2598(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2598,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -361,7 +361,7 @@ fn push_rules_rule_2598(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2599(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2599,
         source: "Int[u_^m_*v_^n_.,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -408,7 +408,7 @@ fn push_rules_rule_2599(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2600(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2600,
         source: "Int[u_^m_*v_^n_.,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -449,7 +449,7 @@ fn push_rules_rule_2600(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2601(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2601,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -486,7 +486,7 @@ fn push_rules_rule_2601(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2602(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2602,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -520,7 +520,7 @@ fn push_rules_rule_2602(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2603(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2603,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -555,7 +555,7 @@ fn push_rules_rule_2603(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2604(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, u_, v_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2604,
         source: "Int[u_^m_*v_^n_,x_Symbol] :=
           With[{a=Simplify[D[u,x]],b=Simplify[D[v,x]]},
@@ -589,7 +589,7 @@ fn push_rules_rule_2604(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2605(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, n_, u_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2605,
         source: "Int[u_^n_.*Log[a_.+b_.*x_],x_Symbol] :=
           With[{c=Simplify[D[u,x]]},
@@ -625,7 +625,7 @@ fn push_rules_rule_2605(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2606(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, m_, n_, u_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2606,
         source: "Int[u_^n_.*(a_.+b_.*x_)^m_.*Log[a_.+b_.*x_],x_Symbol] :=
           With[{c=Simplify[D[u,x]]},

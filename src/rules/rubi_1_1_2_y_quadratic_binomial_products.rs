@@ -15,7 +15,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2331(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2331,
         source: "Int[x_^m_.*Pq_*(a_+b_.*x_^2)^p_.,x_Symbol] :=
           1/2 \\[Star] Subst[Int[x^((m-1)/2)*SubstFor[x^2,Pq,x]*(a+b*x)^p,x],x,x^2] /;
@@ -49,7 +49,7 @@ fn push_rules_rule_2331(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2332(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, m_, p_, p2__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2332,
         source: "Int[(c_.*x_)^m_.*P2_*(a_+b_.*x_^2)^p_.,x_Symbol] :=
           With[{f=Coeff[P2,x,0],g=Coeff[P2,x,1],h=Coeff[P2,x,2]},
@@ -90,7 +90,7 @@ fn push_rules_rule_2332(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2333(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2333,
         source: "Int[(c_.*x_)^m_.*Pq_*(a_+b_.*x_^2)^p_.,x_Symbol] :=
           Int[ExpandIntegrand[(c*x)^m*Pq*(a+b*x^2)^p,x],x] /;
@@ -117,7 +117,7 @@ fn push_rules_rule_2333(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2334(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2334,
         source: "Int[x_^m_*Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{A=Coeff[Pq,x,0],Q=PolynomialQuotient[Pq-Coeff[Pq,x,0],x^2,x]},
@@ -168,7 +168,7 @@ fn push_rules_rule_2334(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2335(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2335,
         source: "Int[(c_.*x_)^m_.*Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{Q=PolynomialQuotient[Pq,a+b*x^2,x],
@@ -220,7 +220,7 @@ fn push_rules_rule_2335(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2336(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2336,
         source: "Int[(c_.*x_)^m_.*Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{Q=PolynomialQuotient[(c*x)^m*Pq,a+b*x^2,x],
@@ -271,7 +271,7 @@ fn push_rules_rule_2336(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2337(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2337,
         source: "Int[(c_.*x_)^m_.*Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{Q=PolynomialQuotient[Pq,a+b*x^2,x],
@@ -323,7 +323,7 @@ fn push_rules_rule_2337(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2338(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2338,
         source: "Int[(c_.*x_)^m_*Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{Q=PolynomialQuotient[Pq,c*x,x], R=PolynomialRemainder[Pq,c*x,x]},
@@ -372,7 +372,7 @@ fn push_rules_rule_2338(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2339(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2339,
         source: "Int[(c_.*x_)^m_.*Pq_*(a_+b_.*x_^2)^p_.,x_Symbol] :=
           With[{q=Expon[Pq,x]},
@@ -417,7 +417,7 @@ fn push_rules_rule_2339(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2340(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, m_, p_, pq__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2340,
         source: "Int[(c_.*x_)^m_.*Pq_*(a_+b_.*x_^2)^p_,x_Symbol] :=
           With[{q=Expon[Pq,x],f=Coeff[Pq,x,Expon[Pq,x]]},

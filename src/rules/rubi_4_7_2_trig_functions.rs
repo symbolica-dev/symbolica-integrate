@@ -24,7 +24,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4727(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4727,
         source: "Int[u_*(c_.*cot[a_.+b_.*x_])^m_.*(d_.*tan[a_.+b_.*x_])^n_.,x_Symbol] :=
           (c*Cot[a+b*x])^m*(d*Tan[a+b*x])^m \\[Star] Int[ActivateTrig[u]*(d*Tan[a+b*x])^(n-m),x] /;
@@ -57,7 +57,7 @@ fn push_rules_rule_4727(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4728(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4728,
         source: "Int[u_*(c_.*tan[a_.+b_.*x_])^m_.*(d_.*cos[a_.+b_.*x_])^n_.,x_Symbol] :=
           (c*Tan[a+b*x])^m*(d*Cos[a+b*x])^m/(d*Sin[a+b*x])^m \\[Star] Int[ActivateTrig[u]*(d*Sin[a+b*x])^m/(d*Cos[a+b*x])^(m-n),x] /;
@@ -87,7 +87,7 @@ fn push_rules_rule_4728(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4729(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, m_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4729,
         source: "Int[u_*(c_.*cot[a_.+b_.*x_])^m_.,x_Symbol] :=
           (c*Cot[a+b*x])^m*(c*Tan[a+b*x])^m \\[Star] Int[ActivateTrig[u]/(c*Tan[a+b*x])^m,x] /;
@@ -120,7 +120,7 @@ fn push_rules_rule_4729(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4730(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, m_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4730,
         source: "Int[u_*(c_.*tan[a_.+b_.*x_])^m_.,x_Symbol] :=
           (c*Cot[a+b*x])^m*(c*Tan[a+b*x])^m \\[Star] Int[ActivateTrig[u]/(c*Cot[a+b*x])^m,x] /;
@@ -153,7 +153,7 @@ fn push_rules_rule_4730(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4731(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_b__, a__, b__, c__, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4731,
         source: "Int[u_*(c_.*tan[a_.+b_.*x_])^n_.*(A_+B_.*cot[a_.+b_.*x_]),x_Symbol] :=
           c \\[Star] Int[ActivateTrig[u]*(c*Tan[a+b*x])^(n-1)*(B+A*Tan[a+b*x]),x] /;
@@ -180,7 +180,7 @@ fn push_rules_rule_4731(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4732(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_b__, a__, b__, c__, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4732,
         source: "Int[u_*(c_.*cot[a_.+b_.*x_])^n_.*(A_+B_.*tan[a_.+b_.*x_]),x_Symbol] :=
           c \\[Star] Int[ActivateTrig[u]*(c*Cot[a+b*x])^(n-1)*(B+A*Cot[a+b*x]),x] /;
@@ -207,7 +207,7 @@ fn push_rules_rule_4732(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4733(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_b__, a__, b__, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4733,
         source: "Int[u_*(A_+B_.*cot[a_.+b_.*x_]),x_Symbol] :=
           Int[ActivateTrig[u]*(B+A*Tan[a+b*x])/Tan[a+b*x],x] /;
@@ -232,7 +232,7 @@ fn push_rules_rule_4733(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4734(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_b__, a__, b__, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4734,
         source: "Int[u_*(A_+B_.*tan[a_.+b_.*x_]),x_Symbol] :=
           Int[ActivateTrig[u]*(B+A*Cot[a+b*x])/Cot[a+b*x],x] /;
@@ -267,7 +267,7 @@ fn push_rules_rule_4735(rules: &mut Vec<RubiRule>) {
         u__,
         x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4735,
         source: "Int[u_.*(c_.*tan[a_.+b_.*x_])^n_.*(A_.+B_.*cot[a_.+b_.*x_]+C_.*cot[a_.+b_.*x_]^2),x_Symbol] :=
           c^2 \\[Star] Int[ActivateTrig[u]*(c*Tan[a+b*x])^(n-2)*(C+B*Tan[a+b*x]+A*Tan[a+b*x]^2),x] /;
@@ -306,7 +306,7 @@ fn push_rules_rule_4736(rules: &mut Vec<RubiRule>) {
         u__,
         x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4736,
         source: "Int[u_.*(c_.*cot[a_.+b_.*x_])^n_.*(A_.+B_.*tan[a_.+b_.*x_]+C_.*tan[a_.+b_.*x_]^2),x_Symbol] :=
           c^2 \\[Star] Int[ActivateTrig[u]*(c*Cot[a+b*x])^(n-2)*(C+B*Cot[a+b*x]+A*Cot[a+b*x]^2),x] /;
@@ -335,7 +335,7 @@ fn push_rules_rule_4736(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4737(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_c__, a__, b__, c__, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4737,
         source: "Int[u_.*(c_.*tan[a_.+b_.*x_])^n_.*(A_+C_.*cot[a_.+b_.*x_]^2),x_Symbol] :=
           c^2 \\[Star] Int[ActivateTrig[u]*(c*Tan[a+b*x])^(n-2)*(C+A*Tan[a+b*x]^2),x] /;
@@ -363,7 +363,7 @@ fn push_rules_rule_4737(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4738(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_c__, a__, b__, c__, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4738,
         source: "Int[u_.*(c_.*cot[a_.+b_.*x_])^n_.*(A_+C_.*tan[a_.+b_.*x_]^2),x_Symbol] :=
           c^2 \\[Star] Int[ActivateTrig[u]*(c*Cot[a+b*x])^(n-2)*(C+A*Cot[a+b*x]^2),x] /;
@@ -391,7 +391,7 @@ fn push_rules_rule_4738(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4739(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_b__, capital_c__, a__, b__, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4739,
         source: "Int[u_*(A_.+B_.*cot[a_.+b_.*x_]+C_.*cot[a_.+b_.*x_]^2),x_Symbol] :=
           Int[ActivateTrig[u]*(C+B*Tan[a+b*x]+A*Tan[a+b*x]^2)/Tan[a+b*x]^2,x] /;
@@ -418,7 +418,7 @@ fn push_rules_rule_4739(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4740(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_b__, capital_c__, a__, b__, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4740,
         source: "Int[u_*(A_.+B_.*tan[a_.+b_.*x_]+C_.*tan[a_.+b_.*x_]^2),x_Symbol] :=
           Int[ActivateTrig[u]*(C+B*Cot[a+b*x]+A*Cot[a+b*x]^2)/Cot[a+b*x]^2,x] /;
@@ -445,7 +445,7 @@ fn push_rules_rule_4740(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4741(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_c__, a__, b__, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4741,
         source: "Int[u_*(A_+C_.*cot[a_.+b_.*x_]^2),x_Symbol] :=
           Int[ActivateTrig[u]*(C+A*Tan[a+b*x]^2)/Tan[a+b*x]^2,x] /;
@@ -471,7 +471,7 @@ fn push_rules_rule_4741(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4742(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_c__, a__, b__, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4742,
         source: "Int[u_*(A_+C_.*tan[a_.+b_.*x_]^2),x_Symbol] :=
           Int[ActivateTrig[u]*(C+A*Cot[a+b*x]^2)/Cot[a+b*x]^2,x] /;
@@ -497,7 +497,7 @@ fn push_rules_rule_4742(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_4743(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_a__, capital_b__, capital_c__, a__, b__, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4743,
         source: "Int[u_*(A_.+B_.*tan[a_.+b_.*x_]+C_.*cot[a_.+b_.*x_]),x_Symbol] :=
           Int[ActivateTrig[u]*(C+A*Tan[a+b*x]+B*Tan[a+b*x]^2)/Tan[a+b*x],x] /;
@@ -534,7 +534,7 @@ fn push_rules_rule_4744(rules: &mut Vec<RubiRule>) {
         u__,
         x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4744,
         source: "Int[u_*(A_.*tan[a_.+b_.*x_]^n_.+B_.*tan[a_.+b_.*x_]^n1_+C_.*tan[a_.+b_.*x_]^n2_),x_Symbol] :=
           Int[ActivateTrig[u]*Tan[a+b*x]^n*(A+B*Tan[a+b*x]+C*Tan[a+b*x]^2),x] /;
@@ -575,7 +575,7 @@ fn push_rules_rule_4745(rules: &mut Vec<RubiRule>) {
         u__,
         x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 4745,
         source: "Int[u_*(A_.*cot[a_.+b_.*x_]^n_.+B_.*cot[a_.+b_.*x_]^n1_+C_.*cot[a_.+b_.*x_]^n2_),x_Symbol] :=
           Int[ActivateTrig[u]*Cot[a+b*x]^n*(A+B*Cot[a+b*x]+C*Cot[a+b*x]^2),x] /;

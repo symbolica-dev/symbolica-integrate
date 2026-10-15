@@ -11,7 +11,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5943(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5943,
         source: "Int[Tanh[a_.+b_.*x_+c_.*x_^2]^n_.,x_Symbol] :=
           Integral[Tanh[a+b*x+c*x^2]^n,x] /;
@@ -35,7 +35,7 @@ fn push_rules_rule_5943(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5944(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5944,
         source: "Int[Coth[a_.+b_.*x_+c_.*x_^2]^n_.,x_Symbol] :=
           Integral[Coth[a+b*x+c*x^2]^n,x] /;
@@ -59,7 +59,7 @@ fn push_rules_rule_5944(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5945(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5945,
         source: "Int[(d_.+e_.*x_)*Tanh[a_.+b_.*x_+c_.*x_^2],x_Symbol] :=
           e*Log[Cosh[a+b*x+c*x^2]]/(2*c) +
@@ -86,7 +86,7 @@ fn push_rules_rule_5945(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5946(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5946,
         source: "Int[(d_.+e_.*x_)*Coth[a_.+b_.*x_+c_.*x_^2],x_Symbol] :=
           e*Log[Sinh[a+b*x+c*x^2]]/(2*c) +
@@ -113,7 +113,7 @@ fn push_rules_rule_5946(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5947(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5947,
         source: "Int[(d_.+e_.*x_)^m_.*Tanh[a_.+b_.*x_+c_.*x_^2]^n_.,x_Symbol] :=
           Integral[(d+e*x)^m*Tanh[a+b*x+c*x^2]^n,x] /;
@@ -138,7 +138,7 @@ fn push_rules_rule_5947(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5948(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, e__, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5948,
         source: "Int[(d_.+e_.*x_)^m_.*Coth[a_.+b_.*x_+c_.*x_^2]^n_.,x_Symbol] :=
           Integral[(d+e*x)^m*Coth[a+b*x+c*x^2]^n,x] /;

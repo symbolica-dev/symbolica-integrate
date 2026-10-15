@@ -12,7 +12,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2119(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, px__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2119,
         source: "Int[Px_*(a_.+b_.*x_)^m_.*(c_.+d_.*x_)^n_.,x_Symbol] :=
           Int[Px*(a*c+b*d*x^2)^m,x] /;
@@ -40,7 +40,7 @@ fn push_rules_rule_2119(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2120(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, px__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2120,
         source: "Int[Px_*(a_.+b_.*x_)^m_*(c_.+d_.*x_)^n_,x_Symbol] :=
           (a+b*x)^FracPart[m]*(c+d*x)^FracPart[m]/(a*c+b*d*x^2)^FracPart[m] \\[Star] Int[Px*(a*c+b*d*x^2)^m,x] /;
@@ -73,7 +73,7 @@ fn push_rules_rule_2120(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2121(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, px__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2121,
         source: "Int[Px_*(a_.+b_.*x_)^m_.*(c_.+d_.*x_)^n_.,x_Symbol] :=
           Int[PolynomialQuotient[Px,a+b*x,x]*(a+b*x)^(m+1)*(c+d*x)^n,x] /;
@@ -104,7 +104,7 @@ fn push_rules_rule_2121(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2122(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, n_, px__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2122,
         source: "Int[Px_*(c_.+d_.*x_)^n_/(a_.+b_.*x_),x_Symbol] :=
           Int[ExpandIntegrand[1/Sqrt[c+d*x],Px*(c+d*x)^(n+1/2)/(a+b*x),x],x] /;
@@ -133,7 +133,7 @@ fn push_rules_rule_2122(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2123(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, px__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2123,
         source: "Int[Px_*(a_.+b_.*x_)^m_.*(c_.+d_.*x_)^n_.,x_Symbol] :=
           Int[ExpandIntegrand[Px*(a+b*x)^m*(c+d*x)^n,x],x] /;
@@ -161,7 +161,7 @@ fn push_rules_rule_2123(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2124(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, px__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2124,
         source: "Int[Px_*(a_.+b_.*x_)^m_*(c_.+d_.*x_)^n_.,x_Symbol] :=
           With[{Qx=PolynomialQuotient[Px,a+b*x,x], R=PolynomialRemainder[Px,a+b*x,x]},
@@ -207,7 +207,7 @@ fn push_rules_rule_2124(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2125(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, m_, n_, px__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2125,
         source: "Int[Px_*(a_.+b_.*x_)^m_.*(c_.+d_.*x_)^n_.,x_Symbol] :=
           With[{q=Expon[Px,x],k=Coeff[Px,x,Expon[Px,x]]},

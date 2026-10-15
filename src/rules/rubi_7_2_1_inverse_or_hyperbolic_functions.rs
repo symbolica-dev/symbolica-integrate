@@ -8,7 +8,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6294(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6294,
         source: "Int[(a_.+b_.*ArcCosh[c_.*x_])^n_.,x_Symbol] :=
           x*(a+b*ArcCosh[c*x])^n -
@@ -32,7 +32,7 @@ fn push_rules_rule_6294(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6295(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6295,
         source: "Int[(a_.+b_.*ArcCosh[c_.*x_])^n_,x_Symbol] :=
           Sqrt[1+c*x]*Sqrt[-1+c*x]*(a+b*ArcCosh[c*x])^(n+1)/(b*c*(n+1)) -
@@ -57,7 +57,7 @@ fn push_rules_rule_6295(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_6296(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 6296,
         source: "Int[(a_.+b_.*ArcCosh[c_.*x_])^n_,x_Symbol] :=
           1/(b*c) \\[Star] Subst[Int[x^n*Sinh[-a/b+x/b],x],x,a+b*ArcCosh[c*x]] /;

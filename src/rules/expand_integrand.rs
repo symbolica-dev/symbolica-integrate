@@ -29,7 +29,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
     let capital_g_ = symbols.capital_g_;
     let head = symbols.rubi_expand_integrand;
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 3,
         source: "ExpandIntegrand[u_^p_.,x_Symbol]",
         pattern: u_.pow(p_),
@@ -47,7 +47,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 4,
         source: "ExpandIntegrand[(a_+b_.*x_^n_)^p_.,x_Symbol]",
         pattern: (a__ + b__ * x_.pow(n_)).pow(p_),
@@ -63,7 +63,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 5,
         source: "ExpandIntegrand[x_^m_.*(a_+b_.*x_^n_)^p_.,x_Symbol]",
         pattern: x_.pow(m_) * (a__ + b__ * x_.pow(n_)).pow(p_),
@@ -79,7 +79,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 6,
         source: "ExpandIntegrand[Px_.*x_^m_*(b_.*x_^n_.+c_.*x_^n1_)^p_.,x_Symbol]",
         pattern: px__ * x_.pow(m_)
@@ -102,7 +102,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 7,
         source: "ExpandIntegrand[Px_.*(b_.*x_^n_.+c_.*x_^n1_)^p_.,x_Symbol]",
         pattern: px__ * (b__ * x_.pow(n_) + c__ * x_.pow(n1_)).pow(p_),
@@ -124,7 +124,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(
+    rules.push_rubi_rule(
         rubi_helper_row!(
             order: 8,
             source: "ExpandIntegrand[(a_.+b_.*F_^u_)^p_.*(c_.+d_.*F_^v_)^q_.,x_Symbol]",
@@ -159,7 +159,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         .with_x_dependent_exponent_for_x_dependent_candidate(),
     );
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 9,
         source: "ExpandIntegrand[(a_.+b_.*x_)^m_.*F_^(e_.*(c_.+d_.*x_)^n_.)/(g_.+h_.*x_),x_Symbol]",
         pattern: (a__ + b__ * x_).pow(m_)
@@ -192,7 +192,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 10,
         source: "ExpandIntegrand[x_^m_.*(e_+f_.*x_)^p_.*F_^(b_.*(c_.+d_.*x_)^n_.),x_Symbol]",
         pattern: x_.pow(m_)
@@ -229,7 +229,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 11,
         source: "ExpandIntegrand[x_^m_.*(e_+f_.*x_)^p_.*F_^(a_.+b_.*(c_.+d_.*x_)^n_.),x_Symbol]",
         pattern: x_.pow(m_)
@@ -267,7 +267,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 12,
         source: "ExpandIntegrand[u_.*(a_+b_.*F_^v_)^m_.*(c_+d_.*F_^v_)^n_,x_Symbol]",
         pattern: u__ * (a__ + b__ * capital_f_.pow(v_)).pow(m_)
@@ -290,7 +290,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 13,
         source: "ExpandIntegrand[u_*(a_.+b_.*x_)^m_.*F_^(e_.*(c_.+d_.*x_)^n_.),x_Symbol]",
         pattern: u__ * (a__ + b__ * x_).pow(m_)
@@ -315,7 +315,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 14,
         source: "ExpandIntegrand[u_*(a_.+b_.*x_)^m_.*Log[c_.*(d_.+e_.*x_^n_.)^p_.],x_Symbol]",
         pattern: u__ * (a__ + b__ * x_).pow(m_)
@@ -334,7 +334,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 15,
         source: "ExpandIntegrand[u_*F_^(e_.*(c_.+d_.*x_)^n_.),x_Symbol]",
         pattern: u__ * capital_f_.pow(e__ * (c__ + d__ * x_).pow(n_)),
@@ -355,7 +355,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 16,
         source: "ExpandIntegrand[F_[u_]^m_.*(a_+b_.*G_[u_])^n_.,x_Symbol]",
         pattern: capital_f_.call(u_).pow(m_)
@@ -383,7 +383,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 17,
         source: "ExpandIntegrand[u_*(a_.+b_.*Log[c_.*(d_.*(e_.+f_.*x_)^p_.)^q_.])^n_,x_Symbol]",
         pattern: u__
@@ -406,7 +406,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 18,
         source: "ExpandIntegrand[u_*(a_.+b_.*F_[c_.+d_.*x_])^n_,x_Symbol]",
         pattern: u__
@@ -433,7 +433,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 19,
         source: "ExpandIntegrand[u_./(a_.*x_^n_+b_.*Sqrt[c_+d_.*x_^j_]),x_Symbol]",
         pattern: u__ * (a__ * x_.pow(n_) + b__ * (c__ + d__ * x_.pow(j_)).sqrt()).pow(-1),
@@ -455,7 +455,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(
+    rules.push_rubi_rule(
         rubi_helper_row!(
             order: 20,
             source: "ExpandIntegrand[(a_+b_.*x_)^m_/(c_+d_.*x_),x_Symbol]",
@@ -493,7 +493,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         .with_positive_integer_affine_power(),
     );
 
-    rules.push(
+    rules.push_rubi_rule(
         rubi_helper_row!(
             order: 21,
             source: "ExpandIntegrand[(a_+b_.*x_)^m_.*(A_+B_.*x_)/(c_+d_.*x_),x_Symbol]",
@@ -539,7 +539,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         .with_positive_integer_affine_power(),
     );
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 22,
         source: "ExpandIntegrand[u_*(a_+b_.*x_)^m_.*(c_+d_.*x_)^n_.,x_Symbol]",
         pattern: u__ * (a__ + b__ * x_).pow(m_) * (c__ + d__ * x_).pow(n_),
@@ -564,7 +564,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(
+    rules.push_rubi_rule(
         rubi_helper_row!(
             order: 23,
             source: "ExpandIntegrand[u_*(a_+b_.*x_)^m_.,x_Symbol]",
@@ -614,7 +614,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         .with_polynomial_complement_of_affine_power(),
     );
 
-    rules.push(
+    rules.push_rubi_rule(
         rubi_helper_row!(
             order: 24,
             source: "ExpandIntegrand[u_*v_^n_*(a_+b_.*x_)^m_,x_Symbol]",
@@ -653,7 +653,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         .with_rational_noninteger_affine_power_below_negative_one(),
     );
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 25,
         source: "ExpandIntegrand[u_*v_^n_*(a_+b_.*x_)^m_,x_Symbol]",
         pattern: u__ * v_.pow(n_) * (a__ + b__ * x_).pow(m_),
@@ -686,7 +686,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 26,
         source: "ExpandIntegrand[1/(a_+b_.*u_^n_),x_Symbol]",
         pattern: (a__ + b__ * u__.pow(n_)).pow(-1),
@@ -709,7 +709,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 27,
         source: "ExpandIntegrand[(c_+d_.*u_^n_)/(a_+b_.*u_^n2_),x_Symbol]",
         pattern: (c__ + d__ * u_.pow(n_)) * (a__ + b__ * u_.pow(n2_)).pow(-1),
@@ -734,7 +734,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 27,
         source: "ExpandIntegrand[(c_+d_.*u_^n_)/(a_+b_.*u_^n2_),x_Symbol]",
         pattern: d__ * u__.pow(n_) * (a__ + b__ * u__.pow(n2_)).pow(-1),
@@ -758,7 +758,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 27,
         source: "ExpandIntegrand[(c_+d_.*u_^n_)/(a_+b_.*u_^n2_),x_Symbol]",
         pattern: d__ * u__ * (a__ + b__ * u__.pow(n2_)).pow(-1),
@@ -779,7 +779,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 28,
         source: "ExpandIntegrand[(a_+b_.*u_)^m_*(c_.+d_.*u_),x_Symbol]",
         pattern: (a__ + b__ * u__).pow(m_) * (c__ + d__ * u__),
@@ -796,7 +796,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 29,
         source: "ExpandIntegrand[1/(a_+b_.*u_^n_),x_Symbol]",
         pattern: (a__ + b__ * u__.pow(n_)).pow(-1),
@@ -818,7 +818,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 30,
         source: "ExpandIntegrand[(c_+d_.*u_^m_.)/(a_+b_.*u_^n_),x_Symbol]",
         pattern: (c__ + d__ * u__.pow(m_)) * (a__ + b__ * u__.pow(n_)).pow(-1),
@@ -848,7 +848,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 31,
         source: "ExpandIntegrand[(c_.+d_.*u_^m_.+e_.*u_^p_)/(a_+b_.*u_^n_),x_Symbol]",
         pattern: (c__ + d__ * u__.pow(m_) + e__ * u__.pow(p_))
@@ -884,7 +884,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 32,
         source: "ExpandIntegrand[(c_.+d_.*u_^m_.+e_.*u_^p_+f_.*u_^q_)/(a_+b_.*u_^n_),x_Symbol]",
         pattern: (c__ + d__ * u__.pow(m_) + e__ * u__.pow(p_) + f__ * u__.pow(q_))
@@ -924,7 +924,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 33,
         source: "ExpandIntegrand[(a_+c_.*u_^n_)^p_,x_Symbol]",
         pattern: (a__ + c__ * u__.pow(n_)).pow(p_),
@@ -958,7 +958,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 34,
         source: "ExpandIntegrand[u_^m_.*(a_.+c_.*u_^n_)^p_,x_Symbol]",
         pattern: u__.pow(m_) * (a__ + c__ * u__.pow(n_)).pow(p_),
@@ -986,7 +986,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 35,
         source: "ExpandIntegrand[(a_+b_.*x_^n_)^p_,x_Symbol]",
         pattern: (a__ + b__ * u__.pow(n_)).pow(p_),
@@ -1011,7 +1011,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 36,
         source: "ExpandIntegrand[(a_.+b_.*u_^n_.+c_.*u_^n2_.)^p_,x_Symbol]",
         pattern: (a__ + b__ * u__.pow(n_) + c__ * u__.pow(n2_)).pow(p_),
@@ -1035,7 +1035,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 37,
         source: "ExpandIntegrand[u_^m_.*(a_.+b_.*u_^n_.+c_.*u_^n2_.)^p_,x_Symbol]",
         pattern: u__.pow(m_) * (a__ + b__ * u__.pow(n_) + c__ * u__.pow(n2_)).pow(p_),
@@ -1063,7 +1063,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 38,
         source: "ExpandIntegrand[(c_+d_.*u_^n_.)/(a_+b_.*u_^n2_.),x_Symbol]",
         pattern: (c__ + d__ * u_.pow(n_)) * (a__ + b__ * u_.pow(n2_)).pow(-1),
@@ -1085,7 +1085,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 39,
         source: "ExpandIntegrand[(d_.+e_.*(f_.+g_.*u_^n_.))/(a_.+b_.*u_^n_.+c_.*u_^n2_.),x_Symbol]",
         pattern: (f__ + u_) * (Atom::num(1) + u_ + u_.pow(2)).pow(-1),
@@ -1100,7 +1100,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 39,
         source: "ExpandIntegrand[(d_.+e_.*(f_.+g_.*u_^n_.))/(a_.+b_.*u_^n_.+c_.*u_^n2_.),x_Symbol]",
         pattern: (f__ + g__ * u_) * (Atom::num(1) + u_ + u_.pow(2)).pow(-1),
@@ -1115,7 +1115,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 39,
         source: "ExpandIntegrand[(d_.+e_.*(f_.+g_.*u_^n_.))/(a_.+b_.*u_^n_.+c_.*u_^n2_.),x_Symbol]",
         pattern: (d__ + e__ * u_.pow(n_))
@@ -1140,7 +1140,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 39,
         source: "ExpandIntegrand[(d_.+e_.*(f_.+g_.*u_^n_.))/(a_.+b_.*u_^n_.+c_.*u_^n2_.),x_Symbol]",
         pattern: (d__ + e__ * (f__ + g__ * u_.pow(n_)))
@@ -1165,7 +1165,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 40,
         source: "ExpandIntegrand[u_/v_,x_Symbol]",
         pattern: u__ * v__.pow(-1),
@@ -1180,7 +1180,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         rhs: { rubi_polynomial_divide(&u__, &v__, x_)? },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 41,
         source: "ExpandIntegrand[u_*(a_.*x_)^p_,x_Symbol]",
         pattern: u__ * (a__ * x_).pow(p_),
@@ -1196,7 +1196,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 42,
         source: "ExpandIntegrand[u_.*v_^p_,x_Symbol]",
         pattern: u__ * v_.pow(p_),
@@ -1210,7 +1210,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 43,
         source: "ExpandIntegrand[u_,x_Symbol]",
         pattern: Atom::var(u_),
@@ -1220,7 +1220,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         rhs: { rubi_expand_expression(&u_, x_) },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 44,
         source: "ExpandIntegrand[u_^m_./(a_+b_.*u_^n_),x_Symbol]",
         pattern: u_.pow(m_) * (a__ + b__ * u_.pow(n_)).pow(-1),
@@ -1236,7 +1236,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
         rhs: { rubi_expand_binomial(&a__, &b__, &m_, &n_, &u_, x_)? },
     ));
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 45,
         source: "ExpandIntegrand[u_,x_Symbol]",
         pattern: Atom::var(u_),

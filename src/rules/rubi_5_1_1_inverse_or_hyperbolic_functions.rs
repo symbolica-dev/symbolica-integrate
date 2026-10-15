@@ -11,7 +11,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5130(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5130,
         source: "Int[(a_.+b_.*ArcSin[c_.*x_])^n_.,x_Symbol] :=
           x*(a+b*ArcSin[c*x])^n -
@@ -36,7 +36,7 @@ fn push_rules_rule_5130(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5131(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5131,
         source: "Int[(a_.+b_.*ArcCos[c_.*x_])^n_.,x_Symbol] :=
           x*(a+b*ArcCos[c*x])^n +
@@ -61,7 +61,7 @@ fn push_rules_rule_5131(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5132(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5132,
         source: "Int[(a_.+b_.*ArcSin[c_.*x_])^n_,x_Symbol] :=
           Sqrt[1-c^2*x^2]*(a+b*ArcSin[c*x])^(n+1)/(b*c*(n+1)) +
@@ -87,7 +87,7 @@ fn push_rules_rule_5132(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5133(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5133,
         source: "Int[(a_.+b_.*ArcCos[c_.*x_])^n_,x_Symbol] :=
           -Sqrt[1-c^2*x^2]*(a+b*ArcCos[c*x])^(n+1)/(b*c*(n+1)) -
@@ -113,7 +113,7 @@ fn push_rules_rule_5133(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5134(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5134,
         source: "Int[(a_.+b_.*ArcSin[c_.*x_])^n_,x_Symbol] :=
           1/(b*c) \\[Star] Subst[Int[x^n*Cos[-a/b+x/b],x],x,a+b*ArcSin[c*x]] /;
@@ -138,7 +138,7 @@ fn push_rules_rule_5134(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5135(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5135,
         source: "Int[(a_.+b_.*ArcCos[c_.*x_])^n_,x_Symbol] :=
           -1/(b*c) \\[Star] Subst[Int[x^n*Sin[-a/b+x/b],x],x,a+b*ArcCos[c*x]] /;

@@ -25,7 +25,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5562(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5562,
         source: "Int[(a_.+b_.*ArcTan[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(a+b*ArcTan[x])^p,x],x,c+d*x] /;
@@ -49,7 +49,7 @@ fn push_rules_rule_5562(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5563(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5563,
         source: "Int[(a_.+b_.*ArcCot[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(a+b*ArcCot[x])^p,x],x,c+d*x] /;
@@ -73,7 +73,7 @@ fn push_rules_rule_5563(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5564(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5564,
         source: "Int[(a_.+b_.*ArcTan[c_+d_.*x_])^p_,x_Symbol] :=
           Unintegrable[(a+b*ArcTan[c+d*x])^p,x] /;
@@ -92,7 +92,7 @@ fn push_rules_rule_5564(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5565(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5565,
         source: "Int[(a_.+b_.*ArcCot[c_+d_.*x_])^p_,x_Symbol] :=
           Unintegrable[(a+b*ArcCot[c+d*x])^p,x] /;
@@ -111,7 +111,7 @@ fn push_rules_rule_5565(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5566(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5566,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcTan[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(f*x/d)^m*(a+b*ArcTan[x])^p,x],x,c+d*x] /;
@@ -139,7 +139,7 @@ fn push_rules_rule_5566(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5567(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5567,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcCot[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(f*x/d)^m*(a+b*ArcCot[x])^p,x],x,c+d*x] /;
@@ -167,7 +167,7 @@ fn push_rules_rule_5567(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5568(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5568,
         source: "Int[(e_.+f_.*x_)^m_*(a_.+b_.*ArcTan[c_+d_.*x_])^p_.,x_Symbol] :=
           (e+f*x)^(m+1)*(a+b*ArcTan[c+d*x])^p/(f*(m+1)) -
@@ -195,7 +195,7 @@ fn push_rules_rule_5568(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5569(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5569,
         source: "Int[(e_.+f_.*x_)^m_*(a_.+b_.*ArcCot[c_+d_.*x_])^p_.,x_Symbol] :=
           (e+f*x)^(m+1)*(a+b*ArcCot[c+d*x])^p/(f*(m+1)) +
@@ -223,7 +223,7 @@ fn push_rules_rule_5569(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5570(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5570,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcTan[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[((d*e-c*f)/d+f*x/d)^m*(a+b*ArcTan[x])^p,x],x,c+d*x] /;
@@ -248,7 +248,7 @@ fn push_rules_rule_5570(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5571(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5571,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcCot[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[((d*e-c*f)/d+f*x/d)^m*(a+b*ArcCot[x])^p,x],x,c+d*x] /;
@@ -273,7 +273,7 @@ fn push_rules_rule_5571(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5572(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5572,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcTan[c_+d_.*x_])^p_,x_Symbol] :=
           Unintegrable[(e+f*x)^m*(a+b*ArcTan[c+d*x])^p,x] /;
@@ -297,7 +297,7 @@ fn push_rules_rule_5572(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5573(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c_, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5573,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcCot[c_+d_.*x_])^p_,x_Symbol] :=
           Unintegrable[(e+f*x)^m*(a+b*ArcCot[c+d*x])^p,x] /;
@@ -321,7 +321,7 @@ fn push_rules_rule_5573(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5574(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a_, b__, c_, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5574,
         source: "Int[ArcTan[a_+b_.*x_]/(c_+d_.*x_^n_.),x_Symbol] :=
           I/2 \\[Star] Int[Log[1-I*a-I*b*x]/(c+d*x^n),x] -
@@ -351,7 +351,7 @@ fn push_rules_rule_5574(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5575(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a_, b__, c_, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5575,
         source: "Int[ArcCot[a_+b_.*x_]/(c_+d_.*x_^n_.),x_Symbol] :=
           I/2 \\[Star] Int[Log[(-I+a+b*x)/(a+b*x)]/(c+d*x^n),x] -
@@ -381,7 +381,7 @@ fn push_rules_rule_5575(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5576(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a_, b__, c_, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5576,
         source: "Int[ArcTan[a_+b_.*x_]/(c_+d_.*x_^n_),x_Symbol] :=
           Unintegrable[ArcTan[a+b*x]/(c+d*x^n),x] /;
@@ -403,7 +403,7 @@ fn push_rules_rule_5576(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5577(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a_, b__, c_, d__, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5577,
         source: "Int[ArcCot[a_+b_.*x_]/(c_+d_.*x_^n_),x_Symbol] :=
           Unintegrable[ArcCot[a+b*x]/(c+d*x^n),x] /;
@@ -436,7 +436,7 @@ fn push_rules_rule_5578(rules: &mut Vec<RubiRule>) {
         q_,
         x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5578,
         source: "Int[(A_.+B_.*x_+C_.*x_^2)^q_.*(a_.+b_.*ArcTan[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(C/d^2+C/d^2*x^2)^q*(a+b*ArcTan[x])^p,x],x,c+d*x] /;
@@ -477,7 +477,7 @@ fn push_rules_rule_5579(rules: &mut Vec<RubiRule>) {
         q_,
         x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5579,
         source: "Int[(A_.+B_.*x_+C_.*x_^2)^q_.*(a_.+b_.*ArcCot[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(C/d^2+C/d^2*x^2)^q*(a+b*ArcCot[x])^p,x],x,c+d*x] /;
@@ -521,7 +521,7 @@ fn push_rules_rule_5580(rules: &mut Vec<RubiRule>) {
         q_,
         x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5580,
         source: "Int[(e_.+f_.*x_)^m_.*(A_.+B_.*x_+C_.*x_^2)^q_.*(a_.+b_.*ArcTan[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[((d*e-c*f)/d+f*x/d)^m*(C/d^2+C/d^2*x^2)^q*(a+b*ArcTan[x])^p,x],x,c+d*x] /;
@@ -569,7 +569,7 @@ fn push_rules_rule_5581(rules: &mut Vec<RubiRule>) {
         q_,
         x_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5581,
         source: "Int[(e_.+f_.*x_)^m_.*(A_.+B_.*x_+C_.*x_^2)^q_.*(a_.+b_.*ArcCot[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[((d*e-c*f)/d+f*x/d)^m*(C/d^2+C/d^2*x^2)^q*(a+b*ArcCot[x])^p,x],x,c+d*x] /;

@@ -49,7 +49,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7166(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7166,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_,x_Symbol] :=
           (a+b*x)*(c*ProductLog[a+b*x])^p/(b*(p+1)) +
@@ -73,7 +73,7 @@ fn push_rules_rule_7166(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7167(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7167,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_.,x_Symbol] :=
           (a+b*x)*(c*ProductLog[a+b*x])^p/b -
@@ -96,7 +96,7 @@ fn push_rules_rule_7167(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7168(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a_, b__, c__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7168,
         source: "Int[(e_.+f_.*x_)^m_.*(c_.*ProductLog[a_+b_.*x_])^p_.,x_Symbol] :=
           1/b^(m+1) \\[Star] Subst[Int[ExpandIntegrand[(c*ProductLog[x])^p,(b*e-a*f+f*x)^m,x],x],x,a+b*x] /;
@@ -124,7 +124,7 @@ fn push_rules_rule_7168(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7169(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7169,
         source: "Int[(c_.*ProductLog[a_.*x_^n_])^p_.,x_Symbol] :=
           x*(c*ProductLog[a*x^n])^p -
@@ -151,7 +151,7 @@ fn push_rules_rule_7169(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7170(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7170,
         source: "Int[(c_.*ProductLog[a_.*x_^n_])^p_.,x_Symbol] :=
           x*(c*ProductLog[a*x^n])^p/(n*p+1) +
@@ -179,7 +179,7 @@ fn push_rules_rule_7170(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7171(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7171,
         source: "Int[(c_.*ProductLog[a_.*x_^n_])^p_.,x_Symbol] :=
           -Subst[Int[(c*ProductLog[a*x^(-n)])^p/x^2,x],x,1/x] /;
@@ -203,7 +203,7 @@ fn push_rules_rule_7171(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7172(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7172,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_.,x_Symbol] :=
           x^(m+1)*(c*ProductLog[a*x^n])^p/(m+1) -
@@ -233,7 +233,7 @@ fn push_rules_rule_7172(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7173(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7173,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_.,x_Symbol] :=
           x^(m+1)*(c*ProductLog[a*x^n])^p/(m+n*p+1) +
@@ -263,7 +263,7 @@ fn push_rules_rule_7173(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7174(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, c__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7174,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_])^p_.,x_Symbol] :=
           Int[x^m*(c*ProductLog[a*x])^p/(1+ProductLog[a*x]),x] +
@@ -286,7 +286,7 @@ fn push_rules_rule_7174(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7175(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7175,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_])^p_.,x_Symbol] :=
           -Subst[Int[(c*ProductLog[a*x^(-n)])^p/x^(m+2),x],x,1/x] /;
@@ -315,7 +315,7 @@ fn push_rules_rule_7175(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7176(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, d_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7176,
         source: "Int[1/(d_+d_.*ProductLog[a_.+b_.*x_]),x_Symbol] :=
           (a+b*x)/(b*d*ProductLog[a+b*x]) /;
@@ -335,7 +335,7 @@ fn push_rules_rule_7176(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7177(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, d_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7177,
         source: "Int[ProductLog[a_.+b_.*x_]/(d_+d_.*ProductLog[a_.+b_.*x_]),x_Symbol] :=
           d*x - Int[1/(d+d*ProductLog[a+b*x]),x] /;
@@ -355,7 +355,7 @@ fn push_rules_rule_7177(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7178(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7178,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_/(d_+d_.*ProductLog[a_.+b_.*x_]),x_Symbol] :=
           c*(a+b*x)*(c*ProductLog[a+b*x])^(p-1)/(b*d) -
@@ -379,7 +379,7 @@ fn push_rules_rule_7178(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7179(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, d_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7179,
         source: "Int[1/(ProductLog[a_.+b_.*x_]*(d_+d_.*ProductLog[a_.+b_.*x_])),x_Symbol] :=
           ExpIntegralEi[ProductLog[a+b*x]]/(b*d) /;
@@ -400,7 +400,7 @@ fn push_rules_rule_7179(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7180(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7180,
         source: "Int[1/(Sqrt[c_.*ProductLog[a_.+b_.*x_]]*(d_+d_.*ProductLog[a_.+b_.*x_])),x_Symbol] :=
           Rt[Pi*c,2]*Erfi[Sqrt[c*ProductLog[a+b*x]]/Rt[c,2]]/(b*c*d) /;
@@ -421,7 +421,7 @@ fn push_rules_rule_7180(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7181(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7181,
         source: "Int[1/(Sqrt[c_.*ProductLog[a_.+b_.*x_]]*(d_+d_.*ProductLog[a_.+b_.*x_])),x_Symbol] :=
           Rt[-Pi*c,2]*Erf[Sqrt[c*ProductLog[a+b*x]]/Rt[-c,2]]/(b*c*d) /;
@@ -442,7 +442,7 @@ fn push_rules_rule_7181(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7182(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7182,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_/(d_+d_.*ProductLog[a_.+b_.*x_]),x_Symbol] :=
           (a+b*x)*(c*ProductLog[a+b*x])^p/(b*d*(p+1)) -
@@ -466,7 +466,7 @@ fn push_rules_rule_7182(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7183(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7183,
         source: "Int[(c_.*ProductLog[a_.+b_.*x_])^p_./(d_+d_.*ProductLog[a_.+b_.*x_]),x_Symbol] :=
           Gamma[p+1,-ProductLog[a+b*x]]*(c*ProductLog[a+b*x])^p/(b*d*(-ProductLog[a+b*x])^p) /;
@@ -486,7 +486,7 @@ fn push_rules_rule_7183(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7184(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a_, b__, d_, e__, f__, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7184,
         source: "Int[(e_.+f_.*x_)^m_./(d_+d_.*ProductLog[a_+b_.*x_]),x_Symbol] :=
           1/b^(m+1) \\[Star] Subst[Int[ExpandIntegrand[1/(d+d*ProductLog[x]),(b*e-a*f+f*x)^m,x],x],x,a+b*x] /;
@@ -514,7 +514,7 @@ fn push_rules_rule_7184(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7185(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a_, b__, c__, d_, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7185,
         source: "Int[(e_.+f_.*x_)^m_.*(c_.*ProductLog[a_+b_.*x_])^p_./(d_+d_.*ProductLog[a_+b_.*x_]),x_Symbol] :=
           1/b^(m+1) \\[Star] Subst[Int[ExpandIntegrand[(c*ProductLog[x])^p/(d+d*ProductLog[x]),(b*e-a*f+f*x)^m,x],x],x,a+b*x] /;
@@ -544,7 +544,7 @@ fn push_rules_rule_7185(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7186(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, d_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7186,
         source: "Int[1/(d_+d_.*ProductLog[a_.*x_^n_]),x_Symbol] :=
           -Subst[Int[1/(x^2*(d+d*ProductLog[a*x^(-n)])),x],x,1/x] /;
@@ -568,7 +568,7 @@ fn push_rules_rule_7186(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7187(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7187,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           c*x*(c*ProductLog[a*x^n])^(p-1)/d /;
@@ -588,7 +588,7 @@ fn push_rules_rule_7187(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7188(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, d_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7188,
         source: "Int[ProductLog[a_.*x_^n_.]^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           a^p*ExpIntegralEi[-p*ProductLog[a*x^n]]/(d*n) /;
@@ -609,7 +609,7 @@ fn push_rules_rule_7188(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7189(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7189,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_/(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           Rt[Pi*c*n,2]/(d*n*a^(1/n)*c^(1/n))*Erfi[Sqrt[c*ProductLog[a*x^n]]/Rt[c*n,2]] /;
@@ -636,7 +636,7 @@ fn push_rules_rule_7189(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7190(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7190,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_/(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           Rt[-Pi*c*n,2]/(d*n*a^(1/n)*c^(1/n))*Erf[Sqrt[c*ProductLog[a*x^n]]/Rt[-c*n,2]] /;
@@ -663,7 +663,7 @@ fn push_rules_rule_7190(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7191(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7191,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           c*x*(c*ProductLog[a*x^n])^(p-1)/d -
@@ -686,7 +686,7 @@ fn push_rules_rule_7191(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7192(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7192,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           x*(c*ProductLog[a*x^n])^p/(d*(n*p+1)) -
@@ -709,7 +709,7 @@ fn push_rules_rule_7192(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7193(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7193,
         source: "Int[(c_.*ProductLog[a_.*x_^n_])^p_./(d_+d_.*ProductLog[a_.*x_^n_]),x_Symbol] :=
           -Subst[Int[(c*ProductLog[a*x^(-n)])^p/(x^2*(d+d*ProductLog[a*x^(-n)])),x],x,1/x] /;
@@ -734,7 +734,7 @@ fn push_rules_rule_7193(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7194(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, d_, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7194,
         source: "Int[x_^m_./(d_+d_.*ProductLog[a_.*x_]),x_Symbol] :=
           x^(m+1)/(d*(m+1)*ProductLog[a*x]) -
@@ -757,7 +757,7 @@ fn push_rules_rule_7194(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7195(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, d_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7195,
         source: "Int[1/(x_*(d_+d_.*ProductLog[a_.*x_])),x_Symbol] :=
           Log[ProductLog[a*x]]/d /;
@@ -774,7 +774,7 @@ fn push_rules_rule_7195(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7196(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, d_, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7196,
         source: "Int[x_^m_./(d_+d_.*ProductLog[a_.*x_]),x_Symbol] :=
           x^(m+1)/(d*(m+1)) -
@@ -795,7 +795,7 @@ fn push_rules_rule_7196(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7197(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, d_, m_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7197,
         source: "Int[x_^m_./(d_+d_.*ProductLog[a_.*x_]),x_Symbol] :=
           x^m*Gamma[m+1,-(m+1)*ProductLog[a*x]]/
@@ -818,7 +818,7 @@ fn push_rules_rule_7197(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7198(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, d_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7198,
         source: "Int[1/(x_*(d_+d_.*ProductLog[a_.*x_^n_.])),x_Symbol] :=
           Log[ProductLog[a*x^n]]/(d*n) /;
@@ -835,7 +835,7 @@ fn push_rules_rule_7198(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7199(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, d_, m_, n_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7199,
         source: "Int[x_^m_./(d_+d_.*ProductLog[a_.*x_^n_]),x_Symbol] :=
           -Subst[Int[1/(x^(m+2)*(d+d*ProductLog[a*x^(-n)])),x],x,1/x] /;
@@ -864,7 +864,7 @@ fn push_rules_rule_7199(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7200(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, c__, d_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7200,
         source: "Int[(c_.*ProductLog[a_.*x_^n_.])^p_./(x_*(d_+d_.*ProductLog[a_.*x_^n_.])),x_Symbol] :=
           (c*ProductLog[a*x^n])^p/(d*n*p) /;
@@ -885,7 +885,7 @@ fn push_rules_rule_7200(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7201(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7201,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           c*x^(m+1)*(c*ProductLog[a*x^n])^(p-1)/(d*(m+1)) /;
@@ -909,7 +909,7 @@ fn push_rules_rule_7201(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7202(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, d_, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7202,
         source: "Int[x_^m_.*ProductLog[a_.*x_^n_.]^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           a^p*ExpIntegralEi[-p*ProductLog[a*x^n]]/(d*n) /;
@@ -930,7 +930,7 @@ fn push_rules_rule_7202(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7203(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7203,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_/(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           a^(p-1/2)*c^(p-1/2)*Rt[Pi*c/(p-1/2),2]*Erf[Sqrt[c*ProductLog[a*x^n]]/Rt[c/(p-1/2),2]]/(d*n) /;
@@ -961,7 +961,7 @@ fn push_rules_rule_7203(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7204(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7204,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_/(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           a^(p-1/2)*c^(p-1/2)*Rt[-Pi*c/(p-1/2),2]*Erfi[Sqrt[c*ProductLog[a*x^n]]/Rt[-c/(p-1/2),2]]/(d*n) /;
@@ -992,7 +992,7 @@ fn push_rules_rule_7204(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7205(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7205,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           c*x^(m+1)*(c*ProductLog[a*x^n])^(p-1)/(d*(m+1)) -
@@ -1019,7 +1019,7 @@ fn push_rules_rule_7205(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7206(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7206,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           x^(m+1)*(c*ProductLog[a*x^n])^p/(d*(m+n*p+1)) -
@@ -1047,7 +1047,7 @@ fn push_rules_rule_7206(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7207(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, c__, d_, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7207,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_])^p_./(d_+d_.*ProductLog[a_.*x_]),x_Symbol] :=
           x^m*Gamma[m+p+1,-(m+1)*ProductLog[a*x]]*(c*ProductLog[a*x])^p/
@@ -1071,7 +1071,7 @@ fn push_rules_rule_7207(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7208(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, c__, d_, m_, n_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7208,
         source: "Int[x_^m_.*(c_.*ProductLog[a_.*x_^n_.])^p_./(d_+d_.*ProductLog[a_.*x_^n_.]),x_Symbol] :=
           -Subst[Int[(c*ProductLog[a*x^(-n)])^p/(x^(m+2)*(d+d*ProductLog[a*x^(-n)])),x],x,1/x] /;
@@ -1101,7 +1101,7 @@ fn push_rules_rule_7208(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_7209(rules: &mut Vec<RubiRule>) {
     rubi_symb!(u__);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 7209,
         source: "Int[u_,x_Symbol] :=
           Subst[Int[SimplifyIntegrand[(x+1)*E^x*SubstFor[ProductLog[x],u,x],x],x],x,ProductLog[x]] /;

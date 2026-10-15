@@ -43,7 +43,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2897(rules: &mut Vec<RubiRule>) {
     rubi_symb!(m_, pq_, u__);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2897,
         source: "Int[Pq_^m_.*Log[u_],x_Symbol] :=
           With[{C=FullSimplify[Pq^m*(1-u)/D[u,x]]},
@@ -82,7 +82,7 @@ fn push_rules_rule_2897(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2898(rules: &mut Vec<RubiRule>) {
     rubi_symb!(n_, p_, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2898,
         source: "Int[Log[c_.*(d_+e_.*x_^n_)^p_.],x_Symbol] :=
           x*Log[c*(d+e*x^n)^p] - e*n*p \\[Star] Int[x^n/(d+e*x^n),x] /;
@@ -106,7 +106,7 @@ fn push_rules_rule_2898(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2899(rules: &mut Vec<RubiRule>) {
     rubi_symb!(p_, q_, a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2899,
         source: "Int[(a_.+b_.*Log[c_.*(d_+e_./x_)^p_.])^q_,x_Symbol] :=
           (e+d*x)*(a+b*Log[c*(d+e/x)^p])^q/d + b*e*p*q/d \\[Star] Int[(a+b*Log[c*(d+e/x)^p])^(q-1)/x,x] /;
@@ -135,7 +135,7 @@ fn push_rules_rule_2899(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2900(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, p_, q_, a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2900,
         source: "Int[(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_,x_Symbol] :=
           x*(a+b*Log[c*(d+e*x^n)^p])^q - b*e*n*p*q \\[Star] Int[x^n*(a+b*Log[c*(d+e*x^n)^p])^(q-1)/(d+e*x^n),x] /;
@@ -165,7 +165,7 @@ fn push_rules_rule_2900(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2901(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, p_, q_, a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2901,
         source: "Int[(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_,x_Symbol] :=
           With[{k=Denominator[n]},
@@ -200,7 +200,7 @@ fn push_rules_rule_2901(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2902(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, p_, q_, a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2902,
         source: "Int[(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_,x_Symbol] :=
           Unintegrable[(a+b*Log[c*(d+e*x^n)^p])^q,x] /;
@@ -245,12 +245,12 @@ fn push_rules_rule_2903(rules: &mut Vec<RubiRule>) {
             rubi_rhs_int(&recursive_integrand, x_)
         },
     );
-    rules.push(rule.with_early_x_dependent(v__));
+    rules.push_rubi_rule(rule.with_early_x_dependent(v__));
 }
 
 fn push_rules_rule_2904(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, p_, q_, a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2904,
         source: "Int[x_^m_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           1/n \\[Star] Subst[Int[x^(Simplify[(m+1)/n]-1)*(a+b*Log[c*(d+e*x)^p])^q,x],x,x^n] /;
@@ -287,7 +287,7 @@ fn push_rules_rule_2904(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2905(rules: &mut Vec<RubiRule>) {
     rubi_symb!(m_, n_, p_, a__, b__, c__, d__, e__, f__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2905,
         source: "Int[(f_.*x_)^m_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.]),x_Symbol] :=
           (f*x)^(m+1)*(a+b*Log[c*(d+e*x^n)^p])/(f*(m+1)) -
@@ -320,7 +320,7 @@ fn push_rules_rule_2905(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2906(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2906,
         source: "Int[(f_*x_)^m_*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           (f*x)^m/x^m \\[Star] Int[x^m*(a+b*Log[c*(d+e*x^n)^p])^q,x] /;
@@ -350,7 +350,7 @@ fn push_rules_rule_2906(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2907(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2907,
         source: "Int[(f_.*x_)^m_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_,x_Symbol] :=
           (f*x)^(m+1)*(a+b*Log[c*(d+e*x^n)^p])^q/(f*(m+1)) -
@@ -386,7 +386,7 @@ fn push_rules_rule_2907(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2908(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, p_, q_, a__, b__, c__, d__, e__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2908,
         source: "Int[x_^m_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_,x_Symbol] :=
           With[{k=Denominator[n]},
@@ -421,7 +421,7 @@ fn push_rules_rule_2908(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2909(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2909,
         source: "Int[(f_*x_)^m_*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           (f*x)^m/x^m \\[Star] Int[x^m*(a+b*Log[c*(d+e*x^n)^p])^q,x] /;
@@ -448,7 +448,7 @@ fn push_rules_rule_2909(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2910(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2910,
         source: "Int[(f_.*x_)^m_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           Unintegrable[(f*x)^m*(a+b*Log[c*(d+e*x^n)^p])^q,x] /;
@@ -498,12 +498,12 @@ fn push_rules_rule_2911(rules: &mut Vec<RubiRule>) {
             rubi_rhs_int(&recursive_integrand, x_)
         },
     );
-    rules.push(rule.with_early_x_dependent(v__));
+    rules.push_rubi_rule(rule.with_early_x_dependent(v__));
 }
 
 fn push_rules_rule_2912(rules: &mut Vec<RubiRule>) {
     rubi_symb!(n_, p_, a__, b__, c__, d__, e__, f__, g__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2912,
         source: "Int[(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])/(f_.+g_.*x_),x_Symbol] :=
           Log[f+g*x]*(a+b*Log[c*(d+e*x^n)^p])/g -
@@ -534,7 +534,7 @@ fn push_rules_rule_2912(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2913(rules: &mut Vec<RubiRule>) {
     rubi_symb!(n_, p_, a__, b__, c__, d__, e__, f__, g__, x_, r_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2913,
         source: "Int[(f_.+g_.*x_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.]),x_Symbol] :=
           (f+g*x)^(r+1)*(a+b*Log[c*(d+e*x^n)^p])/(g*(r+1)) -
@@ -567,7 +567,7 @@ fn push_rules_rule_2913(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2914(rules: &mut Vec<RubiRule>) {
     rubi_symb!(n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_, r_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2914,
         source: "Int[(f_.+g_.*x_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           Unintegrable[(f+g*x)^r*(a+b*Log[c*(d+e*x^n)^p])^q,x] /;
@@ -616,12 +616,12 @@ fn push_rules_rule_2915(rules: &mut Vec<RubiRule>) {
             rubi_rhs_int(&recursive_integrand, x_)
         },
     );
-    rules.push(rule.with_early_x_dependent(u__).with_early_x_dependent(v__));
+    rules.push_rubi_rule(rule.with_early_x_dependent(u__).with_early_x_dependent(v__));
 }
 
 fn push_rules_rule_2916(rules: &mut Vec<RubiRule>) {
     rubi_symb!(m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_, r_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2916,
         source: "Int[x_^m_.*(f_.+g_.*x_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           Int[ExpandIntegrand[(a+b*Log[c*(d+e*x^n)^p])^q,x^m*(f+g*x)^r,x],x] /;
@@ -651,7 +651,7 @@ fn push_rules_rule_2917(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols;
         m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, h__, x_, r_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2917,
         source: "Int[(h_.*x_)^m_*(f_.+g_.*x_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_.)^p_.])^q_.,x_Symbol] :=
           With[{k=Denominator[m]},
@@ -696,7 +696,7 @@ fn push_rules_rule_2918(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols;
         m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, h__, x_, r_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2918,
         source: "Int[(h_.*x_)^m_.*(f_.+g_.*x_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           Unintegrable[(h*x)^m*(f+g*x)^r*(a+b*Log[c*(d+e*x^n)^p])^q,x] /;
@@ -748,12 +748,12 @@ fn push_rules_rule_2919(rules: &mut Vec<RubiRule>) {
             rubi_rhs_int(&recursive_integrand, x_)
         },
     );
-    rules.push(rule.with_early_x_dependent(u__).with_early_x_dependent(v__));
+    rules.push_rubi_rule(rule.with_early_x_dependent(u__).with_early_x_dependent(v__));
 }
 
 fn push_rules_rule_2920(rules: &mut Vec<RubiRule>) {
     rubi_symb!(n_, p_, a__, b__, c__, d__, e__, f__, g__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2920,
         source: "Int[(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])/(f_+g_.*x_^2),x_Symbol] :=
           With[{u=IntHide[1/(f+g*x^2),x]},
@@ -783,7 +783,7 @@ fn push_rules_rule_2920(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2921(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_, r_, s_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2921,
         source: "Int[(f_+g_.*x_^s_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           With[{t=ExpandIntegrand[(a+b*Log[c*(d+e*x^n)^p])^q,(f+g*x^s)^r,x]},
@@ -827,7 +827,7 @@ fn push_rules_rule_2921(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2922(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_, r_, s_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2922,
         source: "Int[(f_+g_.*x_^s_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           With[{k=Denominator[n]},
@@ -866,7 +866,7 @@ fn push_rules_rule_2922(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2923(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_, r_, s_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2923,
         source: "Int[(f_+g_.*x_^s_)^r_.(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           Unintegrable[(f+g*x^s)^r*(a+b*Log[c*(d+e*x^n)^p])^q,x] /;
@@ -890,7 +890,7 @@ fn push_rules_rule_2923(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2924(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; p_, q_, a__, b__, c__, u__, v__, r_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2924,
         source: "Int[u_^r_.*(a_.+b_.*Log[c_.*v_^p_.])^q_.,x_Symbol] :=
           Int[ExpandToSum[u,x]^r*(a+b*Log[c*ExpandToSum[v,x]^p])^q,x] /;
@@ -920,7 +920,7 @@ fn push_rules_rule_2925(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols;
         m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_, r_, s_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2925,
         source: "Int[x_^m_.*(f_+g_.*x_^s_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           1/n \\[Star] Subst[Int[x^(Simplify[(m+1)/n]-1)*(f+g*x^(s/n))^r*(a+b*Log[c*(d+e*x)^p])^q,x],x,x^n] /;
@@ -959,7 +959,7 @@ fn push_rules_rule_2926(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols;
         m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_, r_, s_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2926,
         source: "Int[x_^m_.*(f_+g_.*x_^s_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           Int[ExpandIntegrand[(a+b*Log[c*(d+e*x^n)^p])^q,x^m*(f+g*x^s)^r,x],x] /;
@@ -991,7 +991,7 @@ fn push_rules_rule_2927(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols;
         m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_, r_, s_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2927,
         source: "Int[x_^m_.*(f_+g_.*x_^s_)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           1/n \\[Star] Subst[Int[x^(m+1/n-1)*(f+g*x^(s/n))^r*(a+b*Log[c*(d+e*x)^p])^q,x],x,x^n] /;
@@ -1026,7 +1026,7 @@ fn push_rules_rule_2928(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols;
         m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, h__, x_, r_, s_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2928,
         source: "Int[(h_.*x_)^m_*(f_.+g_.*x_^s_.)^r_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_.)^p_.])^q_.,x_Symbol] :=
           With[{k=Denominator[m]},
@@ -1068,7 +1068,7 @@ fn push_rules_rule_2929(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols;
         m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, h__, x_, r_, s_
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2929,
         source: "Int[(h_.*x_)^m_.*(f_+g_.*x_^s_)^r_.(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])^q_.,x_Symbol] :=
           Unintegrable[(h*x)^m*(f+g*x^s)^r*(a+b*Log[c*(d+e*x^n)^p])^q,x] /;
@@ -1093,7 +1093,7 @@ fn push_rules_rule_2929(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2930(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; m_, p_, q_, a__, b__, c__, h__, u__, v__, x_, r_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2930,
         source: "Int[(h_.*x_)^m_.*u_^r_.*(a_.+b_.*Log[c_.*v_^p_.])^q_.,x_Symbol] :=
           Int[(h*x)^m*ExpandToSum[u,x]^r*(a+b*Log[c*ExpandToSum[v,x]^p])^q,x] /;
@@ -1123,7 +1123,7 @@ fn push_rules_rule_2930(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2931(rules: &mut Vec<RubiRule>) {
     rubi_symb!(m_, n_, p_, q_, a__, b__, c__, d__, e__, f__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2931,
         source: "Int[Log[f_.*x_^q_.]^m_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.])/x_,x_Symbol] :=
           Log[f*x^q]^(m+1)*(a+b*Log[c*(d+e*x^n)^p])/(q*(m+1)) -
@@ -1158,7 +1158,7 @@ fn push_rules_rule_2931(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2932(rules: &mut Vec<RubiRule>) {
     rubi_symb!(capital_f_, m_, n_, p_, a__, b__, c__, d__, e__, f__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2932,
         source: "Int[F_[f_.*x_]^m_.*(a_.+b_.*Log[c_.*(d_+e_.*x_^n_)^p_.]),x_Symbol] :=
           With[{u=IntHide[F[f*x]^m,x]},
@@ -1201,7 +1201,7 @@ fn push_rules_rule_2932(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2933(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2933,
         source: "Int[(a_.+b_.*Log[c_.*(d_+e_.*(f_.+g_.*x_)^n_)^p_.])^q_.,x_Symbol] :=
           1/g \\[Star] Subst[Int[(a+b*Log[c*(d+e*x^n)^p])^q,x],x,f+g*x] /;
@@ -1232,7 +1232,7 @@ fn push_rules_rule_2933(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_2934(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; n_, p_, q_, a__, b__, c__, d__, e__, f__, g__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2934,
         source: "Int[(a_.+b_.*Log[c_.*(d_+e_.*(f_.+g_.*x_)^n_)^p_.])^q_.,x_Symbol] :=
           Unintegrable[(a+b*Log[c*(d+e*(f+g*x)^n)^p])^q,x] /;

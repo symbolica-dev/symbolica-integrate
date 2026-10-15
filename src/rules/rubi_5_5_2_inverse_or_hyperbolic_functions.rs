@@ -29,7 +29,7 @@ pub(super) fn push_rules(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5773(rules: &mut Vec<RubiRule>) {
     rubi_symb!(c__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5773,
         source: "Int[ArcSec[c_+d_.*x_],x_Symbol] :=
           (c+d*x)*ArcSec[c+d*x]/d -
@@ -53,7 +53,7 @@ fn push_rules_rule_5773(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5774(rules: &mut Vec<RubiRule>) {
     rubi_symb!(c__, d__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5774,
         source: "Int[ArcCsc[c_+d_.*x_],x_Symbol] :=
           (c+d*x)*ArcCsc[c+d*x]/d +
@@ -77,7 +77,7 @@ fn push_rules_rule_5774(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5775(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5775,
         source: "Int[(a_.+b_.*ArcSec[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(a+b*ArcSec[x])^p,x],x,c+d*x] /;
@@ -103,7 +103,7 @@ fn push_rules_rule_5775(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5776(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5776,
         source: "Int[(a_.+b_.*ArcCsc[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(a+b*ArcCsc[x])^p,x],x,c+d*x] /;
@@ -129,7 +129,7 @@ fn push_rules_rule_5776(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5777(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5777,
         source: "Int[(a_.+b_.*ArcSec[c_+d_.*x_])^p_,x_Symbol] :=
           Unintegrable[(a+b*ArcSec[c+d*x])^p,x] /;
@@ -151,7 +151,7 @@ fn push_rules_rule_5777(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5778(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5778,
         source: "Int[(a_.+b_.*ArcCsc[c_+d_.*x_])^p_,x_Symbol] :=
           Unintegrable[(a+b*ArcCsc[c+d*x])^p,x] /;
@@ -173,7 +173,7 @@ fn push_rules_rule_5778(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5779(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5779,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcSec[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(f*x/d)^m*(a+b*ArcSec[x])^p,x],x,c+d*x] /;
@@ -203,7 +203,7 @@ fn push_rules_rule_5779(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5780(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5780,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcCsc[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[(f*x/d)^m*(a+b*ArcCsc[x])^p,x],x,c+d*x] /;
@@ -233,7 +233,7 @@ fn push_rules_rule_5780(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5781(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5781,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcSec[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d^(m+1) \\[Star] Subst[Int[(a+b*x)^p*Sec[x]*Tan[x]*(d*e-c*f+f*Sec[x])^m,x],x,ArcSec[c+d*x]] /;
@@ -269,7 +269,7 @@ fn push_rules_rule_5781(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5782(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5782,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcCsc[c_+d_.*x_])^p_.,x_Symbol] :=
           -1/d^(m+1) \\[Star] Subst[Int[(a+b*x)^p*Csc[x]*Cot[x]*(d*e-c*f+f*Csc[x])^m,x],x,ArcCsc[c+d*x]] /;
@@ -305,7 +305,7 @@ fn push_rules_rule_5782(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5783(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5783,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcSec[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[((d*e-c*f)/d+f*x/d)^m*(a+b*ArcSec[x])^p,x],x,c+d*x] /;
@@ -332,7 +332,7 @@ fn push_rules_rule_5783(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5784(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5784,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcCsc[c_+d_.*x_])^p_.,x_Symbol] :=
           1/d \\[Star] Subst[Int[((d*e-c*f)/d+f*x/d)^m*(a+b*ArcCsc[x])^p,x],x,c+d*x] /;
@@ -359,7 +359,7 @@ fn push_rules_rule_5784(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5785(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5785,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcSec[c_+d_.*x_])^p_,x_Symbol] :=
           Unintegrable[(e+f*x)^m*(a+b*ArcSec[c+d*x])^p,x] /;
@@ -385,7 +385,7 @@ fn push_rules_rule_5785(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5786(rules: &mut Vec<RubiRule>) {
     rubi_symb!(symbols; a__, b__, c__, d__, e__, f__, m_, p_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5786,
         source: "Int[(e_.+f_.*x_)^m_.*(a_.+b_.*ArcCsc[c_+d_.*x_])^p_,x_Symbol] :=
           Unintegrable[(e+f*x)^m*(a+b*ArcCsc[c+d*x])^p,x] /;
@@ -411,7 +411,7 @@ fn push_rules_rule_5786(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5787(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, m_, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5787,
         source: "Int[u_.*ArcSec[c_./(a_.+b_.*x_^n_.)]^m_.,x_Symbol] :=
           Int[u*ArcCos[a/c+b*x^n/c]^m,x] /;
@@ -431,7 +431,7 @@ fn push_rules_rule_5787(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5788(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, m_, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5788,
         source: "Int[u_.*ArcCsc[c_./(a_.+b_.*x_^n_.)]^m_.,x_Symbol] :=
           Int[u*ArcSin[a/c+b*x^n/c]^m,x] /;
@@ -451,7 +451,7 @@ fn push_rules_rule_5788(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5789(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, f__, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5789,
         source: "Int[u_.*f_^(c_.*ArcSec[a_.+b_.*x_]^n_.),x_Symbol] :=
           1/b \\[Star] Subst[Int[ReplaceAll[u,x->-a/b+Sec[x]/b]*f^(c*x^n)*Sec[x]*Tan[x],x],x,ArcSec[a+b*x]] /;
@@ -484,7 +484,7 @@ fn push_rules_rule_5789(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5790(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, f__, n_, u__, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5790,
         source: "Int[u_.*f_^(c_.*ArcCsc[a_.+b_.*x_]^n_.),x_Symbol] :=
           -1/b \\[Star] Subst[Int[ReplaceAll[u,x->-a/b+Csc[x]/b]*f^(c*x^n)*Csc[x]*Cot[x],x],x,ArcCsc[a+b*x]] /;
@@ -517,7 +517,7 @@ fn push_rules_rule_5790(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5791(rules: &mut Vec<RubiRule>) {
     rubi_symb!(u_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5791,
         source: "Int[ArcSec[u_],x_Symbol] :=
           x*ArcSec[u] -
@@ -539,7 +539,7 @@ fn push_rules_rule_5791(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5792(rules: &mut Vec<RubiRule>) {
     rubi_symb!(u_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5792,
         source: "Int[ArcCsc[u_],x_Symbol] :=
           x*ArcCsc[u] +
@@ -561,7 +561,7 @@ fn push_rules_rule_5792(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5793(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, u_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5793,
         source: "Int[(c_.+d_.*x_)^m_.*(a_.+b_.*ArcSec[u_]),x_Symbol] :=
           (c+d*x)^(m+1)*(a+b*ArcSec[u])/(d*(m+1)) -
@@ -596,7 +596,7 @@ fn push_rules_rule_5793(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5794(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, c__, d__, m_, u_, x_);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5794,
         source: "Int[(c_.+d_.*x_)^m_.*(a_.+b_.*ArcCsc[u_]),x_Symbol] :=
           (c+d*x)^(m+1)*(a+b*ArcCsc[u])/(d*(m+1)) +
@@ -631,7 +631,7 @@ fn push_rules_rule_5794(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5795(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, u_, v__);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5795,
         source: "Int[v_*(a_.+b_.*ArcSec[u_]),x_Symbol] :=
           With[{w=IntHide[v,x]},
@@ -662,7 +662,7 @@ fn push_rules_rule_5795(rules: &mut Vec<RubiRule>) {
 
 fn push_rules_rule_5796(rules: &mut Vec<RubiRule>) {
     rubi_symb!(a__, b__, u_, v__);
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 5796,
         source: "Int[v_*(a_.+b_.*ArcCsc[u_]),x_Symbol] :=
           With[{w=IntHide[v,x]},

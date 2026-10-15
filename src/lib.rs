@@ -1820,6 +1820,19 @@ impl<T, E: std::fmt::Debug> RubiRhsInvariant<T> for Result<T, E> {
     }
 }
 
+// Share Vec growth, the large rule move, and its unwind cleanup across the
+// generated registration functions without changing their Vec interface.
+trait RubiRuleRegistry {
+    fn push_rubi_rule(&mut self, rule: RubiRule);
+}
+
+impl RubiRuleRegistry for Vec<RubiRule> {
+    #[inline(never)]
+    fn push_rubi_rule(&mut self, rule: RubiRule) {
+        self.push(rule);
+    }
+}
+
 // These wrappers run only while registering rules. Keep the shared
 // construction and order assignment out of each generated constructor.
 #[inline(never)]
@@ -2094,9 +2107,44 @@ macro_rules! rubi_rule_symbol {
     };
 }
 
+#[inline(never)]
+fn rubi_integer_condition_symbols() -> &'static RubiSymbols {
+    rubi_symbols()
+}
+
 /// Builds a generated rule condition, borrowing captures for pure `FreeQ`
 /// guards and retaining owned captures for general condition expressions.
 macro_rules! rubi_condition {
+    ([$($wildcard:ident),*], { freeq!([$($free:ident),+ $(,)?], x_) && integerq!($integer:ident) }) => {
+        rubi_condition!(@integer [$($wildcard),*] [$($free),+] $integer true)
+    };
+    ([$($wildcard:ident),*], { freeq!($free:ident, x_) && integerq!($integer:ident) }) => {
+        rubi_condition!(@integer [$($wildcard),*] [$free] $integer true)
+    };
+    ([$($wildcard:ident),*], { freeq!([$($free:ident),+ $(,)?], x_) && !integerq!($integer:ident) }) => {
+        rubi_condition!(@integer [$($wildcard),*] [$($free),+] $integer false)
+    };
+    ([$($wildcard:ident),*], { freeq!($free:ident, x_) && !integerq!($integer:ident) }) => {
+        rubi_condition!(@integer [$($wildcard),*] [$free] $integer false)
+    };
+    (@integer [$($wildcard:ident),*] [$($free:ident),+] $integer:ident $expected:literal) => {
+        (|matches, integration_symbol, rule| {
+            let symbols = rubi_integer_condition_symbols();
+            if wildcard_captures_are_free_and_integer(
+                matches,
+                rule,
+                &[$(symbols.$free),+],
+                symbols.$integer,
+                integration_symbol,
+                [$(stringify!($wildcard)),*].len(),
+                $expected,
+            ) {
+                ConditionResult::True
+            } else {
+                ConditionResult::False
+            }
+        }) as RubiCondition
+    };
     ([$($wildcard:ident),*], { freeq!([$($free:ident),+ $(,)?], x_) }) => {
         (|matches, integration_symbol, rule| {
             let symbols = rubi_symbols();
@@ -4228,6 +4276,7 @@ fn rubi_appell_f1(
     rubi_symbols().appell_f1.call((a, b1, b2, c, x, y))
 }
 
+#[inline(never)]
 fn rubi_erfi(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().erfi.call((z,))
 }
@@ -4236,14 +4285,17 @@ fn rubi_erf(z: impl RubiAtomArgument) -> Atom {
     z.into_rubi_atom().erf()
 }
 
+#[inline(never)]
 fn rubi_erfc(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().erfc.call((z,))
 }
 
+#[inline(never)]
 fn rubi_fresnel_s(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().fresnel_s.call((z,))
 }
 
+#[inline(never)]
 fn rubi_fresnel_c(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().fresnel_c.call((z,))
 }
@@ -4255,10 +4307,12 @@ fn rubi_exp_integral_e(
     rubi_symbols().exp_integral_e.call((n, z))
 }
 
+#[inline(never)]
 fn rubi_exp_integral_ei(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().exp_integral_ei.call((z,))
 }
 
+#[inline(never)]
 fn rubi_log_integral(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().log_integral.call((z,))
 }
@@ -4270,22 +4324,27 @@ fn rubi_zeta(
     symbolica::transcendental::zeta().call((s, z))
 }
 
+#[inline(never)]
 fn rubi_sin_integral(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().sin_integral.call((z,))
 }
 
+#[inline(never)]
 fn rubi_cos_integral(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().cos_integral.call((z,))
 }
 
+#[inline(never)]
 fn rubi_sinh_integral(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().sinh_integral.call((z,))
 }
 
+#[inline(never)]
 fn rubi_cosh_integral(z: impl symbolica::atom::FunctionArgument) -> Atom {
     rubi_symbols().cosh_integral.call((z,))
 }
 
+#[inline(never)]
 fn rubi_product_log(z: impl RubiAtomArgument) -> Atom {
     rubi_symbols().product_log.call((z.into_rubi_atom(),))
 }
@@ -4346,6 +4405,7 @@ fn rubi_hypergeometric_pfq_3_3(
         .call((a1, a2, a3, b1, b2, b3, z))
 }
 
+#[inline(never)]
 fn rubi_elliptic_e(
     phi: impl symbolica::atom::FunctionArgument,
     m: impl symbolica::atom::FunctionArgument,
@@ -4353,6 +4413,7 @@ fn rubi_elliptic_e(
     rubi_symbols().elliptic_e.call((phi, m))
 }
 
+#[inline(never)]
 fn rubi_elliptic_f(
     phi: impl symbolica::atom::FunctionArgument,
     m: impl symbolica::atom::FunctionArgument,
@@ -4470,12 +4531,17 @@ fn rubi_rules() -> &'static [RubiRule] {
     RULES.as_slice()
 }
 
+#[inline(never)]
+fn sort_rubi_helper_rules(rules: &mut [RubiRule]) {
+    rules.sort_by_key(|rule| rule.downvalue_order);
+}
+
 #[allow(non_snake_case)]
 fn rubi_expand_integrand_rules() -> &'static [RubiRule] {
     static RULES: LazyLock<Vec<RubiRule>> = LazyLock::new(|| {
         let mut rules = Vec::new();
         rules::push_expand_integrand_rules(&mut rules);
-        rules.sort_by_key(|rule| rule.downvalue_order);
+        sort_rubi_helper_rules(&mut rules);
         rules
     });
     RULES.as_slice()
@@ -4486,7 +4552,7 @@ fn rubi_deactivate_trig_rules() -> &'static [RubiRule] {
     static RULES: LazyLock<Vec<RubiRule>> = LazyLock::new(|| {
         let mut rules = Vec::new();
         push_deactivate_trig_rules(&mut rules);
-        rules.sort_by_key(|rule| rule.downvalue_order);
+        sort_rubi_helper_rules(&mut rules);
         rules
     });
     RULES.as_slice()
@@ -4497,7 +4563,7 @@ fn rubi_fix_inert_trig_function_rules() -> &'static [RubiRule] {
     static RULES: LazyLock<Vec<RubiRule>> = LazyLock::new(|| {
         let mut rules = Vec::new();
         rules::push_fix_inert_trig_function_rules(&mut rules);
-        rules.sort_by_key(|rule| rule.downvalue_order);
+        sort_rubi_helper_rules(&mut rules);
         rules
     });
     RULES.as_slice()
@@ -4508,7 +4574,7 @@ fn rubi_unify_inert_trig_function_rules() -> &'static [RubiRule] {
     static RULES: LazyLock<Vec<RubiRule>> = LazyLock::new(|| {
         let mut rules = Vec::new();
         rules::push_unify_inert_trig_function_rules(&mut rules);
-        rules.sort_by_key(|rule| rule.downvalue_order);
+        sort_rubi_helper_rules(&mut rules);
         rules
     });
     RULES.as_slice()
@@ -4530,7 +4596,7 @@ fn push_deactivate_trig_rules(rules: &mut Vec<RubiRule>) {
     let x_ = symbols.x_;
     let head = symbols.rubi_deactivate_trig;
 
-    rules.push(rubi_helper_row!(
+    rules.push_rubi_rule(rubi_helper_row!(
         order: 1,
         source: "DeactivateTrig[(c_.+d_.*x_)^m_.*(a_.+b_.*trig_[e_.+f_.*x_])^n_.,x_]",
         pattern: (c__ + d__ * x_).pow(m_) * (a__ + b__ * trig_.call(e__ + f__ * x_)).pow(n_),
@@ -23263,6 +23329,36 @@ fn wildcard_captures_are_free(
     })
 }
 
+#[inline(never)]
+fn wildcard_captures_are_free_and_integer(
+    matches: &symbolica::id::MatchStack<'_>,
+    rule: &RubiRule,
+    free_wildcards: &[Symbol],
+    integer_wildcard: Symbol,
+    integration_symbol: Symbol,
+    expected_required_count: usize,
+    expected_integer: bool,
+) -> bool {
+    if rule.required.len() != expected_required_count {
+        return false;
+    }
+    #[cfg(feature = "bake-integration-variable")]
+    let baked_x = rubi_replacement_context()
+        .and_then(|(context_rule, _)| std::ptr::eq(context_rule, rule).then(|| rubi_symbols().x_));
+    #[cfg(not(feature = "bake-integration-variable"))]
+    let baked_x: Option<Symbol> = None;
+    if !rule
+        .required
+        .iter()
+        .all(|wildcard| Some(*wildcard) == baked_x || matches.get(*wildcard).is_some())
+    {
+        return false;
+    }
+    wildcard_captures_are_free(matches, rule, free_wildcards, integration_symbol)
+        && wildcard_view_for_rule(matches, integer_wildcard, rule)
+            .is_some_and(|value| integer_q_view(value.as_atom_view()) == expected_integer)
+}
+
 #[cfg(feature = "trace")]
 fn current_rule_id() -> Option<&'static str> {
     CURRENT_RUBI_RULE.with(|current| {
@@ -24738,8 +24834,14 @@ fn is_fraction_number(expr: &Atom) -> bool {
         .unwrap_or(false)
 }
 
+#[inline(never)]
 fn integer_q(expr: &Atom) -> bool {
-    match expr.as_view() {
+    integer_q_view(expr.as_view())
+}
+
+#[inline(always)]
+fn integer_q_view(expr: AtomView<'_>) -> bool {
+    match expr {
         AtomView::Num(number) => {
             return number.get_coeff_view().is_integer();
         }
@@ -24749,7 +24851,7 @@ fn integer_q(expr: &Atom) -> bool {
         _ => {}
     }
 
-    if contains_inexact_number(expr.as_view()) {
+    if contains_inexact_number(expr) {
         return false;
     }
 
@@ -34020,6 +34122,186 @@ mod tests {
             rubi_equivalent_q(&primitive, &expected),
             "expected {expected}, got {primitive}"
         );
+    }
+
+    #[test]
+    fn borrowed_integer_predicate_handles_numeric_and_symbolic_views() {
+        for (input, expected) in [
+            ("3", true),
+            ("-5/2", false),
+            ("-0.1", false),
+            ("y", false),
+            ("f(y)", false),
+            ("(x+1)^2-x^2-2*x", true),
+        ] {
+            let expression =
+                Atom::parse(input, "rubi_integer_guard_test", Default::default()).unwrap();
+            assert_eq!(integer_q_view(expression.as_view()), expected, "{input}");
+        }
+    }
+
+    #[test]
+    fn borrowed_integer_conditions_preserve_capture_and_negation_contract() {
+        use symbolica::atom::SliceType;
+        use symbolica::id::{Match, MatchStack};
+
+        let x = symbol!("x");
+        let symbols = rubi_symbols();
+        let x_atom = Atom::var(x);
+        let coefficient = parse!("y");
+        let unused = Atom::num(1);
+        let mut positive = rubi_rule!(
+            source: "Int[a+n*x+b*x^2,x_Symbol]",
+            desc: "Borrowed integer guard contract.",
+            refs: [],
+            pattern: symbols.a__ + symbols.n_ * symbols.x_ + symbols.b__ * symbols.x_.pow(2),
+            with: [a__, n_, x_, b__],
+            when: { freeq!(a__, x_) && integerq!(n_) },
+            rhs: { Atom::Zero },
+        );
+        let negative = rubi_rule!(
+            source: "Int[a+n*x+b*x^2,x_Symbol]",
+            desc: "Borrowed noninteger guard contract.",
+            refs: [],
+            pattern: symbols.a__ + symbols.n_ * symbols.x_ + symbols.b__ * symbols.x_.pow(2),
+            with: [a__, n_, x_, b__],
+            when: { freeq!([a__], x_) && !integerq!(n_) },
+            rhs: { Atom::Zero },
+        );
+        for (integer, expected) in [
+            (Atom::num(3), true),
+            (parse!("1/2"), false),
+            (parse!("-0.1"), false),
+            (parse!("z"), false),
+            (parse!("(x+1)^2-x^2-2*x"), true),
+        ] {
+            let matches = MatchStack::from(vec![
+                (symbols.a__, Match::Single(coefficient.as_view())),
+                (symbols.n_, Match::Single(integer.as_view())),
+                (symbols.x_, Match::Single(x_atom.as_view())),
+                (symbols.b__, Match::Single(unused.as_view())),
+            ]);
+            assert_eq!(
+                (positive.condition)(&matches, x, &positive) == ConditionResult::True,
+                expected,
+                "{integer}"
+            );
+            assert_eq!(
+                (negative.condition)(&matches, x, &negative) == ConditionResult::True,
+                !expected,
+                "{integer}"
+            );
+            for omitted in [symbols.a__, symbols.n_, symbols.x_, symbols.b__] {
+                let incomplete = MatchStack::from(
+                    matches
+                        .get_matches()
+                        .iter()
+                        .filter(|(wildcard, _)| *wildcard != omitted)
+                        .cloned()
+                        .collect::<Vec<_>>(),
+                );
+                assert_eq!(
+                    (positive.condition)(&incomplete, x, &positive),
+                    ConditionResult::False
+                );
+                assert_eq!(
+                    (negative.condition)(&incomplete, x, &negative),
+                    ConditionResult::False
+                );
+            }
+        }
+        let coefficient_sum = parse!("1+y");
+        let expanded_integer = parse!("(z+1)^2-z^2-2*z");
+        let multiple = MatchStack::from(vec![
+            (
+                symbols.a__,
+                Match::Multiple(
+                    SliceType::Add,
+                    rubi_child_views(coefficient_sum.as_view()).collect(),
+                ),
+            ),
+            (
+                symbols.n_,
+                Match::Multiple(
+                    SliceType::Add,
+                    rubi_child_views(expanded_integer.as_view()).collect(),
+                ),
+            ),
+            (symbols.x_, Match::Single(x_atom.as_view())),
+            (symbols.b__, Match::Single(unused.as_view())),
+        ]);
+        assert_eq!(
+            (positive.condition)(&multiple, x, &positive),
+            ConditionResult::True
+        );
+        assert_eq!(
+            (negative.condition)(&multiple, x, &negative),
+            ConditionResult::False
+        );
+        let dependent = MatchStack::from(vec![
+            (symbols.a__, Match::Single(x_atom.as_view())),
+            (symbols.n_, Match::Single(coefficient.as_view())),
+            (symbols.x_, Match::Single(x_atom.as_view())),
+            (symbols.b__, Match::Single(unused.as_view())),
+        ]);
+        assert_eq!(
+            (positive.condition)(&dependent, x, &positive),
+            ConditionResult::False
+        );
+        assert_eq!(
+            (negative.condition)(&dependent, x, &negative),
+            ConditionResult::False
+        );
+        positive.required.pop();
+        assert_eq!(
+            (positive.condition)(&multiple, x, &positive),
+            ConditionResult::False
+        );
+    }
+
+    #[cfg(feature = "bake-integration-variable")]
+    #[test]
+    fn borrowed_integer_condition_uses_only_its_own_baked_variable_context() {
+        use symbolica::id::{Match, MatchStack};
+
+        let x = symbol!("x");
+        let symbols = rubi_symbols();
+        let coefficient = parse!("y");
+        let integer = Atom::num(3);
+        let row = Box::leak(Box::new(rubi_rule!(
+            source: "Int[a+n*x,x_Symbol]",
+            desc: "Baked variable guard contract.",
+            refs: [],
+            pattern: symbols.a__ + symbols.n_ * symbols.x_,
+            with: [a__, n_, x_],
+            when: { freeq!([a__], x_) && integerq!(n_) },
+            rhs: { Atom::Zero },
+        )));
+        let other_row = Box::leak(Box::new(rubi_rule!(
+            source: "Int[a+n*x,x_Symbol]",
+            desc: "Distinct baked variable context.",
+            refs: [],
+            pattern: symbols.a__ + symbols.n_ * symbols.x_,
+            with: [a__, n_, x_],
+            when: { true },
+            rhs: { Atom::Zero },
+        )));
+        let matches = MatchStack::from(vec![
+            (symbols.a__, Match::Single(coefficient.as_view())),
+            (symbols.n_, Match::Single(integer.as_view())),
+        ]);
+        assert_eq!((row.condition)(&matches, x, row), ConditionResult::False);
+        {
+            let _context = RubiReplacementContext::push(other_row, x);
+            assert_eq!((row.condition)(&matches, x, row), ConditionResult::False);
+        }
+        {
+            let _context = RubiReplacementContext::push(row, x);
+            assert_eq!((row.condition)(&matches, x, row), ConditionResult::True);
+            let incomplete = MatchStack::from(vec![(symbols.n_, Match::Single(integer.as_view()))]);
+            assert_eq!((row.condition)(&incomplete, x, row), ConditionResult::False);
+        }
+        assert_eq!((row.condition)(&matches, x, row), ConditionResult::False);
     }
 
     #[test]

@@ -24,7 +24,7 @@ fn push_rules_rule_2146(rules: &mut Vec<RubiRule>) {
         capital_b__,
         capital_c__
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2146,
         source: "Int[(a_.+b_.*u_+c_.*u_^2)^p_.*(d_.+e_.*u_+f_.*u_^2)^q_.*(A_.+B_.*u_+C_.*u_^2),x_Symbol] :=
           1/Coefficient[u,x,1] \\[Star] Subst[Int[(a+b*x+c*x^2)^p*(d+e*x+f*x^2)^q*(A+B*x+C*x^2),x],x,u] /;
@@ -72,7 +72,7 @@ fn push_rules_rule_2147(rules: &mut Vec<RubiRule>) {
         capital_a__,
         capital_b__
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2147,
         source: "Int[(a_.+b_.*u_+c_.*u_^2)^p_.*(d_.+e_.*u_+f_.*u_^2)^q_.*(A_.+B_.*u_),x_Symbol] :=
           1/Coefficient[u,x,1] \\[Star] Subst[Int[(a+b*x+c*x^2)^p*(d+e*x+f*x^2)^q*(A+B*x),x],x,u] /;
@@ -120,7 +120,7 @@ fn push_rules_rule_2148(rules: &mut Vec<RubiRule>) {
         capital_a__,
         capital_c__
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2148,
         source: "Int[(a_.+b_.*u_+c_.*u_^2)^p_.*(d_.+e_.*u_+f_.*u_^2)^q_.*(A_.+C_.*u_^2),x_Symbol] :=
           1/Coefficient[u,x,1] \\[Star] Subst[Int[(a+b*x+c*x^2)^p*(d+e*x+f*x^2)^q*(A+C*x^2),x],x,u] /;
@@ -168,7 +168,7 @@ fn push_rules_rule_2149(rules: &mut Vec<RubiRule>) {
         capital_b__,
         capital_c__
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2149,
         source: "Int[(a_.+c_.*u_^2)^p_.*(d_.+e_.*u_+f_.*u_^2)^q_.*(A_.+B_.*u_+C_.*u_^2),x_Symbol] :=
           1/Coefficient[u,x,1] \\[Star] Subst[Int[(a+c*x^2)^p*(d+e*x+f*x^2)^q*(A+B*x+C*x^2),x],x,u] /;
@@ -215,7 +215,7 @@ fn push_rules_rule_2150(rules: &mut Vec<RubiRule>) {
         capital_a__,
         capital_b__
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2150,
         source: "Int[(a_.+c_.*u_^2)^p_.*(d_.+e_.*u_+f_.*u_^2)^q_.*(A_.+B_.*u_),x_Symbol] :=
           1/Coefficient[u,x,1] \\[Star] Subst[Int[(a+c*x^2)^p*(d+e*x+f*x^2)^q*(A+B*x),x],x,u] /;
@@ -262,7 +262,7 @@ fn push_rules_rule_2151(rules: &mut Vec<RubiRule>) {
         capital_a__,
         capital_c__
     );
-    rules.push(rubi_rule!(
+    rules.push_rubi_rule(rubi_rule!(
         order: 2151,
         source: "Int[(a_.+c_.*u_^2)^p_.*(d_.+e_.*u_+f_.*u_^2)^q_.*(A_.+C_.*u_^2),x_Symbol] :=
           1/Coefficient[u,x,1] \\[Star] Subst[Int[(a+c*x^2)^p*(d+e*x+f*x^2)^q*(A+C*x^2),x],x,u] /;
